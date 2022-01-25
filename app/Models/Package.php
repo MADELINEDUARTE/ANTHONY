@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * Class Package
+ *
+ * @property $id
+ * @property $name
+ * @property $description
+ * @property $number_of_programs
+ * @property $amount
+ * @property $status_id
+ * @property $created_at
+ * @property $updated_at
+ * @property $deleted_at
+ *
+ * @property Status $status
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
+class Package extends Model
+{
+    use SoftDeletes;
+
+    static $rules = [
+		'name' => 'required',
+		'description' => 'required',
+		'number_of_programs' => 'required',
+		'amount' => 'required',
+		'status_id' => 'required',
+    ];
+
+    protected $perPage = 20;
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name','description','number_of_programs','amount','status_id'];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function status()
+    {
+        return $this->hasOne('App\Models\Status', 'id', 'status_id');
+    }
+    
+
+}
