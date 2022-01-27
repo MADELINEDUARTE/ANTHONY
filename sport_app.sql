@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 24/01/2022 12:00:18
+ Date: 27/01/2022 14:06:44
 */
 
 SET NAMES utf8mb4;
@@ -512,14 +512,17 @@ CREATE TABLE `programs`  (
   INDEX `programs_status_id_foreign`(`status_id`) USING BTREE,
   CONSTRAINT `programs_program_category_id_foreign` FOREIGN KEY (`program_category_id`) REFERENCES `program_categories` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `programs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of programs
 -- ----------------------------
-INSERT INTO `programs` VALUES (1, 'Uno', 'One', 1, 'Dos', 333, '1643032958.jpg', 0, 0, 1, '2022-01-24 14:02:38', '2022-01-24 14:02:38', NULL);
+INSERT INTO `programs` VALUES (1, 'Uno1', 'OneOne', 1, 'Dos', 3331, '1643130893.png', 1, 1, 2, '2022-01-24 14:02:38', '2022-01-25 17:48:16', NULL);
 INSERT INTO `programs` VALUES (2, 'Uno', 'One', 1, 'Dos', 333, '1643033005.jpg', 0, 0, 1, '2022-01-24 14:03:25', '2022-01-24 14:03:25', NULL);
-INSERT INTO `programs` VALUES (3, 'Uno', 'One', 1, 'Dos', 333, '1643036194.jpg', 0, 0, 1, '2022-01-24 14:56:34', '2022-01-24 14:56:34', NULL);
+INSERT INTO `programs` VALUES (3, 'hold', 'One', 1, 'Dos', 333, '1643036194.jpg', 0, 0, 1, '2022-01-24 14:56:34', '2022-01-25 17:56:40', '2022-01-25 17:56:40');
+INSERT INTO `programs` VALUES (4, 'Britney...', 'Spears...', 1, '111', 777, '1643128582.jpg', 1, 1, 1, '2022-01-25 16:36:22', '2022-01-25 17:23:40', NULL);
+INSERT INTO `programs` VALUES (5, 'abc', 'def', 1, 'ghi', 1945, '1643131095.jpg', 1, 0, 1, '2022-01-25 17:18:15', '2022-01-25 17:49:44', '2022-01-25 17:49:44');
+INSERT INTO `programs` VALUES (6, 'Uno1', 'One2', 1, 'Dos3', 3334, '1643133630.jpg', 0, 0, 1, '2022-01-25 18:00:05', '2022-01-25 18:00:30', NULL);
 
 -- ----------------------------
 -- Table structure for role_has_permissions
@@ -627,11 +630,11 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('EhMEXvKXwrhNzWDHhIZD9httLRkswi0l64wIkT10', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNE5EZUQyNDhHRVc0YndOUk90dFE5aGpUaDBSbzVHSVVhN1hvQ2ZkMyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtL2FkZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzMDI5MzMyO31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643036406);
-INSERT INTO `sessions` VALUES ('FcLumhIGsB6BxmVvzGn6YU2ZJHWbUJD6tNeASSuo', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQmNDR2R4T1R3b1NUaXM0MDdvNDBhYlk0MFpJeEJQOHJMdFBwWVRLRiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643032580);
-INSERT INTO `sessions` VALUES ('hvhdCpp0GDoTWOSi3QhieBKlMKwdfW8MkcMriZdY', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiWlpTbDhvNnh6aXZ5RU10MUUwR3hGZDZobEVhUGVvT21aTXd2Q2U3NiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozOToiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3Byb2dyYW0vYWRkIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtL2FkZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643032244);
-INSERT INTO `sessions` VALUES ('wgoZIgrpGtkg6H5doUoSrRJBmzCXtbhbHl5wTNCG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMlFzUUdaV204MlF4WElIRFlkem1oSjVBQWx4cVhSNmVXRXRaZjA1RCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643029394);
-INSERT INTO `sessions` VALUES ('yVd9a8nRmCQZNjzgUMjiW5jK387ututy46mHjO4R', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoid2VaaEwwMXR2TGpucDJiYzZBbldySVJncmhMSk5CaW96R3NTeUlXdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643032245);
+INSERT INTO `sessions` VALUES ('aBqWIbfFrT9VJvMyEnFg84FL7aQqqXHhgzOvGmdG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiWXE0VU9aSkNBejJ1Z1NEZGZCR3BtOVBBSDZLcWxkOW5jcElaamU1MCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozNjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3Byb2dyYW1zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643131329);
+INSERT INTO `sessions` VALUES ('bbNATLWkrU6yQiMbw6Bch1GcjF1AGQKn3lVrFY42', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidHRlUGZhSlpwTDBpOG95cThYcUd6Q05wWE9vbmFyMzBWOVpPRzNxTyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643131330);
+INSERT INTO `sessions` VALUES ('bSXL73q11HFbbVUglIGicrmTEXMAzbCLAkNUfWXy', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoidDVPV0ZsQlBtcnlWY0FUbm9BTk9IS1FqQU1ja3BYRVgxOHJzMk5ySiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzMTI4MDkwO31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643133634);
+INSERT INTO `sessions` VALUES ('bThVMJrRnusc3ejzZSgj2pIA0UqylWUdoMLXZId2', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoieXB4b2Zhbm5ua05EcHZJdnhibHgxVU9UaVladnF2Q3pRM1Bza2FZdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtcz9wYWdlPTIiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTY0MzMwMTQ3ODt9czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkODFNN2dJeHViYWh5SjR2S0pYakF2T0FXd2VaVDFITjhzRGZkUkIzemFWb2FHdXkueDhzTVciO30=', 1643303149);
+INSERT INTO `sessions` VALUES ('LzFewcq3sSrB3NVHgknlCj4u4sjoGMVBRKQtgYQG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoieFA2T2tSOXZ4VXRrNVM4bVdwdW5aSjNjMHVySG56RHhXSzhiNVo4cSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643131472);
 
 -- ----------------------------
 -- Table structure for statuses

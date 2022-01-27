@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $programs->links('pagination.default') !!}
+                {!! $programs->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>
