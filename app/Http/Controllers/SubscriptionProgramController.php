@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Program;
+use App\Models\ProgramDay;
+use App\Models\Status;
+use App\Models\Subscription;
 use App\Models\SubscriptionProgram;
 use Illuminate\Http\Request;
 
@@ -32,7 +36,11 @@ class SubscriptionProgramController extends Controller
     public function create()
     {
         $subscriptionProgram = new SubscriptionProgram();
-        return view('subscription-program.create', compact('subscriptionProgram'));
+        $statuses = Status::all();
+        $programs = Program::all();
+        $subscriptions = Subscription::all();
+        
+        return view('subscription-program.create', compact('subscriptionProgram','statuses','programs','subscriptions'));
     }
 
     /**
@@ -73,8 +81,10 @@ class SubscriptionProgramController extends Controller
     public function edit($id)
     {
         $subscriptionProgram = SubscriptionProgram::find($id);
-
-        return view('subscription-program.edit', compact('subscriptionProgram'));
+        $statuses = Status::all();
+        $programs = Program::all();
+        $subscriptions = Subscription::all();
+        return view('subscription-program.edit', compact('subscriptionProgram','statuses','programs','subscriptions'));
     }
 
     /**

@@ -58,9 +58,9 @@
 											<td>{{ $programDayRoutine->video }}</td>
 											<td>{{ $programDayRoutine->sets }}</td>
 											<td>{{ $programDayRoutine->repetitions }}</td>
-											<td>{{ $programDayRoutine->program_day_id }}</td>
-											<td>{{ $programDayRoutine->status_id }}</td>
-											<td>{{ $programDayRoutine->user_id }}</td>
+											<td>{{ $programDayRoutine->programDay->name }}</td>
+											<td>{{ $programDayRoutine->status->description }}</td>
+											<td>{{ $programDayRoutine->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('program-day-routines.destroy',$programDayRoutine->id) }}" method="POST">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $programDayRoutines->links() !!}
+                {!! $programDayRoutines->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

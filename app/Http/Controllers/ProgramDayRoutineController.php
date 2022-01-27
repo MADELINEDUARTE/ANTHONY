@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProgramDay;
 use App\Models\ProgramDayRoutine;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +34,9 @@ class ProgramDayRoutineController extends Controller
     public function create()
     {
         $programDayRoutine = new ProgramDayRoutine();
-        return view('program-day-routine.create', compact('programDayRoutine'));
+        $statuses = Status::all();
+        $programdays = ProgramDay::all();
+        return view('program-day-routine.create', compact('programDayRoutine','statuses','programdays'));
     }
 
     /**
@@ -73,8 +77,9 @@ class ProgramDayRoutineController extends Controller
     public function edit($id)
     {
         $programDayRoutine = ProgramDayRoutine::find($id);
-
-        return view('program-day-routine.edit', compact('programDayRoutine'));
+        $statuses = Status::all();
+        $programdays = ProgramDay::all();
+        return view('program-day-routine.edit', compact('programDayRoutine','programdays','statuses'));
     }
 
     /**

@@ -40,15 +40,15 @@
                         </div>
                         <div class="form-group">
                             <strong>Program Day Id:</strong>
-                            {{ $programDayRoutine->program_day_id }}
+                            {{ $programDayRoutine->programDay->name }}
                         </div>
                         <div class="form-group">
                             <strong>Status Id:</strong>
-                            {{ $programDayRoutine->status_id }}
+                            {{ $programDayRoutine->status->description }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $programDayRoutine->user_id }}
+                            {{ $programDayRoutine->user->name }}
                         </div>
 
                     </div>

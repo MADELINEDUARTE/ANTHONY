@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Program;
 use App\Models\ProgramDay;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,8 @@ class ProgramDayController extends Controller
     public function create()
     {
         $programDay = new ProgramDay();
-        return view('program-day.create', compact('programDay'));
+        $programs = Program::all();
+        return view('program-day.create', compact('programDay','programs'));
     }
 
     /**
@@ -73,8 +75,8 @@ class ProgramDayController extends Controller
     public function edit($id)
     {
         $programDay = ProgramDay::find($id);
-
-        return view('program-day.edit', compact('programDay'));
+        $programs = Program::all();
+        return view('program-day.edit', compact('programDay','programs'));
     }
 
     /**

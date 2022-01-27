@@ -24,15 +24,15 @@
                         
                         <div class="form-group">
                             <strong>Package Id:</strong>
-                            {{ $subscription->package_id }}
+                            {{ $subscription->package->name }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $subscription->user_id }}
+                            {{ $subscription->user->name }}
                         </div>
                         <div class="form-group">
                             <strong>Status Id:</strong>
-                            {{ $subscription->status_id }}
+                            {{ $subscription->status->description }}
                         </div>
 
                     </div>

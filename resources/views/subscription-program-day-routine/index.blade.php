@@ -50,9 +50,9 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $subscriptionProgramDayRoutine->subscription_programs_id }}</td>
-											<td>{{ $subscriptionProgramDayRoutine->program_days_id }}</td>
-											<td>{{ $subscriptionProgramDayRoutine->user_id }}</td>
+											<td>{{ $subscriptionProgramDayRoutine->subscriptionProgram->id }}</td>
+											<td>{{ $subscriptionProgramDayRoutine->programDay->name }}</td>
+											<td>{{ $subscriptionProgramDayRoutine->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('subscription-program-day-routines.destroy',$subscriptionProgramDayRoutine->id) }}" method="POST">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $subscriptionProgramDayRoutines->links() !!}
+                {!! $subscriptionProgramDayRoutines->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

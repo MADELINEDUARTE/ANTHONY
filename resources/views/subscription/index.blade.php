@@ -50,9 +50,9 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $subscription->package_id }}</td>
-											<td>{{ $subscription->user_id }}</td>
-											<td>{{ $subscription->status_id }}</td>
+											<td>{{ $subscription->package->name }}</td>
+											<td>{{ $subscription->user->name }}</td>
+											<td>{{ $subscription->status->description }}</td>
 
                                             <td>
                                                 <form action="{{ route('subscriptions.destroy',$subscription->id) }}" method="POST">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $subscriptions->links() !!}
+                {!! $subscriptions->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

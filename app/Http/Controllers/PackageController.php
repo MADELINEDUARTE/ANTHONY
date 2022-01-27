@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Package;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +33,8 @@ class PackageController extends Controller
     public function create()
     {
         $package = new Package();
-        return view('package.create', compact('package'));
+        $statuses = Status::all();
+        return view('package.create', compact('package','statuses'));
     }
 
     /**
@@ -60,8 +62,9 @@ class PackageController extends Controller
     public function show($id)
     {
         $package = Package::find($id);
+        $statuses = Status::all();
 
-        return view('package.show', compact('package'));
+        return view('package.show', compact('package','statuses'));
     }
 
     /**
@@ -73,8 +76,9 @@ class PackageController extends Controller
     public function edit($id)
     {
         $package = Package::find($id);
+        $statuses = Status::all();
 
-        return view('package.edit', compact('package'));
+        return view('package.edit', compact('package','statuses'));
     }
 
     /**

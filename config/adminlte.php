@@ -265,8 +265,50 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
+            'text' => 'Program Category',
+            'url'  => 'program-categories',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
             'text' => 'Program LW',
             'url'  => '/admin/programs',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
+            'text' => 'Program Days',
+            'url'  => 'program-days',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
+            'text' => 'Program Day Routine',
+            'url'  => 'program-day-routines',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
+            'text' => 'Package',
+            'url'  => 'packages',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
+            'text' => 'Subscription',
+            'url'  => 'subscriptions',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
+            'text' => 'Subscription Programs',
+            'url'  => 'subscription-programs',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-dumbbell',
+        ],
+        [
+            'text' => 'Subscription Program Days Routine',
+            'url'  => 'subscription-program-day-routines',
             'can' => 'admin.home',
             'icon' => 'fas fa-fw fa-dumbbell',
         ],
@@ -290,41 +332,13 @@ return [
                     'url'  => 'statuses',
                     'can' => 'admin.home',
                 ],
-                [
-                    'text' => 'Package',
-                    'url'  => 'packages',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Program Category',
-                    'url'  => 'program-categories',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Program',
-                    'url'  => 'programs',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Subscription',
-                    'url'  => 'subscriptions',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Subscription Programs',
-                    'url'  => 'subscription-programs',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Program Days',
-                    'url'  => 'program-days',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Subscription Program Days Routine',
-                    'url'  => 'subscription-program-day-routines',
-                    'can' => 'admin.home',
-                ],
+                
+                
+               
+                
+                
+                
+                
                 [
                     'text' => 'Routine Logs',
                     'url'  => 'routine-logs',
@@ -371,8 +385,8 @@ return [
                     'can' => 'admin.home',
                 ],
                 [
-                    'text' => 'Program Day Routine',
-                    'url'  => 'program-day-routines',
+                    'text' => 'Program',
+                    'url'  => 'programs',
                     'can' => 'admin.home',
                 ],
                 [

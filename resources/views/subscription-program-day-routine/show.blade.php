@@ -24,15 +24,15 @@
                         
                         <div class="form-group">
                             <strong>Subscription Programs Id:</strong>
-                            {{ $subscriptionProgramDayRoutine->subscription_programs_id }}
+                            {{ $subscriptionProgramDayRoutine->subscriptionProgram->id }}
                         </div>
                         <div class="form-group">
                             <strong>Program Days Id:</strong>
-                            {{ $subscriptionProgramDayRoutine->program_days_id }}
+                            {{ $subscriptionProgramDayRoutine->programDay->name }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $subscriptionProgramDayRoutine->user_id }}
+                            {{ $subscriptionProgramDayRoutine->user->name }}
                         </div>
 
                     </div>

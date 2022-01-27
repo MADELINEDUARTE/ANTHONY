@@ -51,10 +51,10 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $programDay->program_id }}</td>
+											<td>{{ $programDay->program->name }}</td>
 											<td>{{ $programDay->name }}</td>
 											<td>{{ $programDay->number }}</td>
-											<td>{{ $programDay->user_id }}</td>
+											<td>{{ $programDay->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('program-days.destroy',$programDay->id) }}" method="POST">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $programDays->links() !!}
+                {!! $programDays->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

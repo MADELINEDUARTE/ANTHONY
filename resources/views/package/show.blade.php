@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Status Id:</strong>
-                            {{ $package->status_id }}
+                            {{ $package->status->description }}
                         </div>
 
                     </div>

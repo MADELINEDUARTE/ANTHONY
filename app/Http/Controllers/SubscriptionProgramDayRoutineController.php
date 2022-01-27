@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProgramDay;
+use App\Models\SubscriptionProgram;
 use App\Models\SubscriptionProgramDayRoutine;
 use Illuminate\Http\Request;
 
@@ -32,7 +34,9 @@ class SubscriptionProgramDayRoutineController extends Controller
     public function create()
     {
         $subscriptionProgramDayRoutine = new SubscriptionProgramDayRoutine();
-        return view('subscription-program-day-routine.create', compact('subscriptionProgramDayRoutine'));
+        $programdays = ProgramDay::all();
+        $subscriptionprograms = SubscriptionProgram::all();
+        return view('subscription-program-day-routine.create', compact('subscriptionProgramDayRoutine','programdays','subscriptionprograms'));
     }
 
     /**
@@ -73,8 +77,10 @@ class SubscriptionProgramDayRoutineController extends Controller
     public function edit($id)
     {
         $subscriptionProgramDayRoutine = SubscriptionProgramDayRoutine::find($id);
+        $programdays = ProgramDay::all();
+        $subscriptionprograms = SubscriptionProgram::all();
 
-        return view('subscription-program-day-routine.edit', compact('subscriptionProgramDayRoutine'));
+        return view('subscription-program-day-routine.edit', compact('subscriptionProgramDayRoutine','programdays','subscriptionprograms'));
     }
 
     /**

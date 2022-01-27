@@ -56,7 +56,7 @@
 											<td>{{ $package->description }}</td>
 											<td>{{ $package->number_of_programs }}</td>
 											<td>{{ $package->amount }}</td>
-											<td>{{ $package->status_id }}</td>
+											<td>{{ $package->status->description }}</td>
 
                                             <td>
                                                 <form action="{{ route('packages.destroy',$package->id) }}" method="POST">
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $packages->links() !!}
+                {!! $packages->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

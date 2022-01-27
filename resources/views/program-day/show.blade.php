@@ -24,7 +24,7 @@
                         
                         <div class="form-group">
                             <strong>Program Id:</strong>
-                            {{ $programDay->program_id }}
+                            {{ $programDay->program->name }}
                         </div>
                         <div class="form-group">
                             <strong>Name:</strong>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $programDay->user_id }}
+                            {{ $programDay->user->name }}
                         </div>
 
                     </div>

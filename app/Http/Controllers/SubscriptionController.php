@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Package;
+use App\Models\Status;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 
@@ -32,7 +34,9 @@ class SubscriptionController extends Controller
     public function create()
     {
         $subscription = new Subscription();
-        return view('subscription.create', compact('subscription'));
+        $statuses = Status::all();
+        $packages = Package::all();
+        return view('subscription.create', compact('subscription','statuses','packages'));
     }
 
     /**
@@ -60,8 +64,9 @@ class SubscriptionController extends Controller
     public function show($id)
     {
         $subscription = Subscription::find($id);
-
-        return view('subscription.show', compact('subscription'));
+        $statuses = Status::all();
+        $packages = Package::all();
+        return view('subscription.show', compact('subscription','statuses','packages'));
     }
 
     /**
@@ -73,8 +78,9 @@ class SubscriptionController extends Controller
     public function edit($id)
     {
         $subscription = Subscription::find($id);
-
-        return view('subscription.edit', compact('subscription'));
+        $statuses = Status::all();
+        $packages = Package::all();
+        return view('subscription.edit', compact('subscription','statuses','packages'));
     }
 
     /**

@@ -23,17 +23,30 @@
         </div>
         <div class="form-group">
             {{ Form::label('program_day_id') }}
-            {{ Form::text('program_day_id', $programDayRoutine->program_day_id, ['class' => 'form-control' . ($errors->has('program_day_id') ? ' is-invalid' : ''), 'placeholder' => 'Program Day Id']) }}
+            {{-- Form::text('program_day_id', $programDayRoutine->program_day_id, ['class' => 'form-control' . ($errors->has('program_day_id') ? ' is-invalid' : ''), 'placeholder' => 'Program Day Id']) --}}
+            <select class="form-control" wire:model="program_day_id" name="program_day_id" id="program_day_id" required>
+            <option value="">Select Program Day</option>
+                @foreach ($programdays as $programday)
+                <option value="{{ $programday->id }}" {{ $programDayRoutine->program_day_id == $programday->id ? "selected" : "" }}>{{ $programday->name }}</option>
+                @endforeach
+            </select>
             {!! $errors->first('program_day_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('status_id') }}
-            {{ Form::text('status_id', $programDayRoutine->status_id, ['class' => 'form-control' . ($errors->has('status_id') ? ' is-invalid' : ''), 'placeholder' => 'Status Id']) }}
+            {{-- Form::text('status_id', $programDayRoutine->status_id, ['class' => 'form-control' . ($errors->has('status_id') ? ' is-invalid' : ''), 'placeholder' => 'Status Id']) --}}
+            <select class="form-control" wire:model="status_id" name="status_id" id="status_id" required>
+            <option value="">Select Status</option>
+                @foreach ($statuses as $status)
+                <option value="{{ $status->id }}" {{ $programDayRoutine->status_id == $status->id ? "selected" : "" }}>{{ $status->description }}</option>
+                @endforeach
+            </select>
             {!! $errors->first('status_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('user_id') }}
-            {{ Form::text('user_id', $programDayRoutine->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
+            {{ Auth::user()->name }}
+            {{ Form::hidden('user_id', Auth::user()->id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
             {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
 

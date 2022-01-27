@@ -23,7 +23,13 @@
         </div>
         <div class="form-group">
             {{ Form::label('status_id') }}
-            {{ Form::text('status_id', $package->status_id, ['class' => 'form-control' . ($errors->has('status_id') ? ' is-invalid' : ''), 'placeholder' => 'Status Id']) }}
+            {{-- Form::text('status_id', $package->status_id, ['class' => 'form-control' . ($errors->has('status_id') ? ' is-invalid' : ''), 'placeholder' => 'Status Id']) --}}
+            <select class="form-control" wire:model="status_id" name="status_id" id="status_id" required>
+            <option value="">Select Status</option>
+                @foreach ($statuses as $status)
+                <option value="{{ $status->id }}" {{ $package->status_id == $status->id ? "selected" : "" }}>{{ $status->description }}</option>
+                @endforeach
+            </select>
             {!! $errors->first('status_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
 
