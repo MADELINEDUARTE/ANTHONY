@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExerciseVideo;
+use App\Models\Exercise;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +33,8 @@ class ExerciseVideoController extends Controller
     public function create()
     {
         $exerciseVideo = new ExerciseVideo();
-        return view('exercise-video.create', compact('exerciseVideo'));
+        $exercises = Exercise::all();
+        return view('exercise-video.create', compact('exerciseVideo','exercises'));
     }
 
     /**
@@ -73,8 +75,9 @@ class ExerciseVideoController extends Controller
     public function edit($id)
     {
         $exerciseVideo = ExerciseVideo::find($id);
+        $exercises = Exercise::all();
 
-        return view('exercise-video.edit', compact('exerciseVideo'));
+        return view('exercise-video.edit', compact('exerciseVideo','exercises'));
     }
 
     /**

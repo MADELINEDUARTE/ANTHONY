@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercise;
+use App\Models\Program;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +33,8 @@ class ExerciseController extends Controller
     public function create()
     {
         $exercise = new Exercise();
-        return view('exercise.create', compact('exercise'));
+        $programs = Program::all();
+        return view('exercise.create', compact('exercise','programs'));
     }
 
     /**
@@ -73,8 +75,8 @@ class ExerciseController extends Controller
     public function edit($id)
     {
         $exercise = Exercise::find($id);
-
-        return view('exercise.edit', compact('exercise'));
+        $programs = Program::all();
+        return view('exercise.edit', compact('exercise','programs'));
     }
 
     /**

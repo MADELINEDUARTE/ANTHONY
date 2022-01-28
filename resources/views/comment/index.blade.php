@@ -55,7 +55,7 @@
 											<td>{{ $comment->reason }}</td>
 											<td>{{ $comment->description }}</td>
 											<td>{{ $comment->type }}</td>
-											<td>{{ $comment->subscription_id }}</td>
+											<td>{{ $comment->subscription->id }}</td>
 											<td>{{ $comment->user_id }}</td>
 
                                             <td>

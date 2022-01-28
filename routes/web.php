@@ -20,11 +20,14 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionProgramController;
 use App\Http\Controllers\SubscriptionProgramDayRoutineController;
 use App\Http\Controllers\UserCardController;
+use App\Http\Livewire\Admin\AdminAddBlogComponent;
 use App\Http\Livewire\Admin\AdminAddGendersComponent;
 use App\Http\Livewire\Admin\AdminEditGendersComponent;
 use App\Http\Livewire\Admin\AdminGendersComponent;
 use App\Http\Livewire\Admin\AdminAddProgramComponent;
+use App\Http\Livewire\Admin\AdminBlogComponent;
 use App\Http\Livewire\Admin\AdminEditProgramComponent;
+use App\Http\Livewire\Admin\AdminEditBlogComponent;
 use App\Http\Livewire\Admin\AdminProgramComponent;
 use Illuminate\Support\Facades\Route;
 
@@ -77,6 +80,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/admin/programs', AdminProgramComponent::class)->name("admin.programs");
     Route::get('/admin/program/add', AdminAddProgramComponent::class)->name("admin.addprogram");
     Route::get('/admin/program/edit/{program_id}', AdminEditProgramComponent::class)->name("admin.editprogram");
+
+    Route::get('/admin/blogs', AdminBlogComponent::class)->name("admin.blogs");
+    Route::get('/admin/blog/add', AdminAddBlogComponent::class)->name("admin.addblog");
+    Route::get('/admin/blog/edit/{blog_id}', AdminEditBlogComponent::class)->name("admin.editblog");
 
 });    
 

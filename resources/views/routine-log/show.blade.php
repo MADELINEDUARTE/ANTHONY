@@ -24,7 +24,7 @@
                         
                         <div class="form-group">
                             <strong>Subscription Program Day Routine Id:</strong>
-                            {{ $routineLog->subscription_program_day_routine_id }}
+                            {{ $routineLog->subscriptionProgramDayRoutine->id }}
                         </div>
                         <div class="form-group">
                             <strong>Repetitions:</strong>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $routineLog->user_id }}
+                            {{ $routineLog->user->name }}
                         </div>
 
                     </div>

@@ -261,56 +261,156 @@ return [
         ],
         [
             'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'url'  => 'user/profile',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        
+        
         [
-            'text' => 'Program Category',
-            'url'  => 'program-categories',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
+            'text'    => 'General',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                
+                [
+                    'text' => 'Comments',
+                    'url'  => 'comments',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Frequently Asked Questions',
+                    'url'  => 'frequently-asked-questions',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],                
+                [
+                    'text' => 'Blogs',
+                    'url'  => '/admin/blogs',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+            ]
         ],
+
         [
-            'text' => 'Program LW',
-            'url'  => '/admin/programs',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
+            'text'    => 'Others',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                
+                [
+                    'text' => 'Package',
+                    'url'  => 'packages',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                
+                [
+                    'text' => 'Payment History',
+                    'url'  => 'payment-histories',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                
+                
+                [
+                    'text' => 'User Cards',
+                    'url'  => 'user-cards',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+
+            ]
         ],
+
         [
-            'text' => 'Program Days',
-            'url'  => 'program-days',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
+            'text'    => 'Programs',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                
+                [
+                    'text' => 'Program Category',
+                    'url'  => 'program-categories',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Program LW',
+                    'url'  => '/admin/programs',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Program Days',
+                    'url'  => 'program-days',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Program Day Routine',
+                    'url'  => 'program-day-routines',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+
+                [
+                    'text' => 'Routine Logs',
+                    'url'  => 'routine-logs',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+            ]
         ],
+
         [
-            'text' => 'Program Day Routine',
-            'url'  => 'program-day-routines',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
+            'text'    => 'Subscription',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                
+                [
+                    'text' => 'Subscription',
+                    'url'  => 'subscriptions',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Subscription Programs',
+                    'url'  => 'subscription-programs',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Subscription Program Days Routine',
+                    'url'  => 'subscription-program-day-routines',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+            ]
         ],
+
         [
-            'text' => 'Package',
-            'url'  => 'packages',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
-        ],
-        [
-            'text' => 'Subscription',
-            'url'  => 'subscriptions',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
-        ],
-        [
-            'text' => 'Subscription Programs',
-            'url'  => 'subscription-programs',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
-        ],
-        [
-            'text' => 'Subscription Program Days Routine',
-            'url'  => 'subscription-program-day-routines',
-            'can' => 'admin.home',
-            'icon' => 'fas fa-fw fa-dumbbell',
+            'text'    => 'Exercises',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                
+                [
+                    'text' => 'Exercises',
+                    'url'  => 'exercises',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Exercise Logs',
+                    'url'  => 'exercise-logs',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+                [
+                    'text' => 'Exercise Videos',
+                    'url'  => 'exercise-videos',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
+            ]
         ],
         [
             'text'    => 'parameters',
@@ -333,65 +433,15 @@ return [
                     'can' => 'admin.home',
                 ],
                 
-                
-               
-                
-                
-                
-                
-                [
-                    'text' => 'Routine Logs',
-                    'url'  => 'routine-logs',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Comments',
-                    'url'  => 'comments',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Payment History',
-                    'url'  => 'payment-histories',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Blogs',
-                    'url'  => 'blogs',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Frequently Asked Questions',
-                    'url'  => 'frequently-asked-questions',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'User Cards',
-                    'url'  => 'user-cards',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Exercises',
-                    'url'  => 'exercises',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Exercise Logs',
-                    'url'  => 'exercise-logs',
-                    'can' => 'admin.home',
-                ],
-                [
-                    'text' => 'Exercise Videos',
-                    'url'  => 'exercise-videos',
-                    'can' => 'admin.home',
-                ],
                 [
                     'text' => 'Program',
                     'url'  => 'programs',
-                    'can' => 'admin.home',
+                    'can' => 'admin.other',
                 ],
                 [
                     'text'    => 'level_one',
                     'url'     => '#',
+                    'can' => 'admin.other',
                     'submenu' => [
                         [
                             'text' => 'level_two',
@@ -416,6 +466,7 @@ return [
                 [
                     'text' => 'level_one',
                     'url'  => '#',
+                    'can' => 'admin.other',
                 ],
             ],
         ],

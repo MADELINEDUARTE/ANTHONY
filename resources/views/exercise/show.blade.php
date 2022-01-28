@@ -28,11 +28,11 @@
                         </div>
                         <div class="form-group">
                             <strong>Program Id:</strong>
-                            {{ $exercise->program_id }}
+                            {{ $exercise->program->name }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $exercise->user_id }}
+                            {{ $exercise->user->name }}
                         </div>
 
                     </div>

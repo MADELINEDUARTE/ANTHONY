@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Subscription Id:</strong>
-                            {{ $comment->subscription_id }}
+                            {{ $comment->subscription->id }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>

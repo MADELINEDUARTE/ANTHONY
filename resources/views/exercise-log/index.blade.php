@@ -57,9 +57,9 @@
 											<td>{{ $exerciseLog->description }}</td>
 											<td>{{ $exerciseLog->start }}</td>
 											<td>{{ $exerciseLog->finish }}</td>
-											<td>{{ $exerciseLog->exercise_id }}</td>
-											<td>{{ $exerciseLog->user_id }}</td>
-											<td>{{ $exerciseLog->status_id }}</td>
+											<td>{{ $exerciseLog->exercise->description }}</td>
+											<td>{{ $exerciseLog->user->name }}</td>
+											<td>{{ $exerciseLog->status->description }}</td>
 
                                             <td>
                                                 <form action="{{ route('exercise-logs.destroy',$exerciseLog->id) }}" method="POST">

@@ -3,7 +3,13 @@
         
         <div class="form-group">
             {{ Form::label('subscription_program_day_routine_id') }}
-            {{ Form::text('subscription_program_day_routine_id', $routineLog->subscription_program_day_routine_id, ['class' => 'form-control' . ($errors->has('subscription_program_day_routine_id') ? ' is-invalid' : ''), 'placeholder' => 'Subscription Program Day Routine Id']) }}
+            {{-- Form::text('subscription_program_day_routine_id', $routineLog->subscription_program_day_routine_id, ['class' => 'form-control' . ($errors->has('subscription_program_day_routine_id') ? ' is-invalid' : ''), 'placeholder' => 'Subscription Program Day Routine Id']) --}}
+            <select class="form-control" wire:model="subscription_program_day_routine_id" name="subscription_program_day_routine_id" id="subscription_program_day_routine_id" required>
+            <option value="">Select Subscription Program Day Routine</option>
+                @foreach ($subscriptionprogramdayroutines as $subscriptionprogramdayroutine)
+                <option value="{{ $subscriptionprogramdayroutine->id }}" {{ $routineLog->subscription_program_day_routine_id == $subscriptionprogramdayroutine->id ? "selected" : "" }}>{{ $subscriptionprogramdayroutine->id }}</option>
+                @endforeach
+            </select>
             {!! $errors->first('subscription_program_day_routine_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
@@ -17,8 +23,9 @@
             {!! $errors->first('weight', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('user_id') }}
-            {{ Form::text('user_id', $routineLog->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
+        {{ Form::label('user_id') }}
+            {{ Auth::user()->name }}
+            {{ Form::hidden('user_id', Auth::user()->id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
             {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
 

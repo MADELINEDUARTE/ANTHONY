@@ -51,8 +51,8 @@
                                             <td>{{ ++$i }}</td>
                                             
 											<td>{{ $exerciseVideo->video }}</td>
-											<td>{{ $exerciseVideo->exercise_id }}</td>
-											<td>{{ $exerciseVideo->user_id }}</td>
+											<td>{{ $exerciseVideo->exercise->description }}</td>
+											<td>{{ $exerciseVideo->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('exercise-videos.destroy',$exerciseVideo->id) }}" method="POST">

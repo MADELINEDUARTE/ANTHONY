@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +33,8 @@ class CommentController extends Controller
     public function create()
     {
         $comment = new Comment();
-        return view('comment.create', compact('comment'));
+        $subscriptions = Subscription::all();
+        return view('comment.create', compact('comment','subscriptions'));
     }
 
     /**
@@ -73,8 +75,9 @@ class CommentController extends Controller
     public function edit($id)
     {
         $comment = Comment::find($id);
+        $subscriptions = Subscription::all();
 
-        return view('comment.edit', compact('comment'));
+        return view('comment.edit', compact('comment','subscriptions'));
     }
 
     /**

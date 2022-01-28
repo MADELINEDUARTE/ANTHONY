@@ -54,9 +54,9 @@
                                             
 											<td>{{ $paymentHistory->payment_date }}</td>
 											<td>{{ $paymentHistory->amount }}</td>
-											<td>{{ $paymentHistory->status_id }}</td>
-											<td>{{ $paymentHistory->subscription_id }}</td>
-											<td>{{ $paymentHistory->user_id }}</td>
+											<td>{{ $paymentHistory->status->description }}</td>
+											<td>{{ $paymentHistory->subscription->id }}</td>
+											<td>{{ $paymentHistory->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('payment-histories.destroy',$paymentHistory->id) }}" method="POST">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExerciseLog;
+use App\Models\Status;
+use App\Models\Exercise;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +34,9 @@ class ExerciseLogController extends Controller
     public function create()
     {
         $exerciseLog = new ExerciseLog();
-        return view('exercise-log.create', compact('exerciseLog'));
+        $statuses = Status::all();
+        $exercises = Exercise::all();
+        return view('exercise-log.create', compact('exerciseLog','statuses','exercises'));
     }
 
     /**
@@ -73,8 +77,9 @@ class ExerciseLogController extends Controller
     public function edit($id)
     {
         $exerciseLog = ExerciseLog::find($id);
-
-        return view('exercise-log.edit', compact('exerciseLog'));
+        $statuses = Status::all();
+        $exercises = Exercise::all();
+        return view('exercise-log.edit', compact('exerciseLog','statuses','exercises'));
     }
 
     /**

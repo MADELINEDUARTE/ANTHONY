@@ -13,7 +13,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('user_id') }}
-            {{ Form::text('user_id', $frequentlyAskedQuestion->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
+            {{ Auth::user()->name }}
+            {{ Form::hidden('user_id', Auth::user()->id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
             {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
 

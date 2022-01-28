@@ -32,15 +32,15 @@
                         </div>
                         <div class="form-group">
                             <strong>Status Id:</strong>
-                            {{ $paymentHistory->status_id }}
+                            {{ $paymentHistory->status->description }}
                         </div>
                         <div class="form-group">
                             <strong>Subscription Id:</strong>
-                            {{ $paymentHistory->subscription_id }}
+                            {{ $paymentHistory->subscription->id }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $paymentHistory->user_id }}
+                            {{ $paymentHistory->user->name }}
                         </div>
 
                     </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentHistory;
+use App\Models\Status;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +34,9 @@ class PaymentHistoryController extends Controller
     public function create()
     {
         $paymentHistory = new PaymentHistory();
-        return view('payment-history.create', compact('paymentHistory'));
+        $statuses = Status::all();
+        $subscriptions = Subscription::all();
+        return view('payment-history.create', compact('paymentHistory','statuses','subscriptions'));
     }
 
     /**
@@ -73,8 +77,9 @@ class PaymentHistoryController extends Controller
     public function edit($id)
     {
         $paymentHistory = PaymentHistory::find($id);
-
-        return view('payment-history.edit', compact('paymentHistory'));
+        $statuses = Status::all();
+        $subscriptions = Subscription::all();
+        return view('payment-history.edit', compact('paymentHistory','statuses','subscriptions'));
     }
 
     /**

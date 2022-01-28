@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RoutineLog;
+use App\Models\SubscriptionProgramDayRoutine;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +33,8 @@ class RoutineLogController extends Controller
     public function create()
     {
         $routineLog = new RoutineLog();
-        return view('routine-log.create', compact('routineLog'));
+        $subscriptionprogramdayroutines = SubscriptionProgramDayRoutine::all();
+        return view('routine-log.create', compact('routineLog','subscriptionprogramdayroutines'));
     }
 
     /**
@@ -73,8 +75,9 @@ class RoutineLogController extends Controller
     public function edit($id)
     {
         $routineLog = RoutineLog::find($id);
+        $subscriptionprogramdayroutines = SubscriptionProgramDayRoutine::all();
 
-        return view('routine-log.edit', compact('routineLog'));
+        return view('routine-log.edit', compact('routineLog','subscriptionprogramdayroutines'));
     }
 
     /**

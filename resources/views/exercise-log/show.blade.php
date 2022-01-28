@@ -36,15 +36,15 @@
                         </div>
                         <div class="form-group">
                             <strong>Exercise Id:</strong>
-                            {{ $exerciseLog->exercise_id }}
+                            {{ $exerciseLog->exercise->description }}
                         </div>
                         <div class="form-group">
                             <strong>User Id:</strong>
-                            {{ $exerciseLog->user_id }}
+                            {{ $exerciseLog->user->name }}
                         </div>
                         <div class="form-group">
                             <strong>Status Id:</strong>
-                            {{ $exerciseLog->status_id }}
+                            {{ $exerciseLog->status->description }}
                         </div>
 
                     </div>

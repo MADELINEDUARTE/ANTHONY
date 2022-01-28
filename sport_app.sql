@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 27/01/2022 17:40:55
+ Date: 28/01/2022 12:11:15
 */
 
 SET NAMES utf8mb4;
@@ -37,11 +37,12 @@ CREATE TABLE `blogs`  (
   INDEX `blogs_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `blogs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `blogs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of blogs
 -- ----------------------------
+INSERT INTO `blogs` VALUES (1, 'Mariah.', 'Carey..', '1643381927.jpg', 'Forever...', 1, 1, NULL, '2022-01-28 14:49:13', '2022-01-28 14:58:47');
 
 -- ----------------------------
 -- Table structure for comments
@@ -62,11 +63,12 @@ CREATE TABLE `comments`  (
   INDEX `comments_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `comments_subscription_id_foreign` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
+INSERT INTO `comments` VALUES (1, 'Abriendo', 'Puertas.', '1', 1, 1, NULL, '2022-01-28 13:50:13', '2022-01-28 13:51:09');
 
 -- ----------------------------
 -- Table structure for countries
@@ -110,11 +112,12 @@ CREATE TABLE `exercise_logs`  (
   CONSTRAINT `exercise_logs_exercise_id_foreign` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `exercise_logs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `exercise_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercise_logs
 -- ----------------------------
+INSERT INTO `exercise_logs` VALUES (1, '1011', '2022-01-28', '2022-01-29', 1, 1, 1, NULL, '2022-01-28 14:13:27', '2022-01-28 14:14:46');
 
 -- ----------------------------
 -- Table structure for exercise_videos
@@ -133,11 +136,12 @@ CREATE TABLE `exercise_videos`  (
   INDEX `exercise_videos_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `exercise_videos_exercise_id_foreign` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `exercise_videos_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercise_videos
 -- ----------------------------
+INSERT INTO `exercise_videos` VALUES (1, '1234', 1, 1, NULL, '2022-01-28 14:20:24', '2022-01-28 14:21:09');
 
 -- ----------------------------
 -- Table structure for exercises
@@ -156,11 +160,12 @@ CREATE TABLE `exercises`  (
   INDEX `exercises_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `exercises_program_id_foreign` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `exercises_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercises
 -- ----------------------------
+INSERT INTO `exercises` VALUES (1, 'tyuio', 1, 1, NULL, '2022-01-28 14:02:57', '2022-01-28 14:03:54');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -197,11 +202,12 @@ CREATE TABLE `frequently_asked_questions`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `frequently_asked_questions_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `frequently_asked_questions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of frequently_asked_questions
 -- ----------------------------
+INSERT INTO `frequently_asked_questions` VALUES (1, 'uuu', 'ooo', 1, NULL, '2022-01-28 13:52:45', '2022-01-28 13:52:45');
 
 -- ----------------------------
 -- Table structure for genders
@@ -361,11 +367,12 @@ CREATE TABLE `payment_histories`  (
   CONSTRAINT `payment_histories_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `payment_histories_subscription_id_foreign` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `payment_histories_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of payment_histories
 -- ----------------------------
+INSERT INTO `payment_histories` VALUES (1, '2020-10-10', 10.00, 1, 1, 1, NULL, '2022-01-28 13:56:45', '2022-01-28 13:56:45');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -611,11 +618,12 @@ CREATE TABLE `routine_logs`  (
   INDEX `routine_logs_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `routine_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `spd_routine_foreign` FOREIGN KEY (`subscription_program_day_routine_id`) REFERENCES `subscription_program_day_routines` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of routine_logs
 -- ----------------------------
+INSERT INTO `routine_logs` VALUES (1, 1, 10, 10, 1, NULL, '2022-01-28 13:43:23', '2022-01-28 13:43:23');
 
 -- ----------------------------
 -- Table structure for sessions
@@ -636,7 +644,7 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('vrdRETgSKa7xIhM5lPsSPZLhasIXoS0LX2IQ3iLW', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiWHBWTkxKejFzdmlPNWNrTmNvandrMUJlV0VaWndCSURmNm9Nd09PZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9ibG9ncy9jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTY0MzMxMTczNDt9czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkODFNN2dJeHViYWh5SjR2S0pYakF2T0FXd2VaVDFITjhzRGZkUkIzemFWb2FHdXkueDhzTVciO30=', 1643315995);
+INSERT INTO `sessions` VALUES ('5x7edoKmZA32P03ycbIlvb8RrfThHzWCZBWrnARV', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiT3U5S3M1M3lldHpiclFtdUFyZGRhZWg1NTBWM256VUNYVnpNQmoweiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wYWNrYWdlcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzMzc1NzA2O31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643382665);
 
 -- ----------------------------
 -- Table structure for statuses

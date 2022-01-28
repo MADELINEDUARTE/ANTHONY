@@ -51,10 +51,10 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $routineLog->subscription_program_day_routine_id }}</td>
+											<td>{{ $routineLog->subscriptionProgramDayRoutine->id }}</td>
 											<td>{{ $routineLog->repetitions }}</td>
 											<td>{{ $routineLog->weight }}</td>
-											<td>{{ $routineLog->user_id }}</td>
+											<td>{{ $routineLog->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('routine-logs.destroy',$routineLog->id) }}" method="POST">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $routineLogs->links() !!}
+                {!! $routineLogs->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>
