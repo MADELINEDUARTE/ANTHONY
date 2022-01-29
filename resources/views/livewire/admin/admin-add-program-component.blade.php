@@ -51,11 +51,36 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    
+                                    {{--
                                     <div class="form-group">
                                         {{ Form::label('video') }}
                                         {{ Form::text('video', $program->video, ['class' => 'form-control' . ($errors->has('video') ? ' is-invalid' : ''), 'placeholder' => 'Video', 'wire:model' => 'video']) }}
                                         {!! $errors->first('video', '<div class="invalid-feedback">:message</p>') !!}
                                     </div>
+                                    --}}
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" >Video</label>
+                                        <div class="col-md-8">
+                                            <input type="file" placeholder="Video" class="input-file" wire:model="video" required>
+                                            @error('video')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
+                                            @if ($video)
+                                                <a target="_blank" href="{{ $video->temporaryUrl() }}">
+                                                <video width="320" height="240" controls>
+                                                <source src="{{ $video->temporaryUrl() }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                                </video> 
+                                                </a>
+                                                <p style="color: black;">{{ $video->getClientOriginalName() }}</p>
+                                                
+                                            @endif
+                                        </div>
+                                    </div>     
+
+
                                     <div class="form-group">
                                         {{ Form::label('number_of_days') }}
                                         {{ Form::text('number_of_days', $program->number_of_days, ['class' => 'form-control' . ($errors->has('number_of_days') ? ' is-invalid' : ''), 'placeholder' => 'Number Of Days', 'wire:model' => 'number_of_days']) }}

@@ -22,7 +22,7 @@ class AdminProgramComponent extends Component
     public function render()
     {
         $search = '%'.$this->searchTerm.'%';
-        $programs = Program::where('name','LIKE',$search)->paginate(2);
+        $programs = Program::where('name','LIKE',$search)->paginate(5);
         //$programs = Program::paginate(15);
         
         return view('livewire.admin.admin-program-component',['programs' => $programs]);

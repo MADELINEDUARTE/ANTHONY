@@ -51,11 +51,37 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    {{--
                                     <div class="form-group">
                                         {{ Form::label('video') }}
                                         {{ Form::text('video', '', ['class' => 'form-control' . ($errors->has('video') ? ' is-invalid' : ''), 'placeholder' => 'Video', 'wire:model' => 'video']) }}
                                         {!! $errors->first('video', '<div class="invalid-feedback">:message</p>') !!}
                                     </div>
+                                    --}}
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" >Video</label>
+                                        <div class="col-md-8">
+                                            <input type="file" placeholder="Video" class="input-file" wire:model="newVideo">
+                                            @error('video')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
+                                            @if ($newVideo)
+                                            <a target="_blank" href="{{ $newVideo->temporaryUrl() }}">
+                                                <video width="320" height="240" controls>
+                                                <source src="{{ $newVideo->temporaryUrl() }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                                </video> 
+                                            </a>
+                                            @else    
+                                            <video width="320" height="240" controls>
+                                            <source src="{{ asset('assets/videos/programs') }}/{{ $video }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                            </video> 
+                                            @endif
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         {{ Form::label('number_of_days') }}
                                         {{ Form::text('number_of_days', '', ['class' => 'form-control' . ($errors->has('number_of_days') ? ' is-invalid' : ''), 'placeholder' => 'Number Of Days', 'wire:model' => 'number_of_days']) }}

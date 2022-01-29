@@ -58,18 +58,22 @@ class AdminAddProgramComponent extends Component
 
         $program = new Program();
         $program->name = $this->name;
-        $program->name = $this->name;
         $program->description = $this->description;
         $program->program_category_id = $this->program_category_id;
-        $program->video = $this->video;
+        //$program->video = $this->video;
         $program->number_of_days = $this->number_of_days;
         $program->popular = $this->popular;
         $program->recommended = $this->recommended;
         $program->status_id = $this->status_id;
         
         $imageName = Carbon::now()->timestamp.'.'.$this->image->extension();
-        $this->image->storeAs('programs',$imageName);
+        $this->image->storeAs('images/programs',$imageName);
         $program->image = $imageName;
+        
+
+        $videoName = Carbon::now()->timestamp.'.'.$this->video->extension();
+        $this->video->storeAs('videos/programs',$videoName);
+        $program->video = $videoName;
         $program->save();
        
         session()->flash('message','El programa se ha creado con exito:');
@@ -85,7 +89,7 @@ class AdminAddProgramComponent extends Component
         $this->program_category_id = '1';
         $this->name = 'Uno';
         $this->description = 'One';
-        $this->video = 'Dos';
+        //$this->video = 'Dos';
         $this->number_of_days = '333';
 
     }

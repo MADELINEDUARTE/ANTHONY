@@ -16,6 +16,7 @@ class AdminEditProgramComponent extends Component
 
     public $program_id;
     public $newImage;
+    public $newVideo;
 
     public $name;
     public $description;
@@ -46,6 +47,14 @@ class AdminEditProgramComponent extends Component
             ]);
 
         }
+
+        if($this->newVideo){
+
+            $this->validateOnly($fields,[
+               'newVideo' => 'required'
+            ]);
+
+        }
     }
 
     public function updateProgram(){
@@ -69,12 +78,20 @@ class AdminEditProgramComponent extends Component
 
         }
 
+        if($this->newVideo){
+
+            $this->validate([
+               'newVideo' => 'required'
+            ]);
+
+        }
+
 
         $program = Program::find($this->program_id);
         $program->name = $this->name;
         $program->description = $this->description;
         $program->program_category_id = $this->program_category_id;
-        $program->video = $this->video;
+        //$program->video = $this->video;
         $program->number_of_days = $this->number_of_days;
         $program->popular = $this->popular;
         $program->recommended = $this->recommended;
@@ -84,8 +101,17 @@ class AdminEditProgramComponent extends Component
 
             unlink('assets/images/programs'.'/'.$program->image);
             $imageName = Carbon::now()->timestamp.'.'.$this->newImage->extension();
-            $this->newImage->storeAs('programs',$imageName);
+            $this->newImage->storeAs('images/programs',$imageName);
             $program->image = $imageName;
+
+        }
+
+        if($this->newVideo){
+
+            unlink('assets/videos/programs'.'/'.$program->video);
+            $videoName = Carbon::now()->timestamp.'.'.$this->newVideo->extension();
+            $this->newVideo->storeAs('videos/programs',$videoName);
+            $program->video = $videoName;
 
         }
         
@@ -113,6 +139,7 @@ class AdminEditProgramComponent extends Component
         $this->status_id = $program->status_id;
         
         $this->newImage = $program->newImage;
+        $this->newVideo = $program->newVideo;
         
 
     }
