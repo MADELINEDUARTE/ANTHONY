@@ -47,13 +47,18 @@ class AdminAddBlogComponent extends Component
         $blog = new Blog();
         $blog->title = $this->title;
         $blog->description = $this->description;
-        $blog->video = $this->video;
+        //$blog->video = $this->video;
         $blog->status_id = $this->status_id;
         $blog->user_id = Auth::user()->id;
         
         $imageName = Carbon::now()->timestamp.'.'.$this->image->extension();
-        $this->image->storeAs('blogs',$imageName);
+        $this->image->storeAs('images/blogs',$imageName);
         $blog->image = $imageName;
+
+        $videoName = Carbon::now()->timestamp.'.'.$this->video->extension();
+        $this->video->storeAs('videos/blogs',$videoName);
+        $blog->video = $videoName;
+
         $blog->save();
        
         session()->flash('message','El blog se ha creado con exito:');
@@ -66,7 +71,7 @@ class AdminAddBlogComponent extends Component
         $this->status_id = '1';
         $this->title = 'Mariah';
         $this->description = 'Carey';
-        $this->video = 'Forever';
+        //$this->video = 'Forever';
 
     }
 

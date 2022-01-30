@@ -15,6 +15,7 @@ class AdminEditBlogComponent extends Component
 
     public $blog_id;
     public $newImage;
+    public $newVideo;
 
     public $title;
     public $description;
@@ -37,6 +38,15 @@ class AdminEditBlogComponent extends Component
             ]);
 
         }
+
+        if($this->newVideo){
+
+            $this->validateOnly($fields,[
+               'newVideo' => 'required'
+            ]);
+
+        }
+        
     }
 
     public function updateBlog(){
@@ -57,18 +67,35 @@ class AdminEditBlogComponent extends Component
         }
 
 
+        if($this->newVideo){
+
+            $this->validate([
+               'newVideo' => 'required'
+            ]);
+
+        }
+
         $blog = Blog::find($this->blog_id);
         $blog->title = $this->title;
         $blog->description = $this->description;
-        $blog->video = $this->video;
+        //$blog->video = $this->video;
         $blog->status_id = $this->status_id;
         
         if($this->newImage){
 
             unlink('assets/images/blogs'.'/'.$blog->image);
             $imageName = Carbon::now()->timestamp.'.'.$this->newImage->extension();
-            $this->newImage->storeAs('blogs',$imageName);
+            $this->newImage->storeAs('images/blogs',$imageName);
             $blog->image = $imageName;
+
+        }
+
+        if($this->newVideo){
+
+            unlink('assets/videos/blogs'.'/'.$blog->video);
+            $videoName = Carbon::now()->timestamp.'.'.$this->newVideo->extension();
+            $this->newVideo->storeAs('videos/blogs',$videoName);
+            $blog->video = $videoName;
 
         }
         
@@ -91,6 +118,7 @@ class AdminEditBlogComponent extends Component
         $this->image = $blog->image;
         $this->status_id = $blog->status_id;
         $this->newImage = $blog->newImage;
+        $this->newVideo = $blog->newVideo;
         
 
     }

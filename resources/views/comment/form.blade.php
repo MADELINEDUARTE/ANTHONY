@@ -22,7 +22,7 @@
             <select class="form-control" wire:model="subscription_id" name="subscription_id" id="subscription_id" required>
             <option value="">Select Subscription</option>
                 @foreach ($subscriptions as $subscription)
-                <option value="{{ $subscription->id }}" {{ $comment->subscription_id == $subscription->id ? "selected" : "" }}>{{ $subscription->id }}</option>
+                <option value="{{ $subscription->id }}" {{ $comment->subscription_id == $subscription->id ? "selected" : "" }}>{{ $subscription->package->name }}</option>
                 @endforeach
             </select>
             {!! $errors->first('subscription_id', '<div class="invalid-feedback">:message</p>') !!}
