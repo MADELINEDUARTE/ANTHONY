@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 29/01/2022 12:08:24
+ Date: 31/01/2022 12:31:03
 */
 
 SET NAMES utf8mb4;
@@ -37,12 +37,14 @@ CREATE TABLE `blogs`  (
   INDEX `blogs_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `blogs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `blogs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of blogs
 -- ----------------------------
 INSERT INTO `blogs` VALUES (1, 'Mariah.', 'Carey..', '1643381927.jpg', 'Forever...', 1, 1, NULL, '2022-01-28 14:49:13', '2022-01-28 14:58:47');
+INSERT INTO `blogs` VALUES (2, 'Mariah', 'Carey', '1643563187.jpg', '1643563187.mp4', 1, 1, NULL, '2022-01-30 17:19:47', '2022-01-30 17:19:47');
+INSERT INTO `blogs` VALUES (3, 'Mariah1', 'Carey1', '1643563319.jpg', '1643563319.mp4', 1, 1, NULL, '2022-01-30 17:21:14', '2022-01-30 17:21:59');
 
 -- ----------------------------
 -- Table structure for comments
@@ -136,12 +138,13 @@ CREATE TABLE `exercise_videos`  (
   INDEX `exercise_videos_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `exercise_videos_exercise_id_foreign` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `exercise_videos_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercise_videos
 -- ----------------------------
 INSERT INTO `exercise_videos` VALUES (1, '1234', 1, 1, NULL, '2022-01-28 14:20:24', '2022-01-28 14:21:09');
+INSERT INTO `exercise_videos` VALUES (2, '1643642240.mp4', 1, 1, NULL, '2022-01-31 15:09:11', '2022-01-31 15:17:20');
 
 -- ----------------------------
 -- Table structure for exercises
@@ -470,12 +473,13 @@ CREATE TABLE `program_day_routines`  (
   CONSTRAINT `program_day_routines_program_day_id_foreign` FOREIGN KEY (`program_day_id`) REFERENCES `program_days` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `program_day_routines_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `program_day_routines_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of program_day_routines
 -- ----------------------------
 INSERT INTO `program_day_routines` VALUES (1, 'aint', 'no', 100, 200, 1, 1, 1, NULL, '2022-01-27 20:13:20', '2022-01-27 20:13:20');
+INSERT INTO `program_day_routines` VALUES (2, 'Brandy1', '1643640096.mp4', 101, 10001, 1, 2, 1, NULL, '2022-01-31 14:23:00', '2022-01-31 14:41:36');
 
 -- ----------------------------
 -- Table structure for program_days
@@ -647,9 +651,10 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('3Nh1l7q0QAOQfk8uzVmiVlO5xEfIx1dGSOn7WF2j', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZjlxZFl0OXh6T0xKeXR2MDJNNGFqTHNTb3FkczlLcmVEbVEyMmExcSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3Byb2dyYW0vZWRpdC85Ijt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtL2VkaXQvOSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643468734);
-INSERT INTO `sessions` VALUES ('EUDuHXQxyBeAGGgmFw1X43wsHwAkwTT6gv6cWLaJ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWmk5S3g2SzdnQ21RUWswYjVRcWJQd0JFTnVvTXphMXQ3bUNDS3pqMCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643468735);
-INSERT INTO `sessions` VALUES ('qXW6loAJ6dzDWJttRz5t291kfkzvLN3MSgktnKMT', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiZ0pOMEpKekQ5cXhpYTRlR09FbVh4VDQ0dDd0YU1rYVB4SEVwU2JNbiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtL2VkaXQvOSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzNDY1MzkxO31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643468858);
+INSERT INTO `sessions` VALUES ('jq705raKB3zNcV86YqVE8ROULts9Ch7aOWnrh081', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZUY1dGhNVktxbWVqMkNSa1NMSHE1M3o2dnEwQVlkRFNsTEs0RFFVZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643639964);
+INSERT INTO `sessions` VALUES ('OscfT403YdFSl0rO8f61CrVWnFrSpUqxrhbaeGhG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidEhEZFpiQ2R1ZEJEUkloWlY0bzlmV0hBNTk1cHVleWJKZmh4amU1TiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643639815);
+INSERT INTO `sessions` VALUES ('wb3zXVBDeWsKDY2FdwPTFWTnxscMgKJi1N5qCwXN', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUmt3Rm1ZSk8yeVRtc0VGWm9kb09LazRMSFJGS3dLV1VVWGV6Z05jbCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3Byb2dyYW1kYXlyb3V0aW5lL2VkaXQvMSI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjUyOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcHJvZ3JhbWRheXJvdXRpbmUvZWRpdC8xIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1643639814);
+INSERT INTO `sessions` VALUES ('YNvSfsetv1VORordbCPU3AMZjnH74PSkYnLIAEoF', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoidDRvVkpNT0U0aDl0UFRuWTE5U0RTR2YzcU1tTkRxUWozNU5vbEdmRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9leGVyY2lzZXZpZGVvcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzNjM3NDYyO31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643642294);
 
 -- ----------------------------
 -- Table structure for statuses
