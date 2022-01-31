@@ -21,6 +21,7 @@ use App\Http\Controllers\SubscriptionProgramController;
 use App\Http\Controllers\SubscriptionProgramDayRoutineController;
 use App\Http\Controllers\UserCardController;
 use App\Http\Livewire\Admin\AdminAddBlogComponent;
+use App\Http\Livewire\Admin\AdminAddExerciseVideoComponent;
 use App\Http\Livewire\Admin\AdminAddGendersComponent;
 use App\Http\Livewire\Admin\AdminEditGendersComponent;
 use App\Http\Livewire\Admin\AdminGendersComponent;
@@ -29,7 +30,9 @@ use App\Http\Livewire\Admin\AdminAddProgramDayRoutineComponent;
 use App\Http\Livewire\Admin\AdminBlogComponent;
 use App\Http\Livewire\Admin\AdminEditProgramComponent;
 use App\Http\Livewire\Admin\AdminEditBlogComponent;
+use App\Http\Livewire\Admin\AdminEditExerciseVideoComponent;
 use App\Http\Livewire\Admin\AdminEditProgramDayRoutineComponent;
+use App\Http\Livewire\Admin\AdminExerciseVideoComponent;
 use App\Http\Livewire\Admin\AdminProgramComponent;
 use App\Http\Livewire\Admin\AdminProgramDayRoutineComponent;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +91,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/admin/programdayroutines', AdminProgramDayRoutineComponent::class)->name("admin.programdayroutines");
     Route::get('/admin/programdayroutine/add', AdminAddProgramDayRoutineComponent::class)->name("admin.addprogramdayroutine");
     Route::get('/admin/programdayroutine/edit/{programdayroutine_id}', AdminEditProgramDayRoutineComponent::class)->name("admin.editprogramdayroutine");
+
+    Route::get('/admin/exercisevideos', AdminExerciseVideoComponent::class)->name("admin.exercisevideos");
+    Route::get('/admin/exercisevideos/add', AdminAddExerciseVideoComponent::class)->name("admin.addexercisevideo");
+    Route::get('/admin/exercisevideos/edit/{exercisevideo_id}', AdminEditExerciseVideoComponent::class)->name("admin.editexercisevideo");
 
 });    
 

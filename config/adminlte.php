@@ -406,7 +406,7 @@ return [
                 ],
                 [
                     'text' => 'Exercise Videos',
-                    'url'  => 'exercise-videos',
+                    'url'  => '/admin/exercisevideos',
                     'can' => 'admin.home',
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
