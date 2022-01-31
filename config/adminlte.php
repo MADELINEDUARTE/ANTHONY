@@ -347,7 +347,7 @@ return [
                 ],
                 [
                     'text' => 'Program Day Routine',
-                    'url'  => 'program-day-routines',
+                    'url'  => '/admin/programdayroutines',
                     'can' => 'admin.home',
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
