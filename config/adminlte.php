@@ -289,6 +289,12 @@ return [
                     'can' => 'admin.home',
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
+                [
+                    'text' => 'Admin Users',
+                    'url'  => '/admin/users',
+                    'can' => 'admin.home',
+                    'icon' => 'fas fa-fw fa-dumbbell',
+                ],
             ]
         ],
 

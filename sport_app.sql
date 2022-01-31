@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 31/01/2022 12:31:03
+ Date: 31/01/2022 14:17:28
 */
 
 SET NAMES utf8mb4;
@@ -307,6 +307,8 @@ CREATE TABLE `model_has_roles`  (
 -- Records of model_has_roles
 -- ----------------------------
 INSERT INTO `model_has_roles` VALUES (1, 'App\\Models\\User', 1);
+INSERT INTO `model_has_roles` VALUES (3, 'App\\Models\\User', 1);
+INSERT INTO `model_has_roles` VALUES (3, 'App\\Models\\User', 2);
 
 -- ----------------------------
 -- Table structure for packages
@@ -564,6 +566,7 @@ INSERT INTO `role_has_permissions` VALUES (1, 1);
 INSERT INTO `role_has_permissions` VALUES (1, 2);
 INSERT INTO `role_has_permissions` VALUES (2, 1);
 INSERT INTO `role_has_permissions` VALUES (2, 2);
+INSERT INTO `role_has_permissions` VALUES (2, 3);
 INSERT INTO `role_has_permissions` VALUES (3, 1);
 INSERT INTO `role_has_permissions` VALUES (3, 2);
 INSERT INTO `role_has_permissions` VALUES (4, 1);
@@ -599,13 +602,14 @@ CREATE TABLE `roles`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `roles_name_guard_name_unique`(`name`, `guard_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
 INSERT INTO `roles` VALUES (1, 'Admin', 'web', '2022-01-18 16:44:49', '2022-01-18 16:44:49');
 INSERT INTO `roles` VALUES (2, 'Marketing', 'web', '2022-01-18 16:44:49', '2022-01-18 16:44:49');
+INSERT INTO `roles` VALUES (3, 'Basic', 'web', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for routine_logs
@@ -654,7 +658,7 @@ CREATE TABLE `sessions`  (
 INSERT INTO `sessions` VALUES ('jq705raKB3zNcV86YqVE8ROULts9Ch7aOWnrh081', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZUY1dGhNVktxbWVqMkNSa1NMSHE1M3o2dnEwQVlkRFNsTEs0RFFVZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643639964);
 INSERT INTO `sessions` VALUES ('OscfT403YdFSl0rO8f61CrVWnFrSpUqxrhbaeGhG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidEhEZFpiQ2R1ZEJEUkloWlY0bzlmV0hBNTk1cHVleWJKZmh4amU1TiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1643639815);
 INSERT INTO `sessions` VALUES ('wb3zXVBDeWsKDY2FdwPTFWTnxscMgKJi1N5qCwXN', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUmt3Rm1ZSk8yeVRtc0VGWm9kb09LazRMSFJGS3dLV1VVWGV6Z05jbCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3Byb2dyYW1kYXlyb3V0aW5lL2VkaXQvMSI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjUyOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcHJvZ3JhbWRheXJvdXRpbmUvZWRpdC8xIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1643639814);
-INSERT INTO `sessions` VALUES ('YNvSfsetv1VORordbCPU3AMZjnH74PSkYnLIAEoF', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoidDRvVkpNT0U0aDl0UFRuWTE5U0RTR2YzcU1tTkRxUWozNU5vbEdmRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9leGVyY2lzZXZpZGVvcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzNjM3NDYyO31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643642294);
+INSERT INTO `sessions` VALUES ('YNvSfsetv1VORordbCPU3AMZjnH74PSkYnLIAEoF', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoidDRvVkpNT0U0aDl0UFRuWTE5U0RTR2YzcU1tTkRxUWozNU5vbEdmRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi91c2VycyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjE6e2k6MDtzOjc6Im1lc3NhZ2UiO31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNjQzNjM3NDYyO31zOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDgxTTdnSXh1YmFoeUo0dktKWGpBdk9BV3dlWlQxSE44c0RmZFJCM3phVm9hR3V5Lng4c01XIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQ4MU03Z0l4dWJhaHlKNHZLSlhqQXZPQVd3ZVpUMUhOOHNEZmRSQjN6YVZvYUd1eS54OHNNVyI7fQ==', 1643649405);
 
 -- ----------------------------
 -- Table structure for statuses

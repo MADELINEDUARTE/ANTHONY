@@ -35,6 +35,7 @@ use App\Http\Livewire\Admin\AdminEditProgramDayRoutineComponent;
 use App\Http\Livewire\Admin\AdminExerciseVideoComponent;
 use App\Http\Livewire\Admin\AdminProgramComponent;
 use App\Http\Livewire\Admin\AdminProgramDayRoutineComponent;
+use App\Http\Livewire\Admin\AdminUserComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -95,6 +96,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/admin/exercisevideos', AdminExerciseVideoComponent::class)->name("admin.exercisevideos");
     Route::get('/admin/exercisevideos/add', AdminAddExerciseVideoComponent::class)->name("admin.addexercisevideo");
     Route::get('/admin/exercisevideos/edit/{exercisevideo_id}', AdminEditExerciseVideoComponent::class)->name("admin.editexercisevideo");
+
+    Route::get('/admin/users', AdminUserComponent::class)->name("admin.adminusers");
 
 });    
 
