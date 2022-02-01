@@ -33,7 +33,7 @@ class AdminUserComponent extends Component
         $user = User::where(['id' => $user_id])->first();
         $user->assignRole($this->role_id);
 
-        session()->flash('message','El permiso '.$this->role_id.' '.$this->permission_id.' '.$user_id.' del usuario se ha sido actualizado con exito');
+        session()->flash('message','El permiso del usuario se ha sido actualizado con exito');
 
 
     }

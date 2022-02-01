@@ -8,6 +8,7 @@
 @stop
 
 @section('content')
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -49,6 +50,8 @@
 
                                         <th>Email</th>
 
+                                        <th>Current Roles</th>
+
                                         <th>Role</th>
 
                                         <th>Permission</th>
@@ -66,6 +69,21 @@
                                             <td>{{ $user->last_name }}</td>
 
                                             <td>{{ $user->email }}</td>
+
+                                            <td>
+
+                                            @if (count($user->roles)>0)
+                                                <ul>    
+                                                @foreach ($user->roles as $user_roles)
+                                                <li>{{ $user_roles->name }}<hr></li>
+                                                @endforeach
+                                                </ul>
+
+                                            @else
+                                                <p style="color:red;">Sin Roles Asignados</p>
+                                            @endif
+
+                                            </td>
 
                                             <th>
                                             <div class="form-group">
