@@ -265,7 +265,12 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         
-        
+        [
+            'text' => 'Admin Users',
+            'url'  => '/admin/users',
+            'can' => 'admin.home',
+            'icon' => 'fas fa-fw fa-users',
+        ],
         [
             'text'    => 'General',
             'icon'    => 'fas fa-fw fa-share',
@@ -289,12 +294,7 @@ return [
                     'can' => 'admin.home',
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
-                [
-                    'text' => 'Admin Users',
-                    'url'  => '/admin/users',
-                    'can' => 'admin.home',
-                    'icon' => 'fas fa-fw fa-dumbbell',
-                ],
+                
             ]
         ],
 

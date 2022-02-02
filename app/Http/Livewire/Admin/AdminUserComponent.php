@@ -26,10 +26,6 @@ class AdminUserComponent extends Component
 
     public function updateUserPermission($user_id)
     {
-        //$order = Order::find($order_id);
-        //$order->status = $status;
-        //$order->save();
-
         $user = User::where(['id' => $user_id])->first();
         $user->assignRole($this->role_id);
 
@@ -47,6 +43,14 @@ class AdminUserComponent extends Component
     public function mount(){
 
         $this->role_id = 0;
+
+    }
+
+    public function deleteUserRole($role_id,$user_id){
+
+        $user = User::where(['id' => $user_id])->first();
+        $user->removeRole($role_id);
+        session()->flash('message','El rol se ha eliminado con exito');
 
     }
 

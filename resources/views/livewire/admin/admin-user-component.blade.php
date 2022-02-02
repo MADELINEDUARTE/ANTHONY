@@ -75,9 +75,21 @@
                                             @if (count($user->roles)>0)
                                                 <ul>    
                                                 @foreach ($user->roles as $user_roles)
-                                                <li>{{ $user_roles->name }}<hr></li>
+                                                <li>{{ $user_roles->name }}
+                                                <a href="#" onclick="confirm('¿Estas seguro que deseas eliminar este rol?') || event.stopImmediatePropagation()" wire:click.prevent="deleteUserRole({{ $user_roles->id }},{{ $user->id }})" style="margin-left:10px;" class="slink"> <i class="fa fa-times text-danger"></i></a>
+                                                <hr>
+                                                    <ul>
+                                                    @foreach ($user_roles->permissions as $user_roles_permissions)
+                                                    
+                                                    <li>{{ $user_roles_permissions->name }}</li>
+
+                                                    @endforeach
+                                                    </ul>
+                                                    <hr>
+                                                </li>
                                                 @endforeach
                                                 </ul>
+                                                
 
                                             @else
                                                 <p style="color:red;">Sin Roles Asignados</p>
