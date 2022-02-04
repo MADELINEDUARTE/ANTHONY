@@ -52,6 +52,8 @@
 
                                         <th>Current Roles</th>
 
+                                        <th>Current Permissions</th>
+
                                         <th>Role</th>
 
                                         <th>Permission</th>
@@ -97,11 +99,34 @@
 
                                             </td>
 
+                                            <td>
+
+                                            @if (count($user->permissions)>0)
+                                                <ul>    
+                                                @foreach ($user->permissions as $user_permissions)
+                                                <li>{{ $user_permissions->name }}
+                                                <a href="#" onclick="confirm('¿Estas seguro que deseas eliminar este permiso?') || event.stopImmediatePropagation()" wire:click.prevent="deleteUserPermission({{ $user_permissions->id }},{{ $user->id }})" style="margin-left:10px;" class="slink"> <i class="fa fa-times text-danger"></i></a>
+
+                                                    <ul>
+                                                    @foreach ($user_permissions->roles as $user_permissions_roles)
+                                                        <li><span style="color:blue;">{{ $user_permissions_roles->name }}</span></li>
+                                                    @endforeach
+                                                    </ul>
+
+                                                </li>
+                                                @endforeach
+                                                </ul>
+                                            @else
+                                                <p style="color:red;">Sin Permisos Asignados</p>
+                                            @endif
+
+                                            </td>
+
                                             <th>
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label" ></label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" wire:model="role_id" name="role_id" id="role_id" required>
+                                                    <select class="form-control" wire:model="role_id" name="role_id" id="role_id" required wire:change="updateUserRole({{ $user->id }})">
                                                     <option value="">Select Role</option>
                                                         @foreach ($roles as $role)
                                                         <option value="{{ $role->id }}" wire:change="changePermission()">{{ $role->name }}</option>
@@ -119,7 +144,7 @@
                                                 <label class="col-md-2 control-label" ></label>
                                                 <div class="col-md-8">
                                                     <select class="form-control" wire:model="permission_id" name="permission_id" id="permission_id" required wire:change="updateUserPermission({{ $user->id }})">
-                                                    <option value="">Select Role</option>
+                                                    <option value="">Select Permission</option>
                                                         @foreach ($permissions as $permission)
                                                         <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                                                         @endforeach
