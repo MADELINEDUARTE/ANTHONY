@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Countries;
-use App\Models\Genders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -17,12 +15,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         
-        //Countries::create(['description'=>'Venezuela']);
-        //Countries::factory(1)->create();
-        
-        //Genders::create(['description'=>'Femenino']);
-        //Genders::factory(1)->create();
-        
+      
         User::create([
             'name'=>'Ramon',
             'email'=>'ramonguerra1@gmail.com',

@@ -268,7 +268,7 @@ return [
         [
             'text' => 'Admin Users',
             'url'  => '/admin/users',
-            'can' => 'admin.home',
+            
             'icon' => 'fas fa-fw fa-users',
         ],
         [
@@ -279,19 +279,19 @@ return [
                 [
                     'text' => 'Comments',
                     'url'  => 'comments',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Frequently Asked Questions',
                     'url'  => 'frequently-asked-questions',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],                
                 [
                     'text' => 'Blogs',
                     'url'  => '/admin/blogs',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 
@@ -306,14 +306,14 @@ return [
                 [
                     'text' => 'Package',
                     'url'  => 'packages',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 
                 [
                     'text' => 'Payment History',
                     'url'  => 'payment-histories',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 
@@ -321,7 +321,7 @@ return [
                 [
                     'text' => 'User Cards',
                     'url'  => 'user-cards',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
 
@@ -336,32 +336,32 @@ return [
                 [
                     'text' => 'Program Category',
                     'url'  => 'program-categories',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Program LW',
                     'url'  => '/admin/programs',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Program Days',
                     'url'  => 'program-days',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Program Day Routine',
                     'url'  => '/admin/programdayroutines',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
 
                 [
                     'text' => 'Routine Logs',
                     'url'  => 'routine-logs',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
             ]
@@ -375,19 +375,19 @@ return [
                 [
                     'text' => 'Subscription',
                     'url'  => 'subscriptions',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Subscription Programs',
                     'url'  => 'subscription-programs',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Subscription Program Days Routine',
                     'url'  => 'subscription-program-day-routines',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
             ]
@@ -401,19 +401,19 @@ return [
                 [
                     'text' => 'Exercises',
                     'url'  => 'exercises',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Exercise Logs',
                     'url'  => 'exercise-logs',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
                 [
                     'text' => 'Exercise Videos',
                     'url'  => '/admin/exercisevideos',
-                    'can' => 'admin.home',
+                    
                     'icon' => 'fas fa-fw fa-dumbbell',
                 ],
             ]
@@ -426,17 +426,17 @@ return [
                 [
                     'text' => 'Gender',
                     'url'  => 'genders',
-                    'can' => 'admin.home',
+                    
                 ],
                 [
                     'text' => 'Country',
                     'url'  => 'countries',
-                    'can' => 'admin.home',
+                    
                 ],
                 [
                     'text' => 'Status',
                     'url'  => 'statuses',
-                    'can' => 'admin.home',
+                    
                 ],
                 
                 [
