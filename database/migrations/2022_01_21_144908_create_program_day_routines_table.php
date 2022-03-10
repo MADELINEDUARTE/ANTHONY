@@ -19,7 +19,7 @@ class CreateProgramDayRoutinesTable extends Migration
             $table->string('video')->nullable(false);
             $table->integer('sets')->nullable(false);
             $table->integer('repetitions')->nullable(false);
-            
+            $table->integer('program_id')->nullable(false);
             $table->bigInteger('program_day_id')->unsigned()->nullable(false);
             $table->bigInteger('status_id')->unsigned()->nullable(false);
             $table->bigInteger('user_id')->unsigned()->nullable(false);

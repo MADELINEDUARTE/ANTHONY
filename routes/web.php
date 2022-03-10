@@ -81,9 +81,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
+    /*
     Route::get('/admin/programs', AdminProgramComponent::class)->name("admin.programs");
     Route::get('/admin/program/add', AdminAddProgramComponent::class)->name("admin.addprogram");
     Route::get('/admin/program/edit/{program_id}', AdminEditProgramComponent::class)->name("admin.editprogram");
+    */
 
     Route::get('/admin/blogs', AdminBlogComponent::class)->name("admin.blogs");
     Route::get('/admin/blog/add', AdminAddBlogComponent::class)->name("admin.addblog");

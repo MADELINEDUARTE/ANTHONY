@@ -73,6 +73,13 @@ class ProgramDayRoutine extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
+
+    
+    public function program_day(){
+        return $this->belongsTo(ProgramDay::class,'program_day_id');
+    }
+
+    
     
 
 }

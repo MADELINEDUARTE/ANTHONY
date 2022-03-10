@@ -59,5 +59,10 @@ class ProgramDay extends Model
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
     
+    public function program_day_user(){
+        return $this->belongsTo(User::class, 'user_id');
+     }
+
+
 
 }

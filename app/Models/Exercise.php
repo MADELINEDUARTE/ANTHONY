@@ -31,6 +31,10 @@ class Exercise extends Model
 		'user_id' => 'required',
     ];
 
+    protected $casts = [
+        'video' => 'array',
+      ];
+
     protected $perPage = 20;
 
     /**
@@ -38,7 +42,7 @@ class Exercise extends Model
      *
      * @var array
      */
-    protected $fillable = ['description','program_id','user_id'];
+    protected $fillable = ['description','video','program_id','user_id'];
 
 
     /**
@@ -56,6 +60,10 @@ class Exercise extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
+
+    public function exercise_user(){
+        return $this->belongsTo(User::class, 'user_id');
+     }
     
 
 }

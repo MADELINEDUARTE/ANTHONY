@@ -18,7 +18,8 @@ class StatusFactory extends Factory
      public function definition()
     {
         return [
-            'description'=>'Activo'
+            'description'=>'Activo',
+            'user_id' => 1
         ];
     }
 }

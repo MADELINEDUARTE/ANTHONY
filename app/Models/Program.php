@@ -48,7 +48,7 @@ class Program extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','description','program_category_id','video','number_of_days','image','popular','recommended','status_id'];
+    protected $fillable = ['name','description','program_category_id','video','number_of_days','image','popular','recommended','status_id','user_id'];
 
 
     /**
@@ -65,6 +65,38 @@ class Program extends Model
     public function status()
     {
         return $this->hasOne('App\Models\Status', 'id', 'status_id');
+    }
+
+    public function program_category(){
+        return $this->belongsTo(ProgramCategory::class);
+    }
+
+    public function program_status(){
+        return $this->belongsTo(Status::class,'status_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    
+    public function details(){
+        return $this->hasMany(ProgramDay::class,'program_id');
+    }
+
+    public function details_program_day_routine(){
+        return $this->hasMany(ProgramDayRoutine::class,'program_id');
+    }
+
+    public function exercises(){
+        return $this->hasMany(Exercise::class,'program_id');
+    }
+
+    public function subscription_programs(){
+        return $this->hasMany(SubscriptionProgram::class,'program_id');
+    }
+
+    public function subscription_program_day_routines(){
+        return $this->hasMany(SubscriptionProgramDayRoutine::class,'program_id');
     }
     
 

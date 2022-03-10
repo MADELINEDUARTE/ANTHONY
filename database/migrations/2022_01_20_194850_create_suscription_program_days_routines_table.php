@@ -16,10 +16,11 @@ class CreateSuscriptionProgramDaysRoutinesTable extends Migration
         Schema::create('subscription_program_day_routines', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('subscription_programs_id')->unsigned()->nullable(false);
-            $table->bigInteger('program_days_id')->unsigned()->nullable(false);
+            $table->bigInteger('program_id')->unsigned()->nullable();
+            $table->bigInteger('program_day_id')->unsigned()->nullable(false);
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->foreign('subscription_programs_id','spd1_routine_foreign')->references('id')->on('subscription_programs')->onDelete('cascade');
-            $table->foreign('program_days_id','spd2_routine_foreign')->references('id')->on('program_days')->onDelete('cascade');
+            $table->foreign('program_day_id','spd2_routine_foreign')->references('id')->on('program_days')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

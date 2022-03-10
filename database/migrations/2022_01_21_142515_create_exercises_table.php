@@ -16,6 +16,7 @@ class CreateExercisesTable extends Migration
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
             $table->text('description')->nullable(false);
+            $table->text('video')->nullable();
             $table->bigInteger('program_id')->unsigned()->nullable(false);
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');

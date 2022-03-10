@@ -39,7 +39,7 @@ class SubscriptionProgramDayRoutine extends Model
      *
      * @var array
      */
-    protected $fillable = ['subscription_programs_id','program_days_id','user_id'];
+    protected $fillable = ['subscription_programs_id','program_day_id','user_id','program_id'];
 
 
     /**
@@ -66,5 +66,12 @@ class SubscriptionProgramDayRoutine extends Model
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
     
+    public function program_day(){
+        return $this->belongsTo(ProgramDay::class,'program_day_id');
+    }
+
+    public function subscription_program(){
+        return $this->belongsTo(SubscriptionProgram::class,'subscription_programs_id');
+    }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Package extends Model
 {
     use SoftDeletes;
+    use HasFactory;  
 
     static $rules = [
 		'name' => 'required',
@@ -41,7 +43,7 @@ class Package extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','description','number_of_programs','amount','status_id'];
+    protected $fillable = ['name','description','number_of_programs','amount','status_id','user_id'];
 
 
     /**
@@ -51,6 +53,13 @@ class Package extends Model
     {
         return $this->hasOne('App\Models\Status', 'id', 'status_id');
     }
+
+    public function package_status(){
+      return $this->belongsTo(Status::class,'status_id');
+  }
     
+  public function package_subscription(){
+    return $this->hasMany(Subscription::class,'package_id');
+}
 
 }
