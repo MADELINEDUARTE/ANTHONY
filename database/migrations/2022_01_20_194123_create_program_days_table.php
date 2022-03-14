@@ -17,6 +17,7 @@ class CreateProgramDaysTable extends Migration
             $table->id();
             $table->bigInteger('program_id')->unsigned()->nullable(false);
             $table->string('name')->nullable(false);
+            $table->string('description')->nullable(false);
             $table->integer('number')->nullable(false);
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');

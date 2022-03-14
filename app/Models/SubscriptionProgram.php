@@ -33,6 +33,7 @@ class SubscriptionProgram extends Model
 		'program_id' => 'required',
 		'status_id' => 'required',
 		'user_id' => 'required',
+        'is_active' => 'required',
     ];
 
     protected $perPage = 20;
@@ -42,7 +43,7 @@ class SubscriptionProgram extends Model
      *
      * @var array
      */
-    protected $fillable = ['subscription_id','program_id','status_id','user_id'];
+    protected $fillable = ['subscription_id','program_id','status_id','user_id','is_active'];
 
 
     /**

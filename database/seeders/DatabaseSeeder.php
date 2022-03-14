@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\ProgramCategory::factory(1)->create();
         \App\Models\User::factory(1)->create();
         \App\Models\Package::factory(1)->create();
+        \App\Models\Subscription::factory(1)->create();
 
         $this->call(RoleSeeder::class);
     }

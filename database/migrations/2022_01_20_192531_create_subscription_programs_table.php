@@ -23,6 +23,7 @@ class CreateSubscriptionProgramsTable extends Migration
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->boolean('is_active')->nullable(true);
             $table->timestamps();
             $table->softDeletes();
         });

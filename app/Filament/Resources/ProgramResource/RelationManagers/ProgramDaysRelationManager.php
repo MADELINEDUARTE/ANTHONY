@@ -38,6 +38,9 @@ class ProgramDaysRelationManager extends HasManyRelationManager
                 ->numeric()
                 ->label('Number'),   
               
+                Forms\Components\RichEditor::make('description')
+                ->label('Description')
+                ->required(),
            
                 Forms\Components\Select::make('user_id')
                 ->label('Usuario')
@@ -53,6 +56,7 @@ class ProgramDaysRelationManager extends HasManyRelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable()->label('Name'),
+                Tables\Columns\TextColumn::make('description')->sortable()->searchable()->label('Description'),
                 Tables\Columns\TextColumn::make('number')->sortable()->searchable()->label('number'),
                 Tables\Columns\TextColumn::make('program_day_user.name')->sortable()->searchable()->label('User'),
 

@@ -31,6 +31,7 @@ class ProgramDay extends Model
 		'name' => 'required',
 		'number' => 'required',
 		'user_id' => 'required',
+        'description' => 'required',
     ];
 
     protected $perPage = 20;
@@ -40,7 +41,7 @@ class ProgramDay extends Model
      *
      * @var array
      */
-    protected $fillable = ['program_id','name','number','user_id'];
+    protected $fillable = ['program_id','name','number','user_id','description'];
 
 
     /**

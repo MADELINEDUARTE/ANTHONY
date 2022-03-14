@@ -48,7 +48,11 @@ class ProgramDaySubscriptionRelationManager extends HasManyRelationManager
                     ->options(ProgramDay::where('program_id',Session::get('program_id_hidden'))->pluck('name', 'id'))
                     ->required(), 
                     
-              
+                    Forms\Components\Toggle::make('is_active')
+                    ->label('Is Active?')
+                    ->required()
+                    ->inline(),
+
                     Forms\Components\Select::make('user_id')
                     ->label('Usuario')
                     ->options(User::where('id',Auth::user()->id)->pluck('name', 'id'))

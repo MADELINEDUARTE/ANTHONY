@@ -30,6 +30,7 @@ class SubscriptionProgramDayRoutine extends Model
 		'subscription_programs_id' => 'required',
 		'program_days_id' => 'required',
 		'user_id' => 'required',
+        'is_active' => 'required',
     ];
 
     protected $perPage = 20;
@@ -39,7 +40,7 @@ class SubscriptionProgramDayRoutine extends Model
      *
      * @var array
      */
-    protected $fillable = ['subscription_programs_id','program_day_id','user_id','program_id'];
+    protected $fillable = ['subscription_programs_id','program_day_id','user_id','program_id','is_active'];
 
 
     /**

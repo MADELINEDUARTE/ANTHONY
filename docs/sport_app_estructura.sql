@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 14/03/2022 11:59:53
+ Date: 14/03/2022 15:28:35
 */
 
 SET NAMES utf8mb4;
@@ -415,6 +415,7 @@ CREATE TABLE `program_days`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `program_id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `number` int NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
@@ -542,6 +543,8 @@ CREATE TABLE `subscription_program_day_routines`  (
   `program_id` bigint UNSIGNED NULL DEFAULT NULL,
   `program_day_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
+  `is_active` tinyint(1) NULL DEFAULT NULL,
+  `is_complete` tinyint(1) NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
@@ -564,6 +567,7 @@ CREATE TABLE `subscription_programs`  (
   `program_id` bigint UNSIGNED NOT NULL,
   `status_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
+  `is_active` tinyint(1) NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,

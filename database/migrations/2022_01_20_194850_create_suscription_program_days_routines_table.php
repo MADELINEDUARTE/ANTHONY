@@ -22,6 +22,8 @@ class CreateSuscriptionProgramDaysRoutinesTable extends Migration
             $table->foreign('subscription_programs_id','spd1_routine_foreign')->references('id')->on('subscription_programs')->onDelete('cascade');
             $table->foreign('program_day_id','spd2_routine_foreign')->references('id')->on('program_days')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('is_active')->nullable(true);
+            $table->boolean('is_complete')->nullable(true);
             $table->timestamps();
             $table->softDeletes();
         });

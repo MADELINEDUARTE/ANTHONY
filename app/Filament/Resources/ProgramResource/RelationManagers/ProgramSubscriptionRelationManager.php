@@ -64,6 +64,11 @@ class ProgramSubscriptionRelationManager extends HasManyRelationManager
                     ->options(Status::where('id','>',0)->pluck('description', 'id'))
                     /*->disablePlaceholderSelection()*/
                     ->required(),
+
+                    Forms\Components\Toggle::make('is_active')
+                    ->label('Is Active?')
+                    ->required()
+                    ->inline(),
                 
                     Forms\Components\Select::make('user_id')
                     ->label('Usuario')
