@@ -113,7 +113,7 @@ class ProgramResource extends Resource
         return [
             RelationManagers\ProgramDaysRelationManager::class,
             RelationManagers\ProgramDayRoutineRelationManager::class,
-            RelationManagers\ProgramExercisesRelationManager::class,
+            //RelationManagers\ProgramExercisesRelationManager::class,
             RelationManagers\ProgramSubscriptionRelationManager::class,
             RelationManagers\ProgramDaySubscriptionRelationManager::class,
         ];
