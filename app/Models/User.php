@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -67,4 +68,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function gender(){
+        return $this->belongsTo(Gender::class,'gender_id');
+    }
+
+
+    public function country(){
+        return $this->belongsTo(Country::class,'country_id');
+    }
+
+    
+    public function sendPasswordResetNotification($token)
+    {
+
+        $url = 'http://localhost:8000/?token=' . $token;
+
+        $this->notify(new ResetPasswordNotification($url));
+    }
+
 }

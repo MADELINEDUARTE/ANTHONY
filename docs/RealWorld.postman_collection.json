@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "38ae14fb-626a-4ee1-8c05-ed428822079f",
+		"name": "RealWorld",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15502962"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/register?name=Juan&middle_name=Carlos&last_name=Guerra&gender_id=1&date_of_birth=1983-01-07&email=lolamadonna@gmail.com&password=12345678&address=Palermo&telephone=1135774468&country_id=1",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Juan"
+						},
+						{
+							"key": "middle_name",
+							"value": "Carlos"
+						},
+						{
+							"key": "last_name",
+							"value": "Guerra"
+						},
+						{
+							"key": "gender_id",
+							"value": "1"
+						},
+						{
+							"key": "date_of_birth",
+							"value": "1983-01-07"
+						},
+						{
+							"key": "email",
+							"value": "lolamadonna@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "12345678"
+						},
+						{
+							"key": "address",
+							"value": "Palermo"
+						},
+						{
+							"key": "telephone",
+							"value": "1135774468"
+						},
+						{
+							"key": "country_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/login?email=lolamadonna@gmail.com&password=16284418",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "lolamadonna@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "16284418"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LogOut",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "MDosJ81V6m3dIQqDEkl5eBgntAL2fmTOVzWjdL6z",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "5|PJWb1V83AevjEC4JR1LmIc2gCTQRsooMnbWS08Y7",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url_realworld}}/logout",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"logout"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Mp7Wo6Pngput0dn959iwDUzbJfb6juMFXvDWBvFu",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Forgot Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/olvide_clave?email=lolamadonna@gmail.com",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"olvide_clave"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "lolamadonna@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/resetear_clave?token=b97d2f25aa2d24a6a28cd7971ea98a90de236cb6c928f52690961cb79f0d2e70&email=lolamadonna@gmail.com&password=16284418&password_confirmation=16284418",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"resetear_clave"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "b97d2f25aa2d24a6a28cd7971ea98a90de236cb6c928f52690961cb79f0d2e70"
+						},
+						{
+							"key": "email",
+							"value": "lolamadonna@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "16284418"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "16284418"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email Verification",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "n481zWpuERA29Ebk9yDcZzYpNp3NlifdVzz7QYQF",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "lKAZeHOcIQLh52AY2v41TdSfDQVlnJYbxpBqHaJc",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url_realworld}}/email/verification-notification",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"email",
+						"verification-notification"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "lKAZeHOcIQLh52AY2v41TdSfDQVlnJYbxpBqHaJc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Email",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "n481zWpuERA29Ebk9yDcZzYpNp3NlifdVzz7QYQF",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/verify-email/20/377a1cf26512f55d2c6b0139080a1448afbca8d3?expires=1653518330&signature=beceff5415f59c569048f9dfa702bb8fe13c97089da4209f37cb1669ea44dd54",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"verify-email",
+						"20",
+						"377a1cf26512f55d2c6b0139080a1448afbca8d3"
+					],
+					"query": [
+						{
+							"key": "expires",
+							"value": "1653518330"
+						},
+						{
+							"key": "signature",
+							"value": "beceff5415f59c569048f9dfa702bb8fe13c97089da4209f37cb1669ea44dd54"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/home_display?user=1",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"home_display"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Program Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/program_detail?program_id=3",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"program_detail"
+					],
+					"query": [
+						{
+							"key": "program_id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Card Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/register_card?number=85274196377&name=juan guerra&cvv=333&expiration_date=2025-12-31&user_id=1",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"register_card"
+					],
+					"query": [
+						{
+							"key": "number",
+							"value": "85274196377"
+						},
+						{
+							"key": "name",
+							"value": "juan guerra"
+						},
+						{
+							"key": "cvv",
+							"value": "333"
+						},
+						{
+							"key": "expiration_date",
+							"value": "2025-12-31"
+						},
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post User Program",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url_realworld}}/register_user_program?subscription_id=1&program_id=1&status_id=1&user_id=1&is_active=1",
+					"host": [
+						"{{url_realworld}}"
+					],
+					"path": [
+						"register_user_program"
+					],
+					"query": [
+						{
+							"key": "subscription_id",
+							"value": "1"
+						},
+						{
+							"key": "program_id",
+							"value": "1"
+						},
+						{
+							"key": "status_id",
+							"value": "1"
+						},
+						{
+							"key": "user_id",
+							"value": "1"
+						},
+						{
+							"key": "is_active",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
