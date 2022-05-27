@@ -137,6 +137,54 @@ class UsersManagement extends Controller
         return response("El usuario ha sido creado correctamente", 201);
     }
 
+    public function update_user(Request $request)
+    {
+        
+        /*
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'string|email|max:255|unique:users',
+            'middle_name' => 'required',
+            'last_name' => 'required',
+            'gender_id' => 'required',
+            'date_of_birth' => 'required',
+            'country_id' => 'required',
+            'address' => 'required',
+            'telephone' => 'required'
+        ]);
+        */
+
+        $User = User::find($request->user_id);
+        $User->name = $request->name;
+        $User->email = $request->email;
+        $User->middle_name = $request->middle_name;
+        $User->last_name = $request->last_name;
+        $User->gender_id = $request->gender_id;
+        $User->date_of_birth = $request->date_of_birth;
+        $User->country_id = $request->country_id;
+        $User->address = $request->address;
+        $User->telephone = $request->telephone;
+
+        $User->experience_id = $request->experience_id;
+        $User->reason_id = $request->reason_id;
+        $User->frequency_id = $request->frequency_id;
+        $User->exercise_place_id = $request->exercise_place_id;
+
+        $User->save();
+
+        //$token = $User->createToken('authtoken');
+
+        return response()->json(
+            [
+                'message'=>'User Updated',
+                'data'=> ['user' => $User]
+            ]
+        );
+     
+
+        
+    }
+
 
     public function logout(Request $request)
     {

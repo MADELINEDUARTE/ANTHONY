@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 25/05/2022 18:35:51
+ Date: 27/05/2022 15:09:50
 */
 
 SET NAMES utf8mb4;
@@ -151,12 +151,13 @@ CREATE TABLE `countries`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of countries
 -- ----------------------------
 INSERT INTO `countries` VALUES (1, 'USA', '2022-03-17 19:42:10', '2022-03-17 19:42:10', NULL);
+INSERT INTO `countries` VALUES (2, 'Argentina', '2022-05-25 21:40:47', '2022-05-25 21:40:47', NULL);
 
 -- ----------------------------
 -- Table structure for exercise_logs
@@ -185,6 +186,27 @@ CREATE TABLE `exercise_logs`  (
 -- ----------------------------
 -- Records of exercise_logs
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for exercise_places
+-- ----------------------------
+DROP TABLE IF EXISTS `exercise_places`;
+CREATE TABLE `exercise_places`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `exercise_places_user_id_foreign`(`user_id`) USING BTREE,
+  CONSTRAINT `exercise_places_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of exercise_places
+-- ----------------------------
+INSERT INTO `exercise_places` VALUES (1, 'Home', 1, NULL, '2022-05-27 17:41:28', '2022-05-27 17:41:28');
 
 -- ----------------------------
 -- Table structure for exercise_videos
@@ -234,6 +256,27 @@ CREATE TABLE `exercises`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for experiences
+-- ----------------------------
+DROP TABLE IF EXISTS `experiences`;
+CREATE TABLE `experiences`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `experiences_user_id_foreign`(`user_id`) USING BTREE,
+  CONSTRAINT `experiences_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of experiences
+-- ----------------------------
+INSERT INTO `experiences` VALUES (1, 'Advanced', 1, NULL, '2022-05-27 17:35:14', '2022-05-27 17:35:14');
+
+-- ----------------------------
 -- Table structure for failed_jobs
 -- ----------------------------
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -252,6 +295,27 @@ CREATE TABLE `failed_jobs`  (
 -- ----------------------------
 -- Records of failed_jobs
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for frequencies
+-- ----------------------------
+DROP TABLE IF EXISTS `frequencies`;
+CREATE TABLE `frequencies`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `frequencies_user_id_foreign`(`user_id`) USING BTREE,
+  CONSTRAINT `frequencies_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of frequencies
+-- ----------------------------
+INSERT INTO `frequencies` VALUES (1, 'Daily', 1, NULL, '2022-05-27 17:44:21', '2022-05-27 17:44:21');
 
 -- ----------------------------
 -- Table structure for frequently_asked_questions
@@ -301,7 +365,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -329,12 +393,6 @@ INSERT INTO `migrations` VALUES (20, '2022_01_21_134831_create_payment_histories
 INSERT INTO `migrations` VALUES (21, '2022_01_21_135756_create_blogs_table', 1);
 INSERT INTO `migrations` VALUES (22, '2022_01_21_140453_create_frequently_asked_questions_table', 1);
 INSERT INTO `migrations` VALUES (23, '2022_01_21_141253_create_user_cards_table', 1);
-INSERT INTO `migrations` VALUES (24, '2022_01_21_142515_create_exercises_table', 1);
-INSERT INTO `migrations` VALUES (25, '2022_01_21_143417_create_exercise_logs_table', 1);
-INSERT INTO `migrations` VALUES (26, '2022_01_21_144324_create_exercise_videos_table', 1);
-INSERT INTO `migrations` VALUES (27, '2022_01_21_144908_create_program_day_routines_table', 1);
-INSERT INTO `migrations` VALUES (28, '2022_03_09_150637_create_filament_blog_tables', 1);
-INSERT INTO `migrations` VALUES (29, '2022_03_09_150637_create_tag_tables', 1);
 
 -- ----------------------------
 -- Table structure for model_has_permissions
@@ -487,7 +545,7 @@ CREATE TABLE `personal_access_tokens`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `personal_access_tokens_token_unique`(`token`) USING BTREE,
   INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type`, `tokenable_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of personal_access_tokens
@@ -531,7 +589,8 @@ INSERT INTO `personal_access_tokens` VALUES (38, 'App\\Models\\User', 19, 'autht
 INSERT INTO `personal_access_tokens` VALUES (39, 'App\\Models\\User', 15, 'authtoken', 'ec65cce0e4518c42b99438400985cfbe233da340e050b9ed369eccf75a89aaf8', '[\"*\"]', NULL, '2022-05-25 21:21:06', '2022-05-25 21:21:06');
 INSERT INTO `personal_access_tokens` VALUES (40, 'App\\Models\\User', 15, 'authtoken', '7aa2ffe9848345d3c27a54d4f33b955ee9f788229585a0fa13b24a5e5ba2eea7', '[\"*\"]', NULL, '2022-05-25 21:23:07', '2022-05-25 21:23:07');
 INSERT INTO `personal_access_tokens` VALUES (41, 'App\\Models\\User', 15, 'authtoken', '07708eb46ed04c3f99f91b84cd617483da569e07e463754af8e18da6c61ea88c', '[\"*\"]', '2022-05-25 21:25:49', '2022-05-25 21:24:08', '2022-05-25 21:25:49');
-INSERT INTO `personal_access_tokens` VALUES (42, 'App\\Models\\User', 15, 'authtoken', '3acc50a0938cb8f1873cae49f4161e88a9ae681fe32f196ad9e07495384bbd3c', '[\"*\"]', '2022-05-25 21:34:02', '2022-05-25 21:27:02', '2022-05-25 21:34:02');
+INSERT INTO `personal_access_tokens` VALUES (42, 'App\\Models\\User', 15, 'authtoken', '3acc50a0938cb8f1873cae49f4161e88a9ae681fe32f196ad9e07495384bbd3c', '[\"*\"]', '2022-05-25 21:39:18', '2022-05-25 21:27:02', '2022-05-25 21:39:18');
+INSERT INTO `personal_access_tokens` VALUES (45, 'App\\Models\\User', 20, 'authtoken', '078aea65cc9a0e4f3ecf56ab22c1b3ee22a4ec387b887311ce7194cedbde79a3', '[\"*\"]', '2022-05-25 21:39:38', '2022-05-25 21:38:34', '2022-05-25 21:39:38');
 
 -- ----------------------------
 -- Table structure for program_categories
@@ -575,12 +634,13 @@ CREATE TABLE `program_day_routines`  (
   CONSTRAINT `program_day_routines_program_day_id_foreign` FOREIGN KEY (`program_day_id`) REFERENCES `program_days` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `program_day_routines_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `program_day_routines_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of program_day_routines
 -- ----------------------------
 INSERT INTO `program_day_routines` VALUES (1, '120', 'programs/day/routine/video/blob', 120, 200, 4, 1, 1, 1, NULL, '2022-05-13 16:06:33', '2022-05-13 16:06:33');
+INSERT INTO `program_day_routines` VALUES (2, '123', 'programs/day/routine/video/tumblr_2dcabbe6c501af3656118f7b34f24407_9cdeb00d_500.jpg', 1234, 200, 5, 2, 1, 1, NULL, '2022-05-25 21:52:09', '2022-05-25 21:52:09');
 
 -- ----------------------------
 -- Table structure for program_days
@@ -601,12 +661,13 @@ CREATE TABLE `program_days`  (
   INDEX `program_days_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `program_days_program_id_foreign` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `program_days_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of program_days
 -- ----------------------------
 INSERT INTO `program_days` VALUES (1, 4, 'test', '<p>500</p>', 100, 1, '2022-05-13 16:06:09', '2022-05-13 16:06:09', NULL);
+INSERT INTO `program_days` VALUES (2, 5, 'cant ', '<p>over</p>', 120, 1, '2022-05-25 21:51:47', '2022-05-25 21:51:47', NULL);
 
 -- ----------------------------
 -- Table structure for programs
@@ -634,7 +695,7 @@ CREATE TABLE `programs`  (
   CONSTRAINT `programs_program_category_id_foreign` FOREIGN KEY (`program_category_id`) REFERENCES `program_categories` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `programs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `programs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of programs
@@ -643,6 +704,28 @@ INSERT INTO `programs` VALUES (1, '1', '<p>1</p>', 1, 'programs/video/blob', 1, 
 INSERT INTO `programs` VALUES (2, '2', '<p>2</p>', 1, 'programs/video/TF5JWLNqKxhQYXmRaIdVqjghD8MhbZ-metaYmxvYg==-.png', 2, 'programs/images/HuTfLL3U7WjlGu6otITXrauRZqwfTn-metaYmxvYg==-.png', 1, 1, 1, 1, '2022-03-17 21:56:34', '2022-03-17 22:17:19', NULL);
 INSERT INTO `programs` VALUES (3, 'test', '<p>prueba</p>', 1, 'programs/video/WyNe0EPCbVy2KrdNwl4s6hXJ1RfPsu-metaYmxvYg==-.jpg', 100, 'programs/images/t8pCHrKF0rP2KzHWuBVJZUGVXcl1oi-metaYmxvYg==-.jpg', 1, 1, 1, 1, '2022-03-23 16:35:56', '2022-03-23 16:35:56', NULL);
 INSERT INTO `programs` VALUES (4, 'Becky G', '<p>Esta es una prueba</p>', 1, 'programs/video/o79wVtchLbBV3WHBchpSkzUcPYfyvA-metaeTJtYXRlLmNvbSAtIEZsYXdsZXNzXzcyMHBfVHJpbS5tcDQ=-.mp4', 100, 'programs/images/Th89pu93ndSYoEBaq6ertTounsqnRg-metaYmxvYg==-.jpg', 1, 1, 1, 1, '2022-05-13 16:05:52', '2022-05-13 16:05:52', NULL);
+INSERT INTO `programs` VALUES (5, 'say hello', '<p>to the girl that i am</p>', 1, 'programs/video/7G3enYhnIL2ZMGbVI4lSfoPsL9QMVh-metaMTQxNjUzMjMxXzMyMDcxNzg5OTkzODM0MzdfMzA2NzgyNzkzNjM5MDQyMzAwMV9uLm1wNA==-.mp4', 100, 'programs/images/PMCWm5Afm41mvQc9dfrZDZzbUMPE6G-metadHVtYmxyXzNhM2VhNGZiNDBkMDRkNDU1NTZlMzA1N2I1NWQ2NGZhX2U2Mzg2ZWJiXzUwMC5qcGc=-.jpg', 1, 1, 1, 1, '2022-05-25 21:49:57', '2022-05-25 21:49:57', NULL);
+
+-- ----------------------------
+-- Table structure for reasons
+-- ----------------------------
+DROP TABLE IF EXISTS `reasons`;
+CREATE TABLE `reasons`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `reasons_user_id_foreign`(`user_id`) USING BTREE,
+  CONSTRAINT `reasons_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of reasons
+-- ----------------------------
+INSERT INTO `reasons` VALUES (1, 'Diet', 1, NULL, '2022-05-27 17:38:29', '2022-05-27 17:38:29');
 
 -- ----------------------------
 -- Table structure for role_has_permissions
@@ -752,14 +835,15 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 INSERT INTO `sessions` VALUES ('3EyHTtjwHmCc4yYCixvr2PUWp0USyaVPDXHrCZ0r', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMnlScW5YdHp5dHlMdlQ1cEZpcDlrOHd3TWdpMnZZaEdHaWJrRjZERSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maWxhbWVudC9hc3NldHMvYXBwLmNzcz9pZD02YTVkNDcwNzcxZjg5MjdhNGMxYjA4NzNhODFkOGQ5MSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653509950);
 INSERT INTO `sessions` VALUES ('745DkZMNZRcz42udIRben69p7btWbCwm0FNOB16y', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNGl5UzNaQTBLY0NQOEhpdFdzN1hobFA1N3hvVVM4aWVGNUhmbFVibSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoyNzoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653509949);
-INSERT INTO `sessions` VALUES ('7JBjMWPHqTda6qOjwGWftJYjhSzbp8sfMUerKsSZ', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiS2VvVm03Q0hTbEhGa3prcTdJWXp1YnZzYnNBU0FBT1ZlSGkweUlXYSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM2OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcGFja2FnZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkanFBaE9VbnRseVJzbEZNVFpNVnRwLlZjNFJxNk5TcUxLaFhaL3VvS3BwYVZCbUpIOUhQajIiO3M6MTc6InByb2dyYW1faWRfaGlkZGVuIjtpOjE7fQ==', 1653498604);
-INSERT INTO `sessions` VALUES ('GuT6RykAtlAB8GHGolMHlpt3AAmz5lz9HW4g9gZd', NULL, '127.0.0.1', 'PostmanRuntime/7.29.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiekF5cEx4TkM1ODhwbWpSd2dJMWJnWlNBWlR5ZUNWYnV5UXJBcENkdSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653514377);
-INSERT INTO `sessions` VALUES ('RdrIzqDxxnnEK4ovD3jBLodGHImwS3b7P5ZXj2je', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiRUltT3RpaWs5ZGZ5YWdObnJEb1NoUkxNRFo3ZUxRRHFFWk90ak81QyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maWxhbWVudC9hc3NldHMvYXBwLmNzcz9pZD02YTVkNDcwNzcxZjg5MjdhNGMxYjA4NzNhODFkOGQ5MSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653498206);
+INSERT INTO `sessions` VALUES ('9Tt8TgOkZxENCO1A8DqULvAgJgfGy0QqdHMQBK5T', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNXJINDJneGdTSmlYQTd0eGs2QURjem9iVjFzVTlpaGhtOHJRbmxacCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maWxhbWVudC9hc3NldHMvYXBwLmpzP2lkPTg5YWQ1ZmFmYTdlM2NhNjI4Y2IwMTQwZjZiOWQ4NzU2Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoyNzoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluIjt9fQ==', 1653574200);
+INSERT INTO `sessions` VALUES ('EtF25j34vCMlvlHZb13YFfidII0942p6i1XJLkc3', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiY2ZKMVV5R0tqbkZRSTdPQXdSTTJWT1QwVHp6NVN6bjFXQzJ3YjczUSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9jb3VudHJpZXMvMi9lZGl0Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJGpxQWhPVW50bHlSc2xGTVRaTVZ0cC5WYzRScTZOU3FMS2hYWi91b0twcGFWQm1KSDlIUGoyIjt9', 1653514848);
+INSERT INTO `sessions` VALUES ('GuT6RykAtlAB8GHGolMHlpt3AAmz5lz9HW4g9gZd', NULL, '127.0.0.1', 'PostmanRuntime/7.29.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiekF5cEx4TkM1ODhwbWpSd2dJMWJnWlNBWlR5ZUNWYnV5UXJBcENkdSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653514796);
+INSERT INTO `sessions` VALUES ('PsMEuVW3GbQ6SIRAic8nAicIz519noSOHMW7xBrZ', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoidGRibnRJOUVnd3E4N0ZoRXhOOGxiY2Q0NG5ZS1JrM3k2VDJXTEZ1RCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9wcm9ncmFtcy81L2VkaXQiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkanFBaE9VbnRseVJzbEZNVFpNVnRwLlZjNFJxNk5TcUxLaFhaL3VvS3BwYVZCbUpIOUhQajIiO3M6MTc6InByb2dyYW1faWRfaGlkZGVuIjtpOjU7fQ==', 1653515543);
+INSERT INTO `sessions` VALUES ('S9rolvZFtUChUYNwRRpNtBcreIqfS9L73foqbwyT', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiek1TdVptU01xa2FTejhERFY4RERLZGQxVDZUQjB1bDQ4MklEdjU2MyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9mcmVxdWVuY2llcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkanFBaE9VbnRseVJzbEZNVFpNVnRwLlZjNFJxNk5TcUxLaFhaL3VvS3BwYVZCbUpIOUhQajIiO30=', 1653674857);
 INSERT INTO `sessions` VALUES ('Th1kwNShEaKAbhV7qYZ7OwcZdMghZtcNUbqFckiA', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicGVTU21LVUlnOUFMWkNRYXNxd3pyeHZGWktZeTVka2lNVDdJR1RRbCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653509950);
-INSERT INTO `sessions` VALUES ('tUANboja04ysuBNnkT6Lw2wS0eKbEFxDAmhmM4mt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVEdyTlVLcUg0cWVOaDhNUzBMQlk5QjgzY3RRR3JxMENRdmdZSmVhWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653498206);
+INSERT INTO `sessions` VALUES ('wOXHU6Trio88Ru2QScNWshXOsjPuKg7X6kqCrLBP', NULL, '127.0.0.1', 'PostmanRuntime/7.29.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiN0NWeXRycXNmWUZRcEFHSWpnakFHb2drUGxrT2NsWW5MOUc2dHdsTyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1653672039);
 INSERT INTO `sessions` VALUES ('WQdpQrRakQa8CG8ekYa4tzpePi1G0TDqYUEmgcAv', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTTVPcnRDek1KM09MSHNhQmRNWXk4NkRjWVZ2cnJtWmNPak9wMjVlYiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maWxhbWVudC9hc3NldHMvYXBwLmpzP2lkPTYzZjllMTZjNWUyYWQ4MzQ0ZDBiOWJkNzE3NGYyYjU4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1653509951);
-INSERT INTO `sessions` VALUES ('WvV4M8gSBW93Asv82EIjfdRQomA9H5yjKPdWnDxf', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTGdTb0p5QnZNMXprMnpKRFRNZndnd1M2MHdYN0I5T1FlcGN3aHpEZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maWxhbWVudC9hc3NldHMvYXBwLmpzP2lkPTYzZjllMTZjNWUyYWQ4MzQ0ZDBiOWJkNzE3NGYyYjU4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1653498207);
-INSERT INTO `sessions` VALUES ('YXInqcUDMO9Jq2NLSxYbBN0gbtS7RzsWIZkQqCGc', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSTNjNXBvUnlPUERCc1R0NTQ0YU9XTWpyQkN1NDdSa1owOUN1bjRnbSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjIzNjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwLz9lbWFpbF92ZXJpZnlfdXJsPWh0dHAlM0ElMkYlMkZsb2NhbGhvc3QlM0E4MDAwJTJGYXBpJTJGdmVyaWZ5LWVtYWlsJTJGMTUlMkZiOGVlNWQ3MmM3YWMyYTUzMWUxYTk1NTMxNzVlNjA1ZWFjYWIyMDc1JTNGZXhwaXJlcyUzRDE2NTM1MTc4MTMmc2lnbmF0dXJlPTVmZjAwYTE0ZGFiZmE4NDViNmI0MTRhYzJjMzEwMmRjMjUwMzg3OThhNDRlNjVmZTFmYmQ0YjhhMGVhNzNjZjQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkanFBaE9VbnRseVJzbEZNVFpNVnRwLlZjNFJxNk5TcUxLaFhaL3VvS3BwYVZCbUpIOUhQajIiO30=', 1653514268);
+INSERT INTO `sessions` VALUES ('Znk6aEJhZMhx9gfyqB8ndN0gWOymXuy35H9JSf93', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiY3d3cGRWam11R3c4YUNWRHRkbkVFeFdwV0lMeHI3akpEMUx4Nm1MSSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maWxhbWVudC9hc3NldHMvYXBwLmpzP2lkPTg5YWQ1ZmFmYTdlM2NhNjI4Y2IwMTQwZjZiOWQ4NzU2Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoyNzoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluIjt9fQ==', 1653658069);
 
 -- ----------------------------
 -- Table structure for statuses
@@ -832,7 +916,7 @@ CREATE TABLE `subscription_programs`  (
   CONSTRAINT `subscription_programs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscription_programs_subscription_id_foreign` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscription_programs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of subscription_programs
@@ -845,6 +929,8 @@ INSERT INTO `subscription_programs` VALUES (5, 1, 1, 1, 1, 1, '2022-05-25 17:39:
 INSERT INTO `subscription_programs` VALUES (6, 1, 1, 1, 1, 1, '2022-05-25 18:56:36', '2022-05-25 18:56:36', NULL);
 INSERT INTO `subscription_programs` VALUES (7, 1, 1, 1, 1, 1, '2022-05-25 20:15:08', '2022-05-25 20:15:08', NULL);
 INSERT INTO `subscription_programs` VALUES (8, 1, 1, 1, 1, 1, '2022-05-25 20:35:54', '2022-05-25 20:35:54', NULL);
+INSERT INTO `subscription_programs` VALUES (9, 1, 1, 1, 1, 1, '2022-05-25 21:40:07', '2022-05-25 21:40:07', NULL);
+INSERT INTO `subscription_programs` VALUES (10, 1, 5, 1, 1, 1, '2022-05-25 21:52:23', '2022-05-25 21:52:23', NULL);
 
 -- ----------------------------
 -- Table structure for subscriptions
@@ -925,7 +1011,7 @@ CREATE TABLE `user_cards`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_cards_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `user_cards_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_cards
@@ -936,6 +1022,7 @@ INSERT INTO `user_cards` VALUES (3, '123456', 'juan guerra', '333', '2025-12-31'
 INSERT INTO `user_cards` VALUES (4, '1234567', 'juan guerra', '333', '2025-12-31', 1, NULL, '2022-05-25 18:56:30', '2022-05-25 18:56:30');
 INSERT INTO `user_cards` VALUES (5, '12345678', 'juan guerra', '333', '2025-12-31', 1, NULL, '2022-05-25 20:02:25', '2022-05-25 20:02:25');
 INSERT INTO `user_cards` VALUES (6, '852741963', 'juan guerra', '333', '2025-12-31', 1, NULL, '2022-05-25 20:35:50', '2022-05-25 20:35:50');
+INSERT INTO `user_cards` VALUES (7, '85274196377', 'juan guerra', '333', '2025-12-31', 1, NULL, '2022-05-25 21:40:03', '2022-05-25 21:40:03');
 
 -- ----------------------------
 -- Table structure for users
@@ -963,34 +1050,47 @@ CREATE TABLE `users`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `experience_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `reason_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `frequency_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `exercise_place_id` bigint UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email`) USING BTREE,
   INDEX `users_country_id_foreign`(`country_id`) USING BTREE,
   INDEX `users_gender_id_foreign`(`gender_id`) USING BTREE,
+  INDEX `users_experience_id_foreign`(`experience_id`) USING BTREE,
+  INDEX `users_reason_id_foreign`(`reason_id`) USING BTREE,
+  INDEX `users_frequency_id_foreign`(`frequency_id`) USING BTREE,
+  INDEX `users_exercise_place_id_foreign`(`exercise_place_id`) USING BTREE,
   CONSTRAINT `users_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `users_gender_id_foreign` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `users_gender_id_foreign` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `users_exercise_place_id_foreign` FOREIGN KEY (`exercise_place_id`) REFERENCES `exercise_places` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `users_experience_id_foreign` FOREIGN KEY (`experience_id`) REFERENCES `experiences` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `users_frequency_id_foreign` FOREIGN KEY (`frequency_id`) REFERENCES `frequencies` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `users_reason_id_foreign` FOREIGN KEY (`reason_id`) REFERENCES `reasons` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Admin', 'User', 'System', 1, '1976-07-10', 'admin@admin.com', NULL, '$2y$10$jqAhOUntlyRslFMTZMVtp.Vc4Rq6NSqLKhXZ/uoKppaVBmJH9HPj2', NULL, NULL, NULL, 1, 'Buenos Aires - Argentina', '0412-610-17-95', NULL, NULL, NULL, '2022-03-17 19:42:11', '2022-03-17 19:42:11', NULL);
-INSERT INTO `users` VALUES (3, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'guerra@gmail.com', NULL, '$2y$10$tmhM1dlEEmMMBbxsl5qeqeXT75g7Uo0OmQbG44Ku8OmSjVjB3slae', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 14:41:39', '2022-05-25 14:41:39', NULL);
-INSERT INTO `users` VALUES (4, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'malave@gmail.com', NULL, '$2y$10$8RZJN5JJBo/BQ1DuZNBF7.n2UdF7w5YcUf.gOh6QcIollRbSZij9.', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 16:35:18', '2022-05-25 16:35:18', NULL);
-INSERT INTO `users` VALUES (5, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'carlos@gmail.com', NULL, '$2y$10$PeJvDiYN86H18LF9.r4H0.b1T9/qU/e5Hkft.OIk8/s2qKH2v/q/2', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 17:38:55', '2022-05-25 17:38:55', NULL);
-INSERT INTO `users` VALUES (6, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'otro@gmail.com', NULL, '$2y$10$ab2OK3TImRKeYFW.w0k.Aeq/778pn/t0uFFxj9zotP4XmTOTfslpi', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 18:17:17', '2022-05-25 18:17:17', NULL);
-INSERT INTO `users` VALUES (7, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'guerramalavejuancarlos@gmail.com', NULL, '$2y$10$oCSJt1xQFdMz9Dn979f6fOqgFeseKFA7wGzjFIisqRnlkT1ASKc.S', NULL, NULL, NULL, 1, 'Palermo', '1135774468', 'g4kl6LpJIwhD4qhGB8Tatry2wr2DCAXDTy2WVuRGrspB0sqpjP0NHfrYhz0m', NULL, NULL, '2022-05-25 18:38:46', '2022-05-25 20:49:46', NULL);
-INSERT INTO `users` VALUES (8, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'ramon@gmail.com', NULL, '$2y$10$wImjeNllh3srZUHuTeHRzO9/lt0.11imUy9eTInFbkID4bovoan3y', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 18:56:16', '2022-05-25 18:56:16', NULL);
-INSERT INTO `users` VALUES (9, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '111ramon@gmail.com', NULL, '$2y$10$9sdBpQCdG9gByS8fk.U.LuO4XGVoeuMEgloJ3lvGVnj/AeHwyZ.Ia', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 19:29:02', '2022-05-25 19:29:02', NULL);
-INSERT INTO `users` VALUES (10, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '1211ramon@gmail.com', NULL, '$2y$10$fX0m1S.icPYAqhJ9CW0Fs.D1Tv24J0LTKhvfSX2bZhdetxs3kfhz6', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 19:48:04', '2022-05-25 19:48:04', NULL);
-INSERT INTO `users` VALUES (11, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '121221ramon@gmail.com', NULL, '$2y$10$RKGabv2EIrzE33aGYFP0Ku8tBTqC/p6evzkjPMsWed3BkDtDiD6wW', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:02:09', '2022-05-25 20:02:09', NULL);
-INSERT INTO `users` VALUES (12, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '121221ram88on@gmail.com', NULL, '$2y$10$48Bw5VCpX8EaTh1w9Ud40eYVsNNDXLneBjTlzfAExwQMa4O3woTwe', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:14:50', '2022-05-25 20:14:50', NULL);
-INSERT INTO `users` VALUES (13, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '12125221ram88on@gmail.com', NULL, '$2y$10$V235alEFyLI40lDnjKGDG.ye9crsfO9Wtyq2Knq5SAHfJCSBW3rbW', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:17:20', '2022-05-25 20:17:20', NULL);
-INSERT INTO `users` VALUES (14, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'maryoftheo@gmail.com', NULL, '$2y$10$ejBJHdJtwrB7pg2Ko3DlYuZHGlK9t49BqFqoiLD6vqTyfgCrwI8KK', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:35:31', '2022-05-25 20:35:31', NULL);
-INSERT INTO `users` VALUES (15, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesus@gmail.com', '2022-05-25 21:34:02', '$2y$10$2YCKhvJwDqhcokfRan8C3.6v1/K/42k1F0sD3cTTLoPqP/WWfJJ0O', NULL, NULL, NULL, 1, 'Palermo', '1135774468', 'r3vSHV5YCQfaoFZxU6ljxoNmv4k23g1DDbPr3dKj60foaBuIy7njcN9WqMyD', NULL, NULL, '2022-05-25 20:53:30', '2022-05-25 21:34:02', NULL);
-INSERT INTO `users` VALUES (16, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesusluis@gmail.com', NULL, '$2y$10$f05Ep8Pb5woKagEkgN9P/eBHCJr7xvDLVSS7Sewy3/iNDz3jUntGm', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:07:45', '2022-05-25 21:07:45', NULL);
-INSERT INTO `users` VALUES (17, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesusluislopez@gmail.com', NULL, '$2y$10$b0X/lynMQe7X4wFRbmDVH.CteYG696Yio2Pe5lBhAlSxJm8Mp1CMW', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:11:09', '2022-05-25 21:11:09', NULL);
-INSERT INTO `users` VALUES (18, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesusluislopezjuan@gmail.com', NULL, '$2y$10$wtig2MMfYb44ZWMME135fupZh0.Uu.wCtNDYzAgh1lMGaxanpVQR.', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:14:46', '2022-05-25 21:14:46', NULL);
-INSERT INTO `users` VALUES (19, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'lola@gmail.com', NULL, '$2y$10$bqF9MTd67h6qSfG5XzkfdefpMFs0u3uKJRN.sY6Fam0cBfAN6xoeu', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:17:35', '2022-05-25 21:17:35', NULL);
+INSERT INTO `users` VALUES (1, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '123lolamadonna@gmail.com', NULL, '$2y$10$jqAhOUntlyRslFMTZMVtp.Vc4Rq6NSqLKhXZ/uoKppaVBmJH9HPj2', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-03-17 19:42:11', '2022-05-27 17:14:07', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (3, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'guerra@gmail.com', NULL, '$2y$10$tmhM1dlEEmMMBbxsl5qeqeXT75g7Uo0OmQbG44Ku8OmSjVjB3slae', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 14:41:39', '2022-05-25 14:41:39', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (4, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'malave@gmail.com', NULL, '$2y$10$8RZJN5JJBo/BQ1DuZNBF7.n2UdF7w5YcUf.gOh6QcIollRbSZij9.', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 16:35:18', '2022-05-25 16:35:18', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (5, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'carlos@gmail.com', NULL, '$2y$10$PeJvDiYN86H18LF9.r4H0.b1T9/qU/e5Hkft.OIk8/s2qKH2v/q/2', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 17:38:55', '2022-05-25 17:38:55', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (6, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'otro@gmail.com', NULL, '$2y$10$ab2OK3TImRKeYFW.w0k.Aeq/778pn/t0uFFxj9zotP4XmTOTfslpi', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 18:17:17', '2022-05-25 18:17:17', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (7, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'guerramalavejuancarlos@gmail.com', NULL, '$2y$10$oCSJt1xQFdMz9Dn979f6fOqgFeseKFA7wGzjFIisqRnlkT1ASKc.S', NULL, NULL, NULL, 1, 'Palermo', '1135774468', 'g4kl6LpJIwhD4qhGB8Tatry2wr2DCAXDTy2WVuRGrspB0sqpjP0NHfrYhz0m', NULL, NULL, '2022-05-25 18:38:46', '2022-05-25 20:49:46', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (8, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'ramon@gmail.com', NULL, '$2y$10$wImjeNllh3srZUHuTeHRzO9/lt0.11imUy9eTInFbkID4bovoan3y', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 18:56:16', '2022-05-25 18:56:16', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (9, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '111ramon@gmail.com', NULL, '$2y$10$9sdBpQCdG9gByS8fk.U.LuO4XGVoeuMEgloJ3lvGVnj/AeHwyZ.Ia', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 19:29:02', '2022-05-25 19:29:02', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (10, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '1211ramon@gmail.com', NULL, '$2y$10$fX0m1S.icPYAqhJ9CW0Fs.D1Tv24J0LTKhvfSX2bZhdetxs3kfhz6', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 19:48:04', '2022-05-25 19:48:04', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (11, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '121221ramon@gmail.com', NULL, '$2y$10$RKGabv2EIrzE33aGYFP0Ku8tBTqC/p6evzkjPMsWed3BkDtDiD6wW', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:02:09', '2022-05-25 20:02:09', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (12, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '121221ram88on@gmail.com', NULL, '$2y$10$48Bw5VCpX8EaTh1w9Ud40eYVsNNDXLneBjTlzfAExwQMa4O3woTwe', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:14:50', '2022-05-25 20:14:50', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (13, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', '12125221ram88on@gmail.com', NULL, '$2y$10$V235alEFyLI40lDnjKGDG.ye9crsfO9Wtyq2Knq5SAHfJCSBW3rbW', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:17:20', '2022-05-25 20:17:20', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (14, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'maryoftheo@gmail.com', NULL, '$2y$10$ejBJHdJtwrB7pg2Ko3DlYuZHGlK9t49BqFqoiLD6vqTyfgCrwI8KK', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 20:35:31', '2022-05-25 20:35:31', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (15, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesus@gmail.com', '2022-05-25 21:34:02', '$2y$10$2YCKhvJwDqhcokfRan8C3.6v1/K/42k1F0sD3cTTLoPqP/WWfJJ0O', NULL, NULL, NULL, 1, 'Palermo', '1135774468', 'r3vSHV5YCQfaoFZxU6ljxoNmv4k23g1DDbPr3dKj60foaBuIy7njcN9WqMyD', NULL, NULL, '2022-05-25 20:53:30', '2022-05-25 21:34:02', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (16, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesusluis@gmail.com', NULL, '$2y$10$f05Ep8Pb5woKagEkgN9P/eBHCJr7xvDLVSS7Sewy3/iNDz3jUntGm', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:07:45', '2022-05-25 21:07:45', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (17, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesusluislopez@gmail.com', NULL, '$2y$10$b0X/lynMQe7X4wFRbmDVH.CteYG696Yio2Pe5lBhAlSxJm8Mp1CMW', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:11:09', '2022-05-25 21:11:09', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (18, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'jesusluislopezjuan@gmail.com', NULL, '$2y$10$wtig2MMfYb44ZWMME135fupZh0.Uu.wCtNDYzAgh1lMGaxanpVQR.', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:14:46', '2022-05-25 21:14:46', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (19, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'lola@gmail.com', NULL, '$2y$10$bqF9MTd67h6qSfG5XzkfdefpMFs0u3uKJRN.sY6Fam0cBfAN6xoeu', NULL, NULL, NULL, 1, 'Palermo', '1135774468', NULL, NULL, NULL, '2022-05-25 21:17:35', '2022-05-25 21:17:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` VALUES (20, 'Juan', 'Carlos', 'Guerra', 1, '1983-01-07', 'lolamadonna@gmail.com', '2022-05-25 21:39:38', '$2y$10$KoGkRbsVvVXDYdj9UEwZ6.0dnK6GAP9rMuBD.hRj40jir9fHsoX0.', NULL, NULL, NULL, 1, 'Palermo', '1135774468', 'MimRS4kpg6FmaCzMrA81XjJrXzVt2kj6EL3wrKd4j3KC7Mrd4xcjzR7YWnDo', NULL, NULL, '2022-05-25 21:36:27', '2022-05-25 21:39:38', NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

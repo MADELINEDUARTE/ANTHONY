@@ -35,6 +35,8 @@ Route::middleware('token_validate')->group(function(){
 Route::post('login',[UsersManagement::class,'login']);
 Route::post('register',[UsersManagement::class,'register']);
 Route::post('logout', [UsersManagement::class, 'logout'])->middleware('auth:sanctum');
+Route::post('update_user',[UsersManagement::class,'update_user']);
+
 
 Route::post('register_user_program',[UsersManagement::class,'register_user_program']);
 Route::apiResource('user_management',UsersManagement::class);
