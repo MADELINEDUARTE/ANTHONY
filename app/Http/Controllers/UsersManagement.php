@@ -66,41 +66,74 @@ class UsersManagement extends Controller
     {
         
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required',
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'gender_id' => 'required',
-            'date_of_birth' => 'required',
-            'country_id' => 'required',
-            'address' => 'required',
-            'telephone' => 'required'
+            'email' => 'required|string|email'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'middle_name' => $request->middle_name,
-            'last_name' => $request->last_name,
-            'gender_id' => $request->gender_id,
-            'date_of_birth' => $request->date_of_birth,
-            'country_id' => $request->country_id,
-            'address' => $request->address,
-            'telephone' => $request->telephone,
-        ]);
+        $validate_user=User::where('email',$request->email)->get();
 
-        event(new Registered($user));
+        if(count($validate_user)>0){
+            
+            return response("El usuario ya existe");
 
-        $token = $user->createToken('authtoken');
+        }else{
 
-        return response()->json(
-            [
-                'message'=>'User Registered',
-                'data'=> ['token' => $token->plainTextToken, 'user' => $user]
-            ]
-        );
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required',
+                'middle_name' => 'required',
+                'last_name' => 'required',
+                'gender_id' => 'required',
+                'date_of_birth' => 'required',
+                'country_id' => 'required',
+                'address' => 'required',
+                'telephone' => 'required'
+            ]);
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
+                'gender_id' => $request->gender_id,
+                'date_of_birth' => $request->date_of_birth,
+                'country_id' => $request->country_id,
+                'address' => $request->address,
+                'telephone' => $request->telephone,
+            ]);
+    
+            event(new Registered($user));
+    
+            $token = $user->createToken('authtoken');
+
+
+            if($token){
+
+                return response()->json(
+                    [
+                        'message'=>'User Registered',
+                        'data'=> ['token' => $token->plainTextToken, 'user' => $user]
+                    ]
+                );
+    
+            }else{
+    
+                return response()->json(
+                    [
+                        'message'=>'User Not Registered'
+                    ]
+                );
+    
+            }
+
+        }
+
+        
+
+        
+
+        
         
         /*
         $request->validate([
@@ -134,7 +167,7 @@ class UsersManagement extends Controller
         //$user = User::create($request->all());
 
         
-        return response("El usuario ha sido creado correctamente", 201);
+        //return response("El usuario ha sido creado correctamente", 201);
     }
 
     public function update_user(Request $request)
