@@ -188,20 +188,65 @@ class UsersManagement extends Controller
         */
 
         $User = User::find($request->user_id);
-        $User->name = $request->name;
-        $User->email = $request->email;
-        $User->middle_name = $request->middle_name;
-        $User->last_name = $request->last_name;
-        $User->gender_id = $request->gender_id;
-        $User->date_of_birth = $request->date_of_birth;
-        $User->country_id = $request->country_id;
-        $User->address = $request->address;
-        $User->telephone = $request->telephone;
+        
+        if($request->name && $request->name!=""){
+            $User->name = $request->name;
+        }
+        
+        
+        /*
+        if($request->email && $request->email!=""){
+            $User->email = $request->email;
+        } 
+        */    
 
-        $User->experience_id = $request->experience_id;
-        $User->reason_id = $request->reason_id;
-        $User->frequency_id = $request->frequency_id;
-        $User->exercise_place_id = $request->exercise_place_id;
+        if($request->middle_name && $request->middle_name!=""){
+            $User->middle_name = $request->middle_name;
+        }    
+
+        if($request->last_name && $request->last_name!=""){
+            $User->last_name = $request->last_name;
+        }    
+
+        if($request->gender_id && $request->gender_id!=""){
+            $User->gender_id = $request->gender_id;
+        }    
+
+        
+        if($request->date_of_birth && $request->date_of_birth!=""){
+            $User->date_of_birth = $request->date_of_birth;
+        }
+
+        if($request->country_id && $request->country_id!=""){
+            $User->country_id = $request->country_id;
+        }
+
+        if($request->address && $request->address!=""){
+            $User->address = $request->address;
+        }
+
+        if($request->telephone && $request->telephone!=""){
+            $User->telephone = $request->telephone;
+        }
+
+        if($request->experience_id && $request->experience_id!=""){
+            $User->experience_id = $request->experience_id;
+        }
+        
+        if($request->reason_id && $request->reason_id!=""){
+            $User->reason_id = $request->reason_id;
+        }
+
+        if($request->frequency_id && $request->frequency_id!=""){
+            $User->frequency_id = $request->frequency_id;
+        }
+
+        if($request->exercise_place_id && $request->exercise_place_id!=""){
+            $User->exercise_place_id = $request->exercise_place_id;
+        }
+        
+        
+        
 
         $User->save();
 
