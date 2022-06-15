@@ -8,6 +8,9 @@ use App\Http\Controllers\VerificacionDeEmailController;
 use App\Http\Controllers\OlvideClaveController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\CardRegisterController;
+use App\Http\Controllers\ExercisePlaceController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\FrequencyController;
 use App\Http\Controllers\HomeDisplayController;
 use App\Http\Controllers\UsersManagement;
 
@@ -58,3 +61,11 @@ Route::get('verify-email/{id}/{hash}', [VerificacionDeEmailController::class, 'v
 Route::post('olvide_clave', [OlvideClaveController::class, 'olvide_clave']);
 Route::post('resetear_clave', [OlvideClaveController::class, 'resetear_clave']);
 Route::apiResource('forgotpasswordcontroller',OlvideClaveController::class);
+
+Route::apiResource('frequency',FrequencyController::class);
+
+Route::apiResource('experience',ExperienceController::class);
+
+Route::apiResource('exercise_place',ExercisePlaceController::class);
+
+

@@ -269,13 +269,13 @@ class UsersManagement extends Controller
 
         $request->user()->tokens()->delete();
 
-        /*return response()->json(
+        return response()->json(
             [
                 'message' => 'Logged out'
             ]
-        );*/
+        );
 
-        return response("El usuario ha finalizado sesion", 201);
+        //return response("El usuario ha finalizado sesion", 201);
 
     }
 
