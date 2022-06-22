@@ -49,7 +49,7 @@ class ProgramResource extends Resource
                     ->directory('programs/video')
                     ->visibility('public')
                     ->imagePreviewHeight('200')
-                    /*->preserveFilenames()*/
+                    ->preserveFilenames()
                     ->label('Video')
                     ->required(),
 
@@ -62,7 +62,7 @@ class ProgramResource extends Resource
                     ->directory('programs/images')
                     ->visibility('public')
                     ->imagePreviewHeight('200')
-                    /*->preserveFilenames()*/
+                    ->preserveFilenames()
                     ->label('Image')
                     ->required(),
 
