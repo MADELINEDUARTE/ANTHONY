@@ -45,7 +45,7 @@ class ProgramResource extends Resource
                     /*->searchable()*/
                     ->label('Program Category'),        
                     
-                    Forms\Components\FileUpload::make('video')->disk('public')
+                    Forms\Components\FileUpload::make('video')->disk('local')
                     ->directory('programs/video')
                     ->visibility('public')
                     ->imagePreviewHeight('200')
