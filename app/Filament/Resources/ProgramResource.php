@@ -45,11 +45,11 @@ class ProgramResource extends Resource
                     /*->searchable()*/
                     ->label('Program Category'),        
                     
-                    Forms\Components\FileUpload::make('video')->disk('local')
+                    Forms\Components\FileUpload::make('video')->disk('public')
                     ->directory('programs/video')
                     ->visibility('public')
                     ->imagePreviewHeight('200')
-                    ->preserveFilenames()
+                    /*->preserveFilenames()*/
                     ->label('Video')
                     ->required(),
 
@@ -60,20 +60,10 @@ class ProgramResource extends Resource
 
                     Forms\Components\FileUpload::make('image')->disk('public')
                     ->directory('programs/images')
-                    ->visibility('private')
-                    ->preserveFilenames()
+                    ->visibility('public')
+                    ->imagePreviewHeight('200')
+                    /*->preserveFilenames()*/
                     ->label('Image')
-                    ->imagePreviewHeight('250')
-                    ->loadingIndicatorPosition('left')
-                    ->panelAspectRatio('2:1')
-                    ->panelLayout('integrated')
-                    ->removeUploadedFileButtonPosition('right')
-                    ->uploadButtonPosition('left')
-                    ->uploadProgressIndicatorPosition('left')
-                    ->image()
-                    //->imageCropAspectRatio('16:9')
-                    //->imageResizeTargetWidth('1920')
-                    //->imageResizeTargetHeight('1080')
                     ->required(),
 
                     Forms\Components\Toggle::make('popular')
