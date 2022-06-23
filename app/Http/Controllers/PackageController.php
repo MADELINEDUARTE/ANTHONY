@@ -19,10 +19,9 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::paginate();
-
-        return view('package.index', compact('packages'))
-            ->with('i', (request()->input('page', 1) - 1) * $packages->perPage());
+        $Package=Package::get();
+       
+        return response()->json([$Package]);
     }
 
     /**

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\VerificacionDeEmailController;
 use App\Http\Controllers\OlvideClaveController;
 use App\Http\Controllers\NewPasswordController;
@@ -11,7 +12,11 @@ use App\Http\Controllers\CardRegisterController;
 use App\Http\Controllers\ExercisePlaceController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\FrequencyController;
+use App\Http\Controllers\FrequentlyAskedQuestionController;
+use App\Http\Controllers\GenderController;
 use App\Http\Controllers\HomeDisplayController;
+use App\Http\Controllers\PackageController;
+use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\UsersManagement;
 
 /*
@@ -67,5 +72,19 @@ Route::apiResource('frequency',FrequencyController::class);
 Route::apiResource('experience',ExperienceController::class);
 
 Route::apiResource('exercise_place',ExercisePlaceController::class);
+
+Route::apiResource('gender',GenderController::class);
+
+Route::apiResource('reason',ReasonController::class);
+
+Route::apiResource('package',PackageController::class);
+
+Route::apiResource('frequentlyaskedquestion',FrequentlyAskedQuestionController::class);
+
+Route::apiResource('blogpost',BlogPostController::class);
+
+
+
+
 
 

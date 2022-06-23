@@ -18,10 +18,9 @@ class FrequentlyAskedQuestionController extends Controller
      */
     public function index()
     {
-        $frequentlyAskedQuestions = FrequentlyAskedQuestion::paginate();
-
-        return view('frequently-asked-question.index', compact('frequentlyAskedQuestions'))
-            ->with('i', (request()->input('page', 1) - 1) * $frequentlyAskedQuestions->perPage());
+        $FrequentlyAskedQuestion=FrequentlyAskedQuestion::get();
+       
+        return response()->json([$FrequentlyAskedQuestion]);
     }
 
     /**

@@ -18,10 +18,9 @@ class GenderController extends Controller
      */
     public function index()
     {
-        $genders = Gender::paginate();
-
-        return view('gender.index', compact('genders'))
-            ->with('i', (request()->input('page', 1) - 1) * $genders->perPage());
+        $Gender=Gender::get();
+       
+        return response()->json([$Gender]);
     }
 
     /**
