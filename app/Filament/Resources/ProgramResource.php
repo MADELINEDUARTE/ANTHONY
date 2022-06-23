@@ -48,8 +48,8 @@ class ProgramResource extends Resource
                     Forms\Components\FileUpload::make('video')->disk('public')
                     ->directory('programs/video')
                     ->visibility('public')
-                    ->imagePreviewHeight('200')
-                    /*->preserveFilenames()*/
+                    //->imagePreviewHeight('200')
+                    ->preserveFilenames()
                     ->label('Video')
                     ->required(),
 
@@ -61,8 +61,8 @@ class ProgramResource extends Resource
                     Forms\Components\FileUpload::make('image')->disk('public')
                     ->directory('programs/images')
                     ->visibility('public')
-                    ->imagePreviewHeight('200')
-                    /*->preserveFilenames()*/
+                    //->imagePreviewHeight('200')
+                    ->preserveFilenames()
                     ->label('Image')
                     ->required(),
 
