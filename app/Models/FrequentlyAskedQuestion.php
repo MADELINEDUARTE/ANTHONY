@@ -48,5 +48,11 @@ class FrequentlyAskedQuestion extends Model
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
     
-
+    public function scopesearch($query, $search)
+    {
+      if($search)
+        $query->where(function($query) use ($search){
+          $query->where('question','like','%'.$search.'%')->orWhere('answer','like','%'.$search.'%');
+        });
+    }
 }

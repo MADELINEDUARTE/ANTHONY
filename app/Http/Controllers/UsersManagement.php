@@ -73,7 +73,7 @@ class UsersManagement extends Controller
 
         if(count($validate_user)>0){
             
-            return response("El usuario ya existe");
+             return response()->json("User already exists",422);
 
         }else{
 
@@ -119,11 +119,7 @@ class UsersManagement extends Controller
     
             }else{
     
-                return response()->json(
-                    [
-                        'message'=>'User Not Registered'
-                    ]
-                );
+                return response()->json('User Not Registered',422);
     
             }
 
