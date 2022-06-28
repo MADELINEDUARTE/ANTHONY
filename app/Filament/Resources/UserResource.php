@@ -62,6 +62,14 @@ class UserResource extends Resource
                 ->required()
                 ->numeric(), 
 
+                Forms\Components\Select::make('utype')
+                ->options([
+                    'USR' => 'USR',
+                    'ADM' => 'ADM',
+                ])
+                ->default('USR')
+                ->required(),
+
                 Forms\Components\Hidden::make('password')->id('user_password'),
             ]);
     }
@@ -71,6 +79,7 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable()->searchable()->label('Id'),
+                Tables\Columns\TextColumn::make('utype')->sortable()->searchable()->label('User Type'),
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable()->label('Name'),
                 Tables\Columns\TextColumn::make('last_name')->sortable()->searchable()->label('Last Name'),
                 Tables\Columns\TextColumn::make('email')->sortable()->searchable()->label('Email'),
