@@ -59,8 +59,8 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
 
                     Forms\Components\TextInput::make('repetitions')
                     ->label('Repetitions')
-                    ->required()
-                    ->numeric(),
+                    ->required(),
+                    //->numeric(),
 
                     Forms\Components\Select::make('program_day_id')
                     ->label('Program Day')

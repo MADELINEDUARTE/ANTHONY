@@ -50,8 +50,8 @@ class ProgramResource extends Resource
                     ->visibility('public')
                     //->imagePreviewHeight('200')
                     ->preserveFilenames()
-                    ->label('Video')
-                    ->required(),
+                    ->label('Video'),
+                    //->required(),
 
                     Forms\Components\TextInput::make('number_of_days')
                     ->label('Number of days')

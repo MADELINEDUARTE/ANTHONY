@@ -40,14 +40,14 @@ class ProgramDaysRelationManager extends HasManyRelationManager
               
                 Forms\Components\RichEditor::make('description')
                 ->label('Description')
-                ->required(),
+                ->default(' '),
            
                 Forms\Components\Select::make('user_id')
                 ->label('Usuario')
                 ->options(User::where('id',Auth::user()->id)->pluck('name', 'id'))
                 ->default(Auth::user()->id)
                 ->disablePlaceholderSelection()
-                ->default(' '),
+                ->required(),
             ]);
     }
 
