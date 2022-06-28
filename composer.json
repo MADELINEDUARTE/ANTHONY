@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.7",
         "kepex/laravel-crud-generator": "^0.1.8",
+        "laravel/cashier": "^13.11",
         "laravel/framework": "^8.75",
         "laravel/jetstream": "^2.6",
         "laravel/sanctum": "^2.11",
