@@ -47,7 +47,7 @@ class ProgramDaysRelationManager extends HasManyRelationManager
                 ->options(User::where('id',Auth::user()->id)->pluck('name', 'id'))
                 ->default(Auth::user()->id)
                 ->disablePlaceholderSelection()
-                ->required(),
+                ->default(' '),
             ]);
     }
 
