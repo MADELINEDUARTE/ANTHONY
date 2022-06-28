@@ -16,11 +16,11 @@ class FrequentlyAskedQuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $FrequentlyAskedQuestion=FrequentlyAskedQuestion::get();
+        $FrequentlyAskedQuestion = FrequentlyAskedQuestion::search($request->search)->get();
        
-        return response()->json([$FrequentlyAskedQuestion]);
+        return response()->json($FrequentlyAskedQuestion);
     }
 
     /**
