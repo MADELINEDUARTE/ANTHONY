@@ -21,6 +21,8 @@ class CreateSubscriptionsTable extends Migration
             $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

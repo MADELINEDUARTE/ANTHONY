@@ -51,6 +51,11 @@ class Subscription extends Model
     {
         return $this->hasOne('App\Models\Package', 'id', 'package_id');
     }
+
+    public function packagestripe()
+    {
+        return $this->hasOne('App\Models\Package', 'stripe_id', 'name');
+    }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

@@ -16,6 +16,7 @@ class AddCampoPackage extends Migration
         Schema::table('packages', function (Blueprint $table) {
             $table->text('stripe_id')->nullable();
             $table->decimal('amount')->nullable()->change();
+            $table->integer('status_id');
         });
     }
 

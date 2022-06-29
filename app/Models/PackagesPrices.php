@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PackagesPrices extends Model
 {
     use HasFactory;
+
+    public function recurrence(){
+        return $this->belongsTo(Recurrence::class,'recurrences_id');
+    }
 }

@@ -86,8 +86,16 @@ Route::apiResource('blogpost',BlogPostController::class);
 
 Route::middleware(['token_validate'])->prefix('subscription')->group(function () {
 
-    Route::post('create_cliente_stripe',[SubscriptionStripeController::class,'createClienteStripe']);
-    Route::post('setup_stripe',[SubscriptionStripeController::class,'setupStripe']);
+    Route::post('create_cliente_stripe',[HomeController::class,'createClienteStripe']);
+    Route::post('setup_stripe',[HomeController::class,'setupStripe']);
+    Route::post('create_product',[HomeController::class,'createProduct']);
+    Route::post('create_subscription',[HomeController::class,'createSubscription']);
+    Route::post('cancel_subscription',[HomeController::class,'cancelSubscription']);
+    Route::post('reanudar_subscription',[HomeController::class,'reanudarSubscription']);
+    Route::post('get_invoices',[HomeController::class,'getInvoices']);
+
+
+
 
 });
 

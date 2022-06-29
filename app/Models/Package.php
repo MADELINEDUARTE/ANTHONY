@@ -56,10 +56,15 @@ class Package extends Model
 
     public function package_status(){
       return $this->belongsTo(Status::class,'status_id');
-  }
+    }
     
-  public function package_subscription(){
-    return $this->hasMany(Subscription::class,'package_id');
-}
+    public function package_subscription(){
+      return $this->hasMany(Subscription::class,'package_id');
+    }
+
+    public function prices(){
+      return $this->hasMany(PackagesPrices::class,'packages_id')->where('status_id', 1);
+      //INSERT INTO `packages_prices` (`id`, `packages_id`, `recurrences_id`, `amount`, `stripe_id`, `created_at`, `updated_at`) VALUES (NULL, '1', '2', '100', '12345678765', NULL, NULL);
+    }
 
 }
