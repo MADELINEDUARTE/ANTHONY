@@ -21,7 +21,13 @@ class SubscriptionStripeController extends Controller
     public function __construct($params = null)
     {
       
-      $this->user = isset($params['user']) && $params['user']['stripe_id'] ?  Cashier::findBillable($params['user']['stripe_id']):$params['user'];
+      if(isset($params['user'])){
+        $user = $params['user'];
+      }else{
+        $user = null;
+      }
+
+      $this->user = isset($params['user']) && $params['user']['stripe_id'] ?  Cashier::findBillable($params['user']['stripe_id']):$user;
 
       $setting = Setting::find(1);
       $public_key_stripe = $setting[$setting->eviroment.'_public_key_stripe'];
@@ -401,7 +407,8 @@ class SubscriptionStripeController extends Controller
 
           $subscription = $this->user->newSubscription($product->id, $price->stripe_id)
                             ->trialDays($this->setting['trial_days_stripe'])
-                            ->add();
+                            ->checkout();
+                            // ->add();
 
         }else{
 
