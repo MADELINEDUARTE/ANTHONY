@@ -40,7 +40,7 @@ class ProgramDaysRelationManager extends HasManyRelationManager
               
                 Forms\Components\RichEditor::make('description')
                 ->label('Description')
-                ->required(),
+                ->default(' '),
            
                 Forms\Components\Select::make('user_id')
                 ->label('Usuario')
