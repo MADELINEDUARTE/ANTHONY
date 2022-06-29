@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 28/06/2022 17:02:42
+ Date: 29/06/2022 14:01:39
 */
 
 SET NAMES utf8mb4;
@@ -130,6 +130,7 @@ CREATE TABLE `countries`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
@@ -299,7 +300,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for model_has_permissions
@@ -336,17 +337,37 @@ CREATE TABLE `packages`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `number_of_programs` int NOT NULL,
-  `amount` decimal(8, 2) NOT NULL,
+  `amount` decimal(8, 2) NULL DEFAULT NULL,
   `status_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `stripe_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `packages_user_id_foreign`(`user_id`) USING BTREE,
   INDEX `packages_status_id_foreign`(`status_id`) USING BTREE,
   CONSTRAINT `packages_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `packages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for packages_prices
+-- ----------------------------
+DROP TABLE IF EXISTS `packages_prices`;
+CREATE TABLE `packages_prices`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `packages_id` bigint UNSIGNED NOT NULL,
+  `recurrences_id` bigint UNSIGNED NOT NULL,
+  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stripe_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `packages_prices_packages_id_foreign`(`packages_id`) USING BTREE,
+  INDEX `packages_prices_recurrences_id_foreign`(`recurrences_id`) USING BTREE,
+  CONSTRAINT `packages_prices_packages_id_foreign` FOREIGN KEY (`packages_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `packages_prices_recurrences_id_foreign` FOREIGN KEY (`recurrences_id`) REFERENCES `recurrences` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -521,6 +542,22 @@ CREATE TABLE `reasons`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for recurrences
+-- ----------------------------
+DROP TABLE IF EXISTS `recurrences`;
+CREATE TABLE `recurrences`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interval` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `days` int NOT NULL,
+  `is_recurrence` tinyint(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for role_has_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `role_has_permissions`;
@@ -584,6 +621,45 @@ CREATE TABLE `sessions`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for settings
+-- ----------------------------
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE `settings`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `trial_days_stripe` int NULL DEFAULT NULL,
+  `pro_tax_id_stripe` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `dev_tax_id_stripe` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `pro_secret_key_stripe` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `pro_public_key_stripe` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `dev_secret_key_stripe` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `dev_public_key_stripe` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `pro_id_facebook` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `dev_id_facebook` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `pro_id_google` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `dev_id_google` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `timezone` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `eviroment` enum('local','production','dev') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'local',
+  `delete` int UNSIGNED NOT NULL DEFAULT 0,
+  `status` int UNSIGNED NOT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for state
+-- ----------------------------
+DROP TABLE IF EXISTS `state`;
+CREATE TABLE `state`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_pais` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for statuses
 -- ----------------------------
 DROP TABLE IF EXISTS `statuses`;
@@ -644,7 +720,7 @@ CREATE TABLE `subscription_programs`  (
   CONSTRAINT `subscription_programs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscription_programs_subscription_id_foreign` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscription_programs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for subscriptions
@@ -665,7 +741,7 @@ CREATE TABLE `subscriptions`  (
   CONSTRAINT `subscriptions_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscriptions_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for taggables
@@ -732,7 +808,7 @@ CREATE TABLE `users`  (
   `two_factor_recovery_codes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `country_id` bigint UNSIGNED NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `current_team_id` bigint UNSIGNED NULL DEFAULT NULL,
@@ -745,6 +821,9 @@ CREATE TABLE `users`  (
   `frequency_id` bigint UNSIGNED NULL DEFAULT NULL,
   `exercise_place_id` bigint UNSIGNED NULL DEFAULT NULL,
   `utype` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'USR' COMMENT 'ADM for Admin and USR for User or Customer',
+  `state_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `city` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `postal_code` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email`) USING BTREE,
   INDEX `users_country_id_foreign`(`country_id`) USING BTREE,
@@ -753,12 +832,14 @@ CREATE TABLE `users`  (
   INDEX `users_reason_id_foreign`(`reason_id`) USING BTREE,
   INDEX `users_frequency_id_foreign`(`frequency_id`) USING BTREE,
   INDEX `users_exercise_place_id_foreign`(`exercise_place_id`) USING BTREE,
+  INDEX `users_state_id_foreign`(`state_id`) USING BTREE,
   CONSTRAINT `users_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `users_exercise_place_id_foreign` FOREIGN KEY (`exercise_place_id`) REFERENCES `exercise_places` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `users_experience_id_foreign` FOREIGN KEY (`experience_id`) REFERENCES `experiences` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `users_frequency_id_foreign` FOREIGN KEY (`frequency_id`) REFERENCES `frequencies` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `users_gender_id_foreign` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `users_reason_id_foreign` FOREIGN KEY (`reason_id`) REFERENCES `reasons` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `users_reason_id_foreign` FOREIGN KEY (`reason_id`) REFERENCES `reasons` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `users_state_id_foreign` FOREIGN KEY (`state_id`) REFERENCES `state` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
