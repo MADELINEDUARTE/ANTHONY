@@ -16,7 +16,7 @@ class CreatePackagesPrices extends CreateRecord
     {
         
         //dd($this->all());
-
+        $subscription = new SubscriptionStripeController();
         $PackagesPrices = PackagesPrices::where('packages_id',$this->data["packages_id"])
         ->where('recurrences_id',$this->data["recurrences_id"])
         ->first();
@@ -24,6 +24,12 @@ class CreatePackagesPrices extends CreateRecord
         if($PackagesPrices){
 
             if($PackagesPrices->recurrence->is_recurrence==$this->data["is_recurrence"]){
+
+                if($PackagesPrices->recurrence->is_recurrence==1){
+                    $subscription->cancelPlan(['stripe_id' => $PackagesPrices->stripe_id]);
+                }elseif($PackagesPrices->recurrence->is_recurrence==0){
+                    $subscription->cancelPriceUnique(['stripe_id' => $PackagesPrices->stripe_id]);
+                }
 
                 $PackagesPrices->delete();
             }

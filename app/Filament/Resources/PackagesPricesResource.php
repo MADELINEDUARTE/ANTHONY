@@ -67,7 +67,8 @@ class PackagesPricesResource extends Resource
                 })*/
                 ->options(function(callable $get){
                     return Recurrence::where('is_recurrence',$get('is_recurrence'))->pluck('description', 'id')->toArray();
-                }),
+                })
+                ->required(),
 
 
                 Forms\Components\TextInput::make('amount')->mask(fn (Mask $mask) => $mask
@@ -78,7 +79,8 @@ class PackagesPricesResource extends Resource
                         ->decimalSeparator('.'),
                 ])
                 ->pattern('$money'),
-                ),
+                )
+                ->required(),
                 Forms\Components\Textarea::make('stripe_id')
                     ->required()
                     ->extraAttributes(['style' => 'display:none;'])
@@ -93,8 +95,9 @@ class PackagesPricesResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('packages.name'),
                 Tables\Columns\TextColumn::make('recurrence.description'),
+                Tables\Columns\TextColumn::make('recurrence.is_recurrence'),
                 Tables\Columns\TextColumn::make('amount'),
-                Tables\Columns\TextColumn::make('stripe_id'),
+                //Tables\Columns\TextColumn::make('stripe_id'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
