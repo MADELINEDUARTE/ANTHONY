@@ -82,7 +82,8 @@ class PackagesPricesResource extends Resource
                 )
                 ->required(),
                 Forms\Components\Textarea::make('stripe_id')
-                    ->required()
+                    //->required()
+                    ->label(' ')
                     ->extraAttributes(['style' => 'display:none;'])
                     ->default("Stripe Code")
                     ->maxLength(65535),
@@ -107,7 +108,7 @@ class PackagesPricesResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

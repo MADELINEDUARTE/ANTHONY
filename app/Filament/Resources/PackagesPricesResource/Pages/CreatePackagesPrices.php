@@ -54,7 +54,7 @@ class CreatePackagesPrices extends CreateRecord
 
             //si es recurrente 
             $plan = $subscription->createPlan([
-            'amount'=> ($this->record->amount*100),
+            'amount'=> ($this->record->amount),
             'interval'=> $this->record->recurrence->interval,
             'product_id'=> $this->record->packages->stripe_id,
             ]);
@@ -63,7 +63,7 @@ class CreatePackagesPrices extends CreateRecord
 
             //Si no es recurrente
             $plan = $subscription->createPriceUnique([
-            'amount' => ($this->record->amount*100),
+            'amount' => ($this->record->amount),
             'product_id' => $this->record->packages->stripe_id,
             'name' => $this->record->recurrence->description,
             ]);
