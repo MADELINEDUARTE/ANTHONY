@@ -39,7 +39,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'country_id',
         'address',
         'telephone',
-        'utype',
     ];
 
     /**
@@ -52,6 +51,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'created_at',
+        'updated_at', 'deleted_at', 'stripe_id'
     ];
 
     /**
@@ -80,6 +81,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function country(){
         return $this->belongsTo(Country::class,'country_id');
+    }
+    public function state(){
+        return $this->belongsTo(State::class,'state_id');
     }
 
     

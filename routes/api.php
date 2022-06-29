@@ -18,7 +18,7 @@ use App\Http\Controllers\HomeDisplayController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\UsersManagement;
-
+use App\Http\Controllers\Api\SubscriptionStripeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -84,6 +84,12 @@ Route::apiResource('frequentlyaskedquestion',FrequentlyAskedQuestionController::
 Route::apiResource('blogpost',BlogPostController::class);
 
 
+Route::middleware(['token_validate'])->prefix('subscription')->group(function () {
+
+    Route::post('create_cliente_stripe',[SubscriptionStripeController::class,'createClienteStripe']);
+    Route::post('setup_stripe',[SubscriptionStripeController::class,'setupStripe']);
+
+});
 
 
 

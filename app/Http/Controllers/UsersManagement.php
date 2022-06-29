@@ -73,7 +73,7 @@ class UsersManagement extends Controller
 
         if(count($validate_user)>0){
             
-             return response()->json("User already exists",422);
+             return response()->json(["message"=>"User already exists"],422);
 
         }else{
 
@@ -89,6 +89,8 @@ class UsersManagement extends Controller
                 'address' => 'required',
                 'telephone' => 'required'
             ]);
+
+            
 
             $user = User::create([
                 'name' => $request->name,
@@ -107,6 +109,9 @@ class UsersManagement extends Controller
     
             $token = $user->createToken('authtoken');
 
+            $user->token = $token->plainTextToken;
+            $user->save();
+
 
             if($token){
 
@@ -119,7 +124,7 @@ class UsersManagement extends Controller
     
             }else{
     
-                return response()->json('User Not Registered',422);
+                return response()->json(["message"=>"User Not Registered"],422);
     
             }
 
