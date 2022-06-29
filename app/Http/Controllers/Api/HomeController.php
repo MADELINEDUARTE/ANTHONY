@@ -72,6 +72,8 @@ class HomeController extends Controller
           'name' => '1Mes',
         ]);
 
+        // $subscription->cancelPriceUnique(['stripe_id' => '']);
+
 
         // if(isset($price['status']) && !$price['status']){
         //     return response()->json($price,422);
@@ -82,6 +84,8 @@ class HomeController extends Controller
             'interval'=> 'month',
             'product_id'=> $product->id,
         ]);
+
+        //$subscription->cancelPlan(['stripe_id' => '']);
 
         // if(isset($plan['status']) && !$plan['status']){
         //     return response()->json($plan,422);

@@ -21,7 +21,7 @@ class SubscriptionStripeController extends Controller
     public function __construct($params = null)
     {
       
-      $this->user = isset($params['user']) ?  Cashier::findBillable($params['user']['stripe_id']):null;
+      $this->user = isset($params['user']) && $params['user']['stripe_id'] ?  Cashier::findBillable($params['user']['stripe_id']):$params['user'];
 
       $setting = Setting::find(1);
       $public_key_stripe = $setting[$setting->eviroment.'_public_key_stripe'];
@@ -248,6 +248,33 @@ class SubscriptionStripeController extends Controller
       return null;   
     }
 
+    public  function cancelPriceUnique($data)
+    { 
+      $rules=[
+        'stripe_id'        => 'required',
+      ];
+
+      $validator= Validator::make($data,$rules);
+
+      if ($validator->fails()) {
+        return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
+      }
+
+      try{
+
+        $price = Cashier::stripe()->prices->update($data['stripe_id'],
+          [
+            'active' => false
+          ]
+        );
+
+        return $price;
+      }catch(\Exception $e){
+         return $this->setErrors(['message'=> $e->getMessage()]);
+      } 
+      return null;   
+    }
+
     public  function createPlan($data)
     { 
 
@@ -272,6 +299,34 @@ class SubscriptionStripeController extends Controller
           'interval_count' => $data['interval'] == 'custom' ? 6:1,
           'product'        => $data['product_id'],
         ]);
+
+        return $plan;
+
+      }catch(\Exception $e){
+         return $this->setErrors(['message'=> $e->getMessage()]);
+      } 
+      return null;   
+    }
+
+    public  function cancelPlan($data)
+    { 
+
+      $rules=[
+        'stripe_id'        => 'required',
+      ];
+
+      $validator= Validator::make($data,$rules);
+
+      if ($validator->fails()) {
+        return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
+      }
+
+      try{
+
+        $plan =  Cashier::stripe()->plans->update(
+          $data['stripe_id'],
+          [ 'active'=> false ]
+        );
 
         return $plan;
 
