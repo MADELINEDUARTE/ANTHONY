@@ -17,11 +17,14 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        $Package=Package::get();
-       
-        return response()->json([$Package]);
+        $Package=Package::with(['prices'=>function($query){
+            $query->with(['recurrence']);
+        }])->get();
+
+        return response()->json(['data'=> $Package]);
     }
 
     /**

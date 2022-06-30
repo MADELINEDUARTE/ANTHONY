@@ -35,7 +35,7 @@ class Package extends Model
 		'amount' => 'required',
 		'status_id' => 'required',
     ];
-
+    protected $hidden = ['created_at','updated_at','deleted_at','stripe_id'];
     protected $perPage = 20;
 
     /**
@@ -63,7 +63,7 @@ class Package extends Model
     }
 
     public function prices(){
-      return $this->hasMany(PackagesPrices::class,'packages_id')->where('status_id', 1);
+      return $this->hasMany(PackagesPrices::class,'packages_id');
       //INSERT INTO `packages_prices` (`id`, `packages_id`, `recurrences_id`, `amount`, `stripe_id`, `created_at`, `updated_at`) VALUES (NULL, '1', '2', '100', '12345678765', NULL, NULL);
     }
 

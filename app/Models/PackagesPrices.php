@@ -11,7 +11,7 @@ class PackagesPrices extends Model
 
     protected $table = "packages_prices";
     protected $fillable = ['packages_id','recurrences_id','amount','stripe_id'];
-
+    protected $hidden = ['created_at','updated_at','stripe_id'];
     public function recurrence(){
         return $this->belongsTo(Recurrence::class,'recurrences_id');
     }
