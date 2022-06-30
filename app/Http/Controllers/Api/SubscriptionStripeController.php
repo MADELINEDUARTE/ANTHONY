@@ -13,10 +13,12 @@ class SubscriptionStripeController extends Controller
 {
 
     public $user;
+    public $hasErrors = false;
     public $errors = [  "status"=> false,
                         "message"=>"Error", 
                         "errors"=> null ];
     private $setting;
+
 
     public function __construct($params = null)
     {
@@ -51,10 +53,21 @@ class SubscriptionStripeController extends Controller
       return null;
     }
 
+    public function hasClient()
+    {
+      if($this->user->stripe_id){
+        return true;
+      }
+      return false;
+    }
+
     private function setErrors($error){
+      $this->hasErrors = true;
+
       foreach ($error as $key => $value) {
         $this->errors[$key] = $value;
       }
+
       return $this->getErrors();
     }
 
@@ -114,6 +127,9 @@ class SubscriptionStripeController extends Controller
               ],
               'expand' => ['tax'],
             ]);
+
+            return $this->user;
+
         } catch (\Exception $e) {
 
             $this->setErrors(['message'=> $e->getMessage()]);
@@ -402,12 +418,35 @@ class SubscriptionStripeController extends Controller
       }
       
       try {
-
+        
+        $YOUR_DOMAIN = 'http://localhost:4242/public';
         if($price->recurrence->is_recurrence){
+          
+          // \Stripe\Stripe::setApiKey($this->setting['secret_key_stripe']);
+          if(!$this->user->stripe_id){
+            return $this->setErrors(['message'=> 'Customer not Found' ]);
+          }
 
-          $subscription = $this->user->newSubscription($product->id, $price->stripe_id)
-                            ->trialDays($this->setting['trial_days_stripe'])
-                            ->checkout();
+          $checkout_session = Cashier::stripe()->checkout->sessions->create([
+            'line_items' => [[
+              'price' => $price->stripe_id,
+              'quantity' => 1,
+              'tax_rates' => [$this->setting['tax_id_stripe']],
+            ]],
+            'mode' => 'subscription',
+            'success_url' => $YOUR_DOMAIN . '/success.html?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+            'customer' => $this->user->stripe_id,
+          ]);
+
+          if(!$checkout_session){
+            return $this->setErrors($checkout_session, 422);
+          }
+          
+
+          // return $subscription = $this->user->newSubscription($product->id, $price->stripe_id)
+          //                   ->trialDays($this->setting['trial_days_stripe'])
+          //                   ->checkout();
                             // ->add();
 
         }else{
@@ -441,16 +480,11 @@ class SubscriptionStripeController extends Controller
       } catch (\Exception $e) {
          return $this->setErrors(['message'=> $e->getMessage()]);
       }
-      
-      // $request->user()->newSubscription(
-      //   'default', $price->stripe_id
-      // )->create($data['payment_method']);
-      // 
-      if(!$subscription){
-        return $this->setErrors($subscription, 422);
-      }
+    
 
-      return ['status'=> true,'message'=> 'Subscription Create'];
+      return ['status'=> true,'message'=> 'Subscription Create', 
+        'data'=> [ 'url' => $checkout_session->url ]
+      ];
 
     }
 

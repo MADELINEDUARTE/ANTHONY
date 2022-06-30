@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Program;
 use App\Http\Controllers\Api\SubscriptionStripeController; 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class HomeController extends Controller
 {
@@ -97,20 +99,41 @@ class HomeController extends Controller
 
     public function createSubscription(Request $request)
     {
+      $rules=[
+        'package_id'        => 'required',
+        'price_id'      => 'required',
+      ];
+
+      $validator= Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
+      }
+
       $subscription = new SubscriptionStripeController([ 'user' => Auth::user() ]);
 
+      if(!$subscription->hasClient()){
+         $customer = $subscription->createClienteStripe();
+
+        if(isset($customer['status']) && !$customer['status']){
+         return response()->json($subscription->getErrors(),422);
+        }
+      }
+      
+
       $subscriptionData = $subscription->createSubscription([
-                                        'package_id'=> 1, 
-                                        'price_id'=> 1,
+                                        'package_id'=> $request->package_id, 
+                                        'price_id'=> $request->price_id,
                                         'create_method_payment' => false,
                                         'payment_method' => ''
                                       ]);
 
       if(!$subscriptionData['status']){
-         return response()->json($subscriptionData,422);
+        return response()->json($subscription->getErrors(),422);
+
       }
 
-        return response()->json(['status'=> true,'message'=> 'Subscription Create']);
+        return response()->json($subscriptionData);
     }
 
     public function cancelSubscription(Request $request)
