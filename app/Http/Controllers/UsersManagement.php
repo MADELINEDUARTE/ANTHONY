@@ -324,18 +324,84 @@ class UsersManagement extends Controller
         ->where('is_active',1)
         ->get();
     
-        $user_program = new SubscriptionProgram();
-        $user_program->subscription_id = $request->subscription_id;
-        $user_program->program_id = $request->program_id;
-        $user_program->status_id = $request->status_id;
-        $user_program->user_id = $request->user_id;
-        $user_program->is_active = $request->is_active;
-        $user_program->save();
+        if($package->id == 1){
+
+            $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+            ->where('status_id',1)
+            ->where('user_id',$request->user_id)
+            ->where('program_id',$request->program_id)
+            ->where('is_active',1)
+            ->get();
+
+            if(count($subscription_program_per_user)>0){
+
+                return response("El usuario ya tiene este programa asociado", 403);
+
+
+            }else{
+
+                $user_program = new SubscriptionProgram();
+                $user_program->subscription_id = $request->subscription_id;
+                $user_program->program_id = $request->program_id;
+                $user_program->status_id = $request->status_id;
+                $user_program->user_id = $request->user_id;
+                $user_program->is_active = $request->is_active;
+                $user_program->save();
+            
+                //$user = User::create($request->all());
     
-        //$user = User::create($request->all());
+                return response("El usuario ha sido asociado correctamente al programa; tienen ".count($subscription_program)." programas asociados para el paquete ".$package->name." ", 201);
+    
+
+            }
+
+            
+        }else{
+
+
+            $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+            ->where('status_id',1)
+            ->where('user_id',$request->user_id)
+            ->where('program_id',$request->program_id)
+            ->where('is_active',1)
+            ->get();
+
+            if(count($subscription_program_per_user)>0){
+
+                return response("El usuario ya tiene este programa asociado", 403);
+
+            }else{
+                
+                if(count($subscription_program) >= $package->number_of_programs){
+
+                    return response("El usuario ha alcanzado y/o superado el limite de programas segun su paquete asociado:".$package->name." tiene ".count($subscription_program)." / ".$package->number_of_programs." programas asociados", 403);
+        
+                }else{
+        
+                    $user_program = new SubscriptionProgram();
+                    $user_program->subscription_id = $request->subscription_id;
+                    $user_program->program_id = $request->program_id;
+                    $user_program->status_id = $request->status_id;
+                    $user_program->user_id = $request->user_id;
+                    $user_program->is_active = $request->is_active;
+                    $user_program->save();
+                
+                    //$user = User::create($request->all());
+        
+                    return response("El usuario ha sido asociado correctamente al programa; tienen ".count($subscription_program)." programas asociados", 201);
+        
+        
+                }
+
+            }
+
+            
+
+        }
+
+       
     
         
-        return response("El usuario ha sido asociado correctamente al programa; tienen ".count($subscription_program)." programas asociados", 201);
     }
 
     /*public function register_user_program(Request $request)

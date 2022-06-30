@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 29/06/2022 14:01:47
+ Date: 30/06/2022 10:24:04
 */
 
 SET NAMES utf8mb4;
@@ -474,12 +474,14 @@ CREATE TABLE `packages`  (
   INDEX `packages_status_id_foreign`(`status_id`) USING BTREE,
   CONSTRAINT `packages_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `packages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of packages
 -- ----------------------------
-INSERT INTO `packages` VALUES (1, 'Gold', 'Puro Oro', 3, 7.00, 1, 1, '2022-03-17 19:42:11', '2022-03-17 19:42:11', NULL, NULL);
+INSERT INTO `packages` VALUES (1, 'Gold1', 'Puro Oro', 3, 7.00, 1, 1, '2022-03-17 19:42:11', '2022-06-29 19:45:48', NULL, NULL);
+INSERT INTO `packages` VALUES (8, 'Silver', '<p>Plata</p>', 120, 333.00, 1, 1, '2022-06-29 18:11:00', '2022-06-29 18:11:01', NULL, 'prod_Ly1O9A9nbt4nuU');
+INSERT INTO `packages` VALUES (9, 'Bronce', '<p>Bronce</p>', 230, NULL, 1, 1, '2022-06-29 18:12:52', '2022-06-29 18:12:54', NULL, 'prod_Ly1Qd9HcsiSVeK');
 
 -- ----------------------------
 -- Table structure for packages_prices
@@ -498,12 +500,15 @@ CREATE TABLE `packages_prices`  (
   INDEX `packages_prices_recurrences_id_foreign`(`recurrences_id`) USING BTREE,
   CONSTRAINT `packages_prices_packages_id_foreign` FOREIGN KEY (`packages_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `packages_prices_recurrences_id_foreign` FOREIGN KEY (`recurrences_id`) REFERENCES `recurrences` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of packages_prices
 -- ----------------------------
-INSERT INTO `packages_prices` VALUES (1, 1, 1, '150000', 'Stripe Code 333', '2022-06-29 16:58:13', '2022-06-29 16:59:15');
+INSERT INTO `packages_prices` VALUES (2, 9, 3, '1200', 'Stripe Code0111', '2022-06-29 18:17:38', '2022-06-29 18:17:38');
+INSERT INTO `packages_prices` VALUES (3, 8, 3, '333', 'plan_Ly1ed4n0C6RnUZ', '2022-06-29 18:26:47', '2022-06-29 18:26:49');
+INSERT INTO `packages_prices` VALUES (9, 9, 7, '100', 'price_1LG6EaFllRtR3x1go5Xj9m3K', '2022-06-29 19:07:31', '2022-06-29 19:07:32');
+INSERT INTO `packages_prices` VALUES (11, 9, 4, '19', 'plan_Ly2KduPhzZystX', '2022-06-29 19:09:15', '2022-06-29 19:09:15');
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -798,12 +803,17 @@ CREATE TABLE `recurrences`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of recurrences
 -- ----------------------------
-INSERT INTO `recurrences` VALUES (1, 'Annual', 'month', 365, 0, 1, '2022-06-29 16:57:57', '2022-06-29 16:59:26');
+INSERT INTO `recurrences` VALUES (2, 'Annual', 'year', 365, 1, 1, NULL, NULL);
+INSERT INTO `recurrences` VALUES (3, 'Monthly', 'month', 365, 1, 1, NULL, NULL);
+INSERT INTO `recurrences` VALUES (4, '6 Months', 'custom', 180, 1, 1, NULL, NULL);
+INSERT INTO `recurrences` VALUES (5, 'Annual', 'year', 365, 0, 1, NULL, NULL);
+INSERT INTO `recurrences` VALUES (6, 'Monthly', 'month', 365, 0, 1, NULL, NULL);
+INSERT INTO `recurrences` VALUES (7, '6 Months', 'custom', 180, 0, 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for role_has_permissions
@@ -911,7 +921,12 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('GA8ujiL4DZ0hbYUx6epnR9ZkoZsRRgAa7ZicPSg5', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTo4OntzOjY6Il90b2tlbiI7czo0MDoiWGpTUGd5cUtUYkJIVlFleXVsZGJEN2pQNlhJazFGbnJoZGFOYmp5SiI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM5OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcmVjdXJyZW5jZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkanFBaE9VbnRseVJzbEZNVFpNVnRwLlZjNFJxNk5TcUxLaFhaL3VvS3BwYVZCbUpIOUhQajIiO3M6MTc6InByb2dyYW1faWRfaGlkZGVuIjtpOjE7czo4OiJmaWxhbWVudCI7YTowOnt9fQ==', 1656522073);
+INSERT INTO `sessions` VALUES ('12DkMLomti7HPHxAdMozh5rcvJDdNKIQT0HCJGgu', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiYjF5ajY4NUwwS2FwQmZsNHBTcGU2UEhXS1ZmUVpRdllzQ01uM0M1MSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcGFja2FnZXMvMS9lZGl0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJGpxQWhPVW50bHlSc2xGTVRaTVZ0cC5WYzRScTZOU3FMS2hYWi91b0twcGFWQm1KSDlIUGoyIjtzOjg6ImZpbGFtZW50IjthOjA6e319', 1656531948);
+INSERT INTO `sessions` VALUES ('1squp8PZW7S5d2uV6IjILzlkBSDlpFw472faNfGB', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiazh6Z3VCNHFYMVRGY3YxdEFWamtzR09DcHYwM3FRZlJpdXJDWjNBTyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3BhY2thZ2VzLXByaWNlcy9jcmVhdGUiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo1MDoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3BhY2thZ2VzLXByaWNlcy9jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1656525118);
+INSERT INTO `sessions` VALUES ('D3i3MgYKE1RrkcFPW4DK7n7StO7hP4b0HbVxlfNl', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVGdra3A5UVB5a0ZWMTdPWFJUdUxnRmVnemoxQ2VQWVoxRUZvZVhSaCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1656525122);
+INSERT INTO `sessions` VALUES ('GA8ujiL4DZ0hbYUx6epnR9ZkoZsRRgAa7ZicPSg5', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTo4OntzOjY6Il90b2tlbiI7czo0MDoiWGpTUGd5cUtUYkJIVlFleXVsZGJEN2pQNlhJazFGbnJoZGFOYmp5SiI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjgwOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvZmlsYW1lbnQvYXNzZXRzL2FwcC5qcz9pZD1mYjk5ZTA1NzIzMDZjMWMzM2U4YzZkZmRhZWVlMGQyMSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRqcUFoT1VudGx5UnNsRk1UWk1WdHAuVmM0UnE2TlNxTEtoWFovdW9LcHBhVkJtSkg5SFBqMiI7czoxNzoicHJvZ3JhbV9pZF9oaWRkZW4iO2k6MTtzOjg6ImZpbGFtZW50IjthOjA6e319', 1656530238);
+INSERT INTO `sessions` VALUES ('JTt0vr7UcCvDqxyxhJQJHZ4Z76rfPhnc9AI77VGf', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiVlh4cUlLWTg5RkFONWlEa0xNanNuQTVQRjI5M3JxNVFoVHNSalR6biI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRqcUFoT1VudGx5UnNsRk1UWk1WdHAuVmM0UnE2TlNxTEtoWFovdW9LcHBhVkJtSkg5SFBqMiI7fQ==', 1656549512);
+INSERT INTO `sessions` VALUES ('ucKI6WYaPaPWySrx1WFtvUiCNqxMyGxOUSr2pIio', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiVEx4TXNqV0x3Y2lIOGJURThzRmd0OTNxSk9sZU9CcEpJUjFXZkNOdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRqcUFoT1VudGx5UnNsRk1UWk1WdHAuVmM0UnE2TlNxTEtoWFovdW9LcHBhVkJtSkg5SFBqMiI7fQ==', 1656594369);
 
 -- ----------------------------
 -- Table structure for settings
@@ -938,11 +953,13 @@ CREATE TABLE `settings`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of settings
 -- ----------------------------
+INSERT INTO `settings` VALUES (1, 'Realworld', 3, '', 'txr_1KiprzFllRtR3x1gD2iN53na', NULL, NULL, 'sk_test_51JFMxBFllRtR3x1grUZN8aDZgeCLo3DULOkOlLsfSSlT2NQRTkYOpgBzxG5VuLB9Q4rxkTxREB7G6hgSL2zGo2WU00RADrrKf6', 'pk_test_51JFMxBFllRtR3x1gBilPZnRFAmn5t6vpZSYDOLR2A14zgdDZUiVvLorUwZiq1ummftz3ZKmWRb4X9DtoBkju4w3g00z410NK5H', NULL, NULL, NULL, NULL, NULL, 'local', 0, 1, NULL, NULL);
+INSERT INTO `settings` VALUES (2, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'local', 0, 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for state
@@ -1040,7 +1057,7 @@ CREATE TABLE `subscription_programs`  (
   CONSTRAINT `subscription_programs_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscription_programs_subscription_id_foreign` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscription_programs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of subscription_programs
@@ -1058,6 +1075,10 @@ INSERT INTO `subscription_programs` VALUES (10, 1, 5, 1, 1, 1, '2022-05-25 21:52
 INSERT INTO `subscription_programs` VALUES (11, 1, 2, 1, 1, 1, '2022-06-29 16:04:29', '2022-06-29 16:04:29', NULL);
 INSERT INTO `subscription_programs` VALUES (12, 1, 2, 1, 1, 1, '2022-06-29 16:04:34', '2022-06-29 16:04:34', NULL);
 INSERT INTO `subscription_programs` VALUES (13, 1, 2, 1, 1, 1, '2022-06-29 16:05:02', '2022-06-29 16:05:02', NULL);
+INSERT INTO `subscription_programs` VALUES (14, 1, 2, 1, 1, 1, '2022-06-30 13:10:46', '2022-06-30 13:10:46', NULL);
+INSERT INTO `subscription_programs` VALUES (15, 1, 2, 1, 1, 1, '2022-06-30 13:16:51', '2022-06-30 13:16:51', NULL);
+INSERT INTO `subscription_programs` VALUES (16, 2, 2, 1, 3, 1, '2022-06-30 13:18:34', '2022-06-30 13:18:34', NULL);
+INSERT INTO `subscription_programs` VALUES (17, 2, 2, 1, 3, 1, '2022-06-30 13:19:38', '2022-06-30 13:19:38', NULL);
 
 -- ----------------------------
 -- Table structure for subscriptions
@@ -1078,14 +1099,13 @@ CREATE TABLE `subscriptions`  (
   CONSTRAINT `subscriptions_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscriptions_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of subscriptions
 -- ----------------------------
 INSERT INTO `subscriptions` VALUES (1, 1, 1, 1, '2022-03-17 19:42:11', '2022-03-17 19:42:11', NULL);
-INSERT INTO `subscriptions` VALUES (2, 1, 3, 1, '2022-06-29 13:29:59', '2022-06-29 13:29:59', NULL);
-INSERT INTO `subscriptions` VALUES (3, 1, 3, 1, '2022-06-29 13:40:01', '2022-06-29 13:40:01', NULL);
+INSERT INTO `subscriptions` VALUES (2, 8, 3, 1, '2022-06-29 13:29:59', '2022-06-29 13:29:59', NULL);
 
 -- ----------------------------
 -- Table structure for taggables
