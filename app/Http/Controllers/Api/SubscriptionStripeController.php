@@ -419,7 +419,7 @@ class SubscriptionStripeController extends Controller
       
       try {
         
-        $YOUR_DOMAIN = 'http://localhost:4242/public';
+        $YOUR_DOMAIN = 'https://realworld.uscreativity.com';
         if($price->recurrence->is_recurrence){
           
           // \Stripe\Stripe::setApiKey($this->setting['secret_key_stripe']);
@@ -434,8 +434,8 @@ class SubscriptionStripeController extends Controller
               'tax_rates' => [$this->setting['tax_id_stripe']],
             ]],
             'mode' => 'subscription',
-            'success_url' => $YOUR_DOMAIN . '/success.html?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+            'success_url' => $YOUR_DOMAIN . '/success?package_id='.$package.'price_id='.$price->id,
+            'cancel_url' => $YOUR_DOMAIN . '/cancel',
             'customer' => $this->user->stripe_id,
           ]);
 

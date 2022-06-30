@@ -6,6 +6,7 @@ use App\Models\Program;
 use App\Models\Subscription;
 use App\Models\SubscriptionProgram;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeDisplayController extends Controller
 {
@@ -16,19 +17,41 @@ class HomeDisplayController extends Controller
      */
     public function index(Request $request)
     {
-        $program_recommended=Program::where("recommended",1)->get();
+        
 
-        $program_popular=Program::where("popular",1)->get();
+        if(isset($request->todos) && $request->todos == 'all'){
+            return response()->json(['data'=> Program::Search($request->search)->get()]);
+        }
 
-        if($request->user){
-            $subscription_program=SubscriptionProgram::where("user_id",$request->user)->get();
+        if(isset($request->popular) && $request->popular == 'all'){
+            return response()->json(['data'=> Program::where("popular",1)->Search($request->search)->get()]);
+        }
+
+        if(isset($request->popular) && $request->popular == 'all'){
+            return response()->json(['data'=> Program::where("recommended",1)->Search($request->search)->get()]);
+        }
+
+        if(isset($request->my_programs) && $request->my_programs == 'all'){
+            return response()->json(['data'=> SubscriptionProgram::where("user_id",Auth::user()->id)->get()]);
+        }
+
+        $program_recommended=Program::where("recommended",1)->limit(6)->get();
+
+        $program_popular=Program::where("popular",1)->limit(6)->get();
+
+        if(Auth::user() ){
+            $subscription_program=SubscriptionProgram::where("user_id",Auth::user()->id)->get();
         }else{
             $subscription_program=[];
         }
 
-        
-
-        return response()->json([$program_recommended, $program_popular,$subscription_program]);
+        return response()->json([
+            'data'=> [
+                'recommended'   => $program_recommended,
+                'popular'       => $program_popular,
+                'my_programs'   => $subscription_program
+            ]
+        ]);
 
         //return response($program_recommended);
     }
