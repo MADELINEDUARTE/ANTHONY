@@ -194,6 +194,33 @@ class HomeController extends Controller
       return response()->json(['status'=> true, 'data'=> Country::all() ]);
     }
 
+    public function updateAddress(Request $request)
+    {
+
+      $rules=[
+        'address'    => 'required',
+        'state_id'   => 'required',
+        'city'       => 'required',
+        'postal_code'=> 'required',
+      ];
+
+      $validator= Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
+      }
+
+      $user = Auth::user();
+
+      $user->address     = $request->address;
+      $user->state_id    = $request->state_id;
+      $user->city        = $request->city;
+      $user->postal_code = $request->postal_code;
+      $user->save();
+
+
+      return response()->json(['status'=> true,'message'=> 'Update address', 'data' => $user]);
+    }
 
     
 

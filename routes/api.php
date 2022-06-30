@@ -97,11 +97,11 @@ Route::middleware(['token_validate'])->prefix('subscription')->group(function ()
     Route::post('reanudar_subscription',[HomeController::class,'reanudarSubscription']);
     Route::post('get_invoices',[HomeController::class,'getInvoices']);
 
-
-
-
 });
 
+Route::middleware(['token_validate'])->group(function () {
+    Route::post('update_address',[HomeController::class,'updateAddress']);
+});
 
 
 
