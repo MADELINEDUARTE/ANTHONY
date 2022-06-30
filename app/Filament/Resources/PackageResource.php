@@ -41,6 +41,9 @@ class PackageResource extends Resource
                     
                     Forms\Components\TextInput::make('amount')
                     ->label('Amount')
+                    ->default('333')
+                    //->extraAttributes(['style' => 'display:none'])
+                    ->hidden()
                     ->required()
                     ->numeric(), 
 

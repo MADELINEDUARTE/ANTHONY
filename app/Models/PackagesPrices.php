@@ -19,4 +19,6 @@ class PackagesPrices extends Model
     public function packages(){
         return $this->belongsTo(Package::class,'packages_id');
     }
+
+    
 }

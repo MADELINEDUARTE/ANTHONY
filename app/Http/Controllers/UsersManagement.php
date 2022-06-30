@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Package;
+use App\Models\Subscription;
 use Illuminate\Validation\Rules\Password;
 
 class UsersManagement extends Controller
@@ -280,7 +282,63 @@ class UsersManagement extends Controller
 
     }
 
+    public function register_user_subscription(Request $request)
+    {
+        $request->validate([
+            'package_id' => 'required',
+            'user_id' => 'required',
+            'status_id' => 'required'
+            
+        ]);
+
+        $user_subscription = new Subscription();
+        $user_subscription->package_id = $request->package_id;
+        $user_subscription->user_id = $request->user_id;
+        $user_subscription->status_id = $request->status_id;
+        $user_subscription->save();
+
+        
+        return response("El usuario ha sido asociado correctamente a la suscripción", 201);
+    }
+
     public function register_user_program(Request $request)
+    {
+        $request->validate([
+            'subscription_id' => 'required',
+            'program_id' => 'required',
+            'status_id' => 'required',
+            'user_id' => 'required',
+            'is_active' => 'required'
+        ]);
+    
+    
+        $subscription = Subscription::where('id',$request->subscription_id)
+        ->where('user_id',$request->user_id)
+        ->first();
+    
+        $package = Package::where('id',$subscription->package_id)->first();
+    
+        $subscription_program = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+        ->where('status_id',1)
+        ->where('user_id',$request->user_id)
+        ->where('is_active',1)
+        ->get();
+    
+        $user_program = new SubscriptionProgram();
+        $user_program->subscription_id = $request->subscription_id;
+        $user_program->program_id = $request->program_id;
+        $user_program->status_id = $request->status_id;
+        $user_program->user_id = $request->user_id;
+        $user_program->is_active = $request->is_active;
+        $user_program->save();
+    
+        //$user = User::create($request->all());
+    
+        
+        return response("El usuario ha sido asociado correctamente al programa; tienen ".count($subscription_program)." programas asociados", 201);
+    }
+
+    /*public function register_user_program(Request $request)
     {
         $request->validate([
             'subscription_id' => 'required',
@@ -302,7 +360,7 @@ class UsersManagement extends Controller
 
         
         return response("El usuario ha sido asociado correctamente añ programa", 201);
-    }
+    }*/
     
 
      public function index(Request $request)
