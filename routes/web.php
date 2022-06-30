@@ -37,6 +37,7 @@ use App\Http\Livewire\Admin\AdminProgramComponent;
 use App\Http\Livewire\Admin\AdminProgramDayRoutineComponent;
 use App\Http\Livewire\Admin\AdminUserComponent;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('success',[HomeController::class,'success']);
+Route::get('cancel',[HomeController::class,'cancel']);
 /*Route::get('/', function () {
     return view('auth.login');
 });
@@ -67,6 +69,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
     return view('dash.index');
 })->name('dash');
 */
+
+
 
 Route::get('/dash','App\Http\Controllers\DashboardController@index');
 
@@ -126,4 +130,5 @@ Route::resource('exercises', ExerciseController::class)->middleware([ 'auth','ve
 Route::resource('exercise-logs', ExerciseLogController::class)->middleware([ 'auth','verified']);
 Route::resource('exercise-videos', ExerciseVideoController::class)->middleware([ 'auth','verified']);
 Route::resource('program-day-routines', ProgramDayRoutineController::class)->middleware([ 'auth','verified']);
+
 

@@ -395,7 +395,7 @@ class SubscriptionStripeController extends Controller
         return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
       }
 
-      $package = $this->getPackage(['package_id' => 1, 'price_id' => 1]);
+      $package = $this->getPackage(['package_id' => $data['package_id'] , 'price_id' => $data['price_id'] ]);
       
       if(!$package){
         return $this->setErrors(['message'=> 'Package not Found' ]);
