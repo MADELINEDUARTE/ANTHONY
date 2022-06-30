@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Program;
+use App\Models\State;
+use App\Models\Country;
 use App\Http\Controllers\Api\SubscriptionStripeController; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -180,6 +182,16 @@ class HomeController extends Controller
       }
 
       return response()->json($invoices);
+    }
+
+    public function getState()
+    {
+      return response()->json(['status'=> true, 'data'=> State::all() ]);
+    }
+
+    public function getCountry()
+    {
+      return response()->json(['status'=> true, 'data'=> Country::all() ]);
     }
 
 

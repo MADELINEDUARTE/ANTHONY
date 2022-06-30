@@ -82,6 +82,10 @@ Route::apiResource('frequentlyaskedquestion',FrequentlyAskedQuestionController::
 
 Route::apiResource('blogpost',BlogPostController::class);
 
+Route::get('get_state',[HomeController::class,'getState']);
+Route::get('get_country',[HomeController::class,'getCountry']);
+
+
 
 Route::middleware(['token_validate'])->prefix('subscription')->group(function () {
 
