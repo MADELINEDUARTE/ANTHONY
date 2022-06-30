@@ -48,6 +48,7 @@ class ProgramDayRoutine extends Model
      * @var array
      */
     protected $fillable = ['title','video','sets','repetitions','program_day_id','status_id','user_id'];
+    protected $hidden = ['deleted_at','created_at','updated_at'];
 
 
     /**

@@ -27,7 +27,7 @@ class HomeDisplayController extends Controller
             return response()->json(['data'=> Program::where("popular",1)->Search($request->search)->get()]);
         }
 
-        if(isset($request->popular) && $request->popular == 'all'){
+        if(isset($request->recommended) && $request->recommended == 'all'){
             return response()->json(['data'=> Program::where("recommended",1)->Search($request->search)->get()]);
         }
 
@@ -58,21 +58,78 @@ class HomeDisplayController extends Controller
 
     public function program_detail(Request $request)
     {
-        $program_detail=Program::
-        with("programCategory")
-        ->with("status")
-        ->with("program_category")
-        ->with("program_status")
-        ->with("user")
-        ->with("details")
-        ->with("details_program_day_routine")
-        ->with("exercises")
-        ->with("subscription_programs")
-        ->with("subscription_program_day_routines")
-        ->where("id",$request->program_id)->get();
 
-        return response($program_detail);
+        $program = Program::with([
+          "programCategory",
+          "status",
+          "program_category",
+          "program_status",
+          "user",
+          "details"=>function($query){
+            $query->with(['exercise']);
+          },
+          "details_program_day_routine",
+          "exercises",
+          "subscription_programs",
+          "subscription_program_day_routines"
+        ])
+        ->where("id",$request->program_id)
+        ->first();
+
+        $user = Auth::user();
+
+        $status_package = null;
+
+        if($user->subscription){
+          $status_package = [ // saber si pago si no tiene sub llega null 
+            "id"      => $user->subscription->package->id,
+            "name"    => $user->subscription->package->name,
+            "status"  => $user->subscription->status_id ? true:false,
+            "message" => "", //alert
+          ];
+        }
+
+        $subscriptionProgram = SubscriptionProgram::where('program_id',$program->id)
+                                ->where('subscription_id',$user->subscription->id)
+                                ->where('user_id',$user->id)
+                                ->latest()
+                                ->first();
+
+        $status_program = null;
+
+        if($subscriptionProgram && $subscriptionProgram->status_id == 1){
+          $status_program = [ //si el programa en el que entro esta registrado o no o nulo
+            "id"     => $subscriptionProgram->id,
+            "status" => $subscriptionProgram->is_active ? true: false,
+            "active" => $subscriptionProgram->is_active,
+          ];
+        }
+
+        $program_detail =  [
+          "id"                  => $program->id,
+          "name"                => $program->name,
+          "description"         => $program->description,
+          "program_category_id" => $program->program_category_id ,
+          "video"               => $program->video,
+          "number_of_days"      => $program->number_of_days,
+          "image"               => $program->image,
+          "status_package"      => $status_package,
+          "status_program"      => $status_program,
+          "details"             => $program->details
+        ];
+
+        foreach ($program_detail['details'] as $key => $dia) {
+          foreach ($dia['exercise'] as $d => $ejercicio) {
+
+            $ejercicio['complete'] = false;
+            $ejercicio['log'] = [];
+          }
+        }
+
+        return response()->json(['date'=> $program_detail]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.

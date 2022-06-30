@@ -10,7 +10,9 @@ use App\Models\Country;
 use App\Http\Controllers\Api\SubscriptionStripeController; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Subscription;
+use App\Models\Package;
+use App\Models\SubscriptionProgram;
 
 class HomeController extends Controller
 {
@@ -132,10 +134,9 @@ class HomeController extends Controller
 
       if(!$subscriptionData['status']){
         return response()->json($subscription->getErrors(),422);
-
       }
 
-        return response()->json($subscriptionData);
+      return response()->json($subscriptionData);
     }
 
     public function cancelSubscription(Request $request)
@@ -222,6 +223,99 @@ class HomeController extends Controller
       return response()->json(['status'=> true,'message'=> 'Update address', 'data' => $user]);
     }
 
+    public function register_user_program(Request $request)
+    {
+        $rules=[
+          'subscription_id' => 'required',
+          'program_id' => 'required',
+          'status_id' => 'required',
+          'is_active' => 'required'
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+        }
+      
+        $subscription = Subscription::where('id',$request->subscription_id)
+        ->where('user_id',Auth::user()->id)
+        ->first();
+    
+        $package = Package::where('id',$subscription->package_id)->first();
+    
+        $subscription_program = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+        ->where('status_id',1)
+        ->where('user_id',Auth::user()->id)
+        ->orderBy('created_at','desc')
+        // ->where('is_active',1)
+        ->get();
+        
+    
+            $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+            ->where('status_id',1)
+            ->where('user_id',Auth::user()->id)
+            ->where('program_id',$request->program_id)
+            ->where('is_active',1)
+            ->get();
+
+            if(count($subscription_program_per_user)>0){
+              return response()->json(['status'=> true, 'message'=> "The user already has this program associated"], 403);
+            }else{ 
+
+              $programsActivos = $subscription_program->where('is_active',1);
+
+              if(count($programsActivos) >= $package->number_of_programs){
+
+                return response()->json(['status'=> true, 'message'=> "The user has reached and/or exceeded the program limit according to its associated package:"], 403);
+      
+              }else{
+
+                $programsInactivo = $subscription_program->where('is_active',0);
+                if(count($programsInactivo)){
+
+                  $programsInactivo[0]->is_active = 1;
+                  $programsInactivo[0]->save();
+
+                }else{
+
+                  $user_program = new SubscriptionProgram();
+                  $user_program->subscription_id = $request->subscription_id;
+                  $user_program->program_id = $request->program_id;
+                  $user_program->status_id = $request->status_id;
+                  $user_program->user_id = Auth::user()->id;
+                  $user_program->is_active = $request->is_active;
+                  $user_program->save();
+               }
+                //$user = User::create($request->all());
+    
+                return response()->json(['status'=> true,'message'=>"The user has been successfully associated with the program; they have ".count($programsActivos)." associated programs "],201);
+              }
+            }
+    }
+
+    public function cancel_user_program(Request $request)
+    {
+      $rules=[
+        'status_program_id' => 'required',
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return response()->json($validator->errors(),422);
+      }
+
+      $subscription_program = SubscriptionProgram::where('id', $request->status_program_id)->first();
+
+      if($subscription_program){
+        $subscription_program->is_active = 0;
+        $subscription_program->save();
+
+        return response()->json(['status'=> true, 'message'=> 'Program stop']);
+      }
+      return response()->json(['status'=> false, 'message'=> 'Program not found'], 422);
+    }
     
 
 }

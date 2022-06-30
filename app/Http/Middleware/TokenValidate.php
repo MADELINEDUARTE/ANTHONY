@@ -19,6 +19,7 @@ class TokenValidate
      */
     public function handle(Request $request, Closure $next)
     {
+
         $user = User::where('token',$request->header('token'))->first();
 
         if(!$user){

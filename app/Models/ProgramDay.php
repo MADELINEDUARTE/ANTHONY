@@ -43,6 +43,8 @@ class ProgramDay extends Model
      */
     protected $fillable = ['program_id','name','number','user_id','description'];
 
+    protected $hidden = ['deleted_at','created_at','updated_at'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -62,6 +64,11 @@ class ProgramDay extends Model
     
     public function program_day_user(){
         return $this->belongsTo(User::class, 'user_id');
+     }
+
+     public function exercise()
+     {
+        return $this->hasMany(ProgramDayRoutine::class, 'program_day_id');
      }
 
 

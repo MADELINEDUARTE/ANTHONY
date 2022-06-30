@@ -45,10 +45,10 @@ Route::post('register',[UsersManagement::class,'register']);
 Route::post('logout', [UsersManagement::class, 'logout'])->middleware('auth:sanctum');
 Route::post('update_user',[UsersManagement::class,'update_user']);
 Route::post('register_user_subscription',[UsersManagement::class,'register_user_subscription']);
-Route::post('register_user_program',[UsersManagement::class,'register_user_program']);
+
 Route::apiResource('user_management',UsersManagement::class);
 
-Route::get('program_detail',[HomeDisplayController::class,'program_detail']);
+
 
 
 Route::post('register_card',[CardRegisterController::class,'register_card']);
@@ -101,7 +101,11 @@ Route::middleware(['token_validate'])->prefix('subscription')->group(function ()
 
 Route::middleware(['token_validate'])->group(function () {
     Route::post('update_address',[HomeController::class,'updateAddress']);
-     Route::apiResource('home_display',HomeDisplayController::class);
+    Route::apiResource('home_display', HomeDisplayController::class);
+    Route::get('program_detail',[HomeDisplayController::class,'program_detail']);
+    Route::post('register_user_program',[HomeController::class,'register_user_program']);
+    Route::post('cancel_user_program',[HomeController::class,'cancel_user_program']);
+    
 });
 
 
