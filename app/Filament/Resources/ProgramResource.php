@@ -114,8 +114,8 @@ class ProgramResource extends Resource
             RelationManagers\ProgramDaysRelationManager::class,
             RelationManagers\ProgramDayRoutineRelationManager::class,
             //RelationManagers\ProgramExercisesRelationManager::class,
-            RelationManagers\ProgramSubscriptionRelationManager::class,
-            RelationManagers\ProgramDaySubscriptionRelationManager::class,
+            //RelationManagers\ProgramSubscriptionRelationManager::class,
+            //RelationManagers\ProgramDaySubscriptionRelationManager::class,
         ];
     }
 

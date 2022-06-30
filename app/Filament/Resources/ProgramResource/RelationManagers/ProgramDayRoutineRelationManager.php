@@ -49,8 +49,8 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
                 ->visibility('public')
                 ->imagePreviewHeight('200')
                 ->preserveFilenames()
-                ->label('Video')
-                ->required(), 
+                ->label('Video'),
+                //->required(), 
 
                 Forms\Components\TextInput::make('sets')
                     ->label('Sets')

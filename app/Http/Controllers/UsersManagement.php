@@ -350,9 +350,9 @@ class UsersManagement extends Controller
         ->where('is_active',1)
         ->get();
     
-        if($package->id == 1){
+        //if($package->id == 1){
 
-            $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+            /*$subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
             ->where('status_id',1)
             ->where('user_id',$request->user_id)
             ->where('program_id',$request->program_id)
@@ -379,10 +379,10 @@ class UsersManagement extends Controller
                 return response("El usuario ha sido asociado correctamente al programa; tienen ".count($subscription_program)." programas asociados para el paquete ".$package->name." ", 201);
     
 
-            }
+            }*/
 
             
-        }else{
+        /*}else{*/
 
 
             $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
@@ -423,7 +423,7 @@ class UsersManagement extends Controller
 
             
 
-        }
+        //}
 
        
     

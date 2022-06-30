@@ -35,7 +35,7 @@ class ProgramDaysRelationManager extends HasManyRelationManager
 
                 Forms\Components\TextInput::make('number')
                 ->required()
-                ->numeric()
+                //->numeric()
                 ->label('Number'),   
               
                 Forms\Components\RichEditor::make('description')
