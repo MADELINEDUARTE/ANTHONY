@@ -49,7 +49,7 @@ Route::post('register_user_program',[UsersManagement::class,'register_user_progr
 Route::apiResource('user_management',UsersManagement::class);
 
 Route::get('program_detail',[HomeDisplayController::class,'program_detail']);
-Route::apiResource('home_display',HomeDisplayController::class);
+
 
 Route::post('register_card',[CardRegisterController::class,'register_card']);
 Route::apiResource('card_register',CardRegisterController::class);
@@ -82,6 +82,10 @@ Route::apiResource('frequentlyaskedquestion',FrequentlyAskedQuestionController::
 
 Route::apiResource('blogpost',BlogPostController::class);
 
+Route::get('get_state',[HomeController::class,'getState']);
+Route::get('get_country',[HomeController::class,'getCountry']);
+
+
 
 Route::middleware(['token_validate'])->prefix('subscription')->group(function () {
 
@@ -93,11 +97,12 @@ Route::middleware(['token_validate'])->prefix('subscription')->group(function ()
     Route::post('reanudar_subscription',[HomeController::class,'reanudarSubscription']);
     Route::post('get_invoices',[HomeController::class,'getInvoices']);
 
-
-
-
 });
 
+Route::middleware(['token_validate'])->group(function () {
+    Route::post('update_address',[HomeController::class,'updateAddress']);
+     Route::apiResource('home_display',HomeDisplayController::class);
+});
 
 
 

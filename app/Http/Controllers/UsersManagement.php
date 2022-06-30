@@ -12,6 +12,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Package;
 use App\Models\Subscription;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class UsersManagement extends Controller
 {
@@ -21,7 +24,7 @@ class UsersManagement extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
 
         /*
@@ -43,23 +46,46 @@ class UsersManagement extends Controller
         }
         */
 
-        $request->authenticate();
+        // $request->authenticate();
+
+      $rules=[
+        'email'    => 'required',
+        'password'   => 'required',
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return response()->json($validator->errors(),422);
+      }
+
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt($credentials)) {
 
 
-        $token = $request->user()->createToken('authtoken');
+            return response()->json([ 
+                'status'=> false,
+                "message" => "User Logged",
+                "data" => [
+                    "user"=> Auth::user(),
+                    "token" =>  Auth::user()->token
+                ]
+            ]);
 
-       return response()->json(
-           [
-               'message'=>'Logged in baby',
-               'data'=> [
-                   'user'=> $request->user(),
-                   'token'=> $token->plainTextToken
-               ]
-           ]
-        );
+            
+        }else{
 
-       
+            return response()->json([ 
+                'status'=> false,
+                'message' => 'The provided credentials do not match our records.',
+            ]);
 
+        }
+        
         
     }
 

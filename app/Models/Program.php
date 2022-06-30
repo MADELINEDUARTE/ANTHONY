@@ -98,6 +98,12 @@ class Program extends Model
     public function subscription_program_day_routines(){
         return $this->hasMany(SubscriptionProgramDayRoutine::class,'program_id');
     }
+
+    public function scopeSearch($query, $search)
+    {
+        if($search)
+            $query->where('name','like','%'.$search.'%');
+    }
     
 
 }
