@@ -8,6 +8,7 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Package;
+use App\Models\Subscription;
 
 class SubscriptionStripeController extends Controller
 {
@@ -500,7 +501,7 @@ class SubscriptionStripeController extends Controller
         return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
       }
 
-      $package = $this->getPackage(['package_id' => 1, 'price_id' => null]);
+      $package = $this->getPackage(['package_id' => $data['package_id'], 'price_id' => null]);
 
       if(!$package){
         return $this->setErrors(['message'=> 'Package not Found' ]);
@@ -508,7 +509,16 @@ class SubscriptionStripeController extends Controller
 
       try {
 
-        $this->user->subscription($package->stripe_id)->cancel();
+        // $this->user->subscription($package->stripe_id)->cancel();
+
+        Cashier::stripe()->subscriptions->cancel(
+          $this->user->subscription->stripe_id,
+          []
+        );
+
+        // $this->user->id
+        // Subscription::where('user_id',)
+
 
       } catch (\Exception $e) {
         return $this->setErrors(['message'=> $e->getMessage()]);
@@ -529,7 +539,7 @@ class SubscriptionStripeController extends Controller
         return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
       }
 
-      $package = $this->getPackage(['package_id' => 1, 'price_id' => null]);
+      $package = $this->getPackage(['package_id' => $data['package_id'], 'price_id' => null]);
 
       if(!$package){
         return $this->setErrors(['message'=> 'Package not Found' ]);
@@ -537,7 +547,21 @@ class SubscriptionStripeController extends Controller
 
       try {
 
-        $this->user->subscription($package->stripe_id)->resume();
+         // dd() ;
+          Cashier::stripe()->subscriptions->update(
+            $this->user->subscription->stripe_id,
+            [
+              'cancel_at_period_end' => false,
+            ]
+          );
+
+         // Cashier::findBillable($this->user->stripe_id)->subscription($package->stripe_id)->resume();
+        // $this->user;
+
+        // Cashier::stripe()->subscriptions->cancel(
+        //   $this->user->subscription->stripe_id,
+        //   []
+        // );
 
       } catch (\Exception $e) {
         return $this->setErrors(['message'=> $e->getMessage()]);
@@ -593,7 +617,7 @@ class SubscriptionStripeController extends Controller
         foreach ($invoices as $key => $invoice) {
           if($invoice->total() != '$0.00'){
             $datos[] = [
-              'name' => $this->user->subscription->packagestripe->name,
+              'name' => $this->user->subscription->package->name,
               'amount' => $invoice->total(),
               'date' => $invoice->date()->toFormattedDateString(),
               'invoice_pdf' => $invoice->invoice_pdf,

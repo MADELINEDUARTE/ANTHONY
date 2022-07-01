@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\ProgramDayRoutine;
 use App\Models\SubscriptionProgramLogDetail;
 use App\Models\SubscriptionProgramLog;
-
+use \Carbon\Carbon;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -96,8 +96,9 @@ class HomeDisplayController extends Controller
 
         $status_package = null;
         $status_program = null;
-
-        if($user->subscription){
+        
+       $statusNo = ['canceled'];
+        if($user->subscription && !in_array($user->subscription->stripe_status, $statusNo)){
           $status_package = [ // saber si pago si no tiene sub llega null 
             "id"      => $user->subscription->package->id,
             "name"    => $user->subscription->package->name,
@@ -139,19 +140,24 @@ class HomeDisplayController extends Controller
           "details"             => $program->details
         ];
 
+$conteoSI = 0;
         foreach ($program_detail['details'] as $key => $dia) {
+            
             $dia['status'] = false;
             $dia['muscular_group'] = '';
+
           foreach ($dia['exercise'] as $d => $ejercicio) {
             
             $ejercicio['completed'] = false;
             $ejercicio['log'] = [];
 
-            if($subscriptionProgram){
+            if(isset($subscriptionProgram)){
+                // dd($subscriptionProgram->id); 
                 $log = SubscriptionProgramLog::where('program_days_id', $dia['id'])
                             ->where('program_day_routines_id', $ejercicio['id'])
                             ->where('subscription_programs_id', $subscriptionProgram->id)
-                            ->first(); 
+                            ->first();
+
                 if($log){
 
 
@@ -163,6 +169,10 @@ class HomeDisplayController extends Controller
                         $ejercicio['completed'] = false;
                     }
 
+                    if($ejercicio['completed'] == true){
+                        $conteoSI++;
+                    }
+
                     $arr = [];
                     foreach ($logs as $y => $value) {
                         $arr[] = [
@@ -171,11 +181,35 @@ class HomeDisplayController extends Controller
                           "weight"=> $value->peso
                         ];
                     }
-
                     $ejercicio['log'] = $arr;
+                    $cuento = 0;
+                    $cuentow = 0;
+                    $numero = count($ejercicio['log']);
+                    foreach ($ejercicio['log'] as $key => $value) {
+                      $cuento += $value['repetitions'];
+                      $cuentow += intval($value['weight']);
+                    }
+
+                    $calculorepetitions = $cuento / $numero;
+                    $calculow = $cuentow / $numero;
+
+                    $ejercicio['list'] = [
+                      [
+                        "maxweight" => $calculow,
+                        "maxreps" => $calculorepetitions,
+                        "date" => Carbon::parse($log->updated_at)->format('m/d/Y'),
+                      ]
+                    ];
                 }
             }
             
+          }
+
+
+          if($conteoSI == count($dia['exercise'])){
+            $dia['status'] = true;
+          }elseif($conteoSI < count($dia['exercise'])){
+            $dia['status'] = false;
           }
         }
 

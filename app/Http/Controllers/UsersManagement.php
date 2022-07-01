@@ -321,6 +321,17 @@ class UsersManagement extends Controller
             $User->exercise_place_id = $request->exercise_place_id;
         }
 
+        if($request->state_id && $request->state_id!=""){
+            $User->state_id = $request->state_id;
+        }
+
+        if($request->city && $request->city!=""){
+            $User->city = $request->city;
+        }
+        if($request->postal_code && $request->postal_code!=""){
+            $User->postal_code = $request->postal_code;
+        }
+
 
         $User->save();
 

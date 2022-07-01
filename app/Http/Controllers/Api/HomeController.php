@@ -16,6 +16,7 @@ use App\Models\Package;
 use App\Models\SubscriptionProgram;
 use App\Models\SubscriptionProgramLog;
 use App\Models\SubscriptionProgramLogDetail;
+use \Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -114,12 +115,13 @@ class HomeController extends Controller
       $validator= Validator::make($request->all(),$rules);
 
       if ($validator->fails()) {
-        return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
+        return response()->json($validator->errors(),422);
       }
 
       $subscription = new SubscriptionStripeController([ 'user' => Auth::user() ]);
 
       if(!$subscription->hasClient()){
+        
          $customer = $subscription->createClienteStripe();
 
         if(isset($customer['status']) && !$customer['status']){
@@ -144,11 +146,25 @@ class HomeController extends Controller
 
     public function cancelSubscription(Request $request)
     {
+
+      $rules=[
+        'package_id'        => 'required',
+      ];
+
+      $validator= Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return response()->json($validator->errors(),422);
+      }
+
       $subscription = new SubscriptionStripeController([ 'user' => Auth::user() ]);
+      
+      // dd( Auth::user() );
 
       $subscriptionData = $subscription->cancelSubscription([
-                                        'package_id'=> 1, 
+                                        'package_id'=> $request->package_id, 
                                       ]);
+
 
       if(!$subscriptionData['status']){
         return response()->json($subscriptionData,422);
@@ -174,6 +190,7 @@ class HomeController extends Controller
 
         return response()->json(['status'=> true,'message'=> 'Subscription Canceled']);
     }
+
 
     public function getInvoices(Request $request)
     {
@@ -211,7 +228,7 @@ class HomeController extends Controller
       $validator= Validator::make($request->all(),$rules);
 
       if ($validator->fails()) {
-        return $this->setErrors(['errors'=> collect($validator->errors())->all()]);
+        return response()->json($validator->errors(),422);
       }
 
       $user = Auth::user();
@@ -276,7 +293,7 @@ class HomeController extends Controller
 
                 $programsInactivo = $subscription_program->where('is_active',0);
                 if(count($programsInactivo)){
-
+                  
                   $programsInactivo[0]->is_active = 1;
                   $programsInactivo[0]->save();
 
@@ -360,12 +377,12 @@ class HomeController extends Controller
           $detalle = new SubscriptionProgramLogDetail();
           $detalle->subscription_program_logs_id  = $log->id;
           $detalle->set                           = $data['set'];
-          $detalle->repeticiones                  = $data['repeticiones'];
-          $detalle->peso                          = $data['peso'];
+          $detalle->repeticiones                  = $data['repetitions'];
+          $detalle->peso                          = $data['weight'];
           $detalle->save();
         }else{
-          $detalle->repeticiones= $data['repeticiones'];
-          $detalle->peso =$data['peso'];
+          $detalle->repeticiones= $data['repetitions'];
+          $detalle->peso =$data['weight'];
           $detalle->save();
         }
       }
@@ -395,7 +412,30 @@ class HomeController extends Controller
         ];
       }
 
+
       $ejercicio->log = $arr;
+
+      
+
+      $cuento = 0;
+      $cuentow = 0;
+      $numero = count($ejercicio->log);
+      foreach ($ejercicio->log as $key => $value) {
+        $cuento += $value['repetitions'];
+        $cuentow += intval($value['weight']);
+      }
+      
+      $calculorepetitions = $cuento / $numero;
+      $calculow = $cuentow / $numero;
+
+      $ejercicio->list = [
+        [
+          "maxweight" => $calculow,
+          "maxreps" => $calculorepetitions,
+          "date" => Carbon::parse($log->updated_at)->format('m/d/Y'),
+        ]
+      ];
+
 
       return response()->json([ 'status'=> true, 'message'=> 'Created', 'data' => $ejercicio ]);
     }
@@ -404,10 +444,21 @@ class HomeController extends Controller
     public function getSubscription()
     {
       $user = Auth::user();
-      $user->subscription;
-      $user->subscription->packages;
+      $subscription = [];
+      if($user->subscription->package){
+        $price = $user->subscription->package->prices()->where('stripe_id',$user->subscription->stripe_price)->first();
 
-      return response()->json(['status'=> true, 'data'=> $user->subscription ]);
+        $subscription = [
+          'tittle' => $user->subscription->package->name,
+          'text' => $user->subscription->package->description,
+          'recurrence' => $price->recurrence->description,
+          'mount' => $price->amount,
+          'status' => $user->subscription->stripe_status,
+          'package_id' => $user->subscription->package->id
+        ];
+      }
+
+      return response()->json(['status'=> true, 'data'=> $subscription ]);
     }
 
 }

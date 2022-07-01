@@ -109,8 +109,8 @@ Route::middleware(['token_validate'])->group(function () {
     Route::post('register_user_program',[HomeController::class,'register_user_program']);
     Route::post('cancel_user_program',[HomeController::class,'cancel_user_program']);
     Route::post('create_log',[HomeController::class,'create_log']);
-    Route::post('get_subscription',[HomeController::class,'getSubscription']);
-    
+    Route::get('get_subscription',[HomeController::class,'getSubscription']);
+
 
 });
 
