@@ -93,9 +93,18 @@ class UsersManagement extends Controller
     public function register(Request $request)
     {
         
-        $request->validate([
+
+
+         $rules=[
             'email' => 'required|string|email'
-        ]);
+            
+          ];
+
+          $validator = Validator::make($request->all(),$rules);
+
+          if ($validator->fails()) {
+            return response()->json($validator->errors(),422);
+          }
 
         $validate_user=User::where('email',$request->email)->get();
 
@@ -105,7 +114,8 @@ class UsersManagement extends Controller
 
         }else{
 
-            $request->validate([
+
+            $rules=[
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 // 'password' => 'required',
@@ -116,7 +126,13 @@ class UsersManagement extends Controller
                 'country_id' => 'required',
                 // 'address' => 'required',
                 'telephone' => 'required'
-            ]);
+            ];
+
+          $validator = Validator::make($request->all(),$rules);
+
+          if ($validator->fails()) {
+            return response()->json($validator->errors(),422);
+          }
 
             $user = User::create([
                 'name' => $request->name,
@@ -162,7 +178,33 @@ class UsersManagement extends Controller
         }
 
         
+        public function validateCode(Request $request){
+            $rules=[
+                'code' => 'required',
+                'user_id' => 'required'
+            ];
 
+            $validator = Validator::make($request->all(),$rules);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(),422);
+            }
+
+            $user = User::where('id', $request->user_id)->first();
+
+            if($user){
+                if($user->code == $request->code){
+                    return response()->json([
+                        'message'=>'User Validated',
+                        'data'=> ['token' => $user->token, 'user' => $user]
+                    ],200);
+                }
+            }else{
+                return response()->json(["message"=>"User Not Found"],422);
+            }
+
+
+        }
         
 
         

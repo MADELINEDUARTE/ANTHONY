@@ -19,7 +19,7 @@ class SendCode extends Mailable
      * @return void
      */
     public function __construct($code, $user)
-    {s
+    {
         $this->code = $code; 
         $this->user = $user; 
     }
