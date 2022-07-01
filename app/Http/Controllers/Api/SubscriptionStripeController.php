@@ -620,7 +620,7 @@ class SubscriptionStripeController extends Controller
               'name' => $this->user->subscription->package->name,
               'amount' => $invoice->total(),
               'date' => $invoice->date()->toFormattedDateString(),
-              'invoice_pdf' => $invoice->invoice_pdf,
+              'invoice_pdf' => $invoice->hosted_invoice_url,
               'status' => $invoice->status,
               'pm_last_four' => $this->user->pm_last_four,
               'pm_type' => $this->user->pm_type,
