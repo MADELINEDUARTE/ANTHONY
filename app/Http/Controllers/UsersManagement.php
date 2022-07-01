@@ -14,8 +14,8 @@ use App\Models\Subscription;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
-
+use App\Mail\SendCode;
+use Illuminate\Support\Facades\Mail;
 class UsersManagement extends Controller
 {
     /**
@@ -108,39 +108,42 @@ class UsersManagement extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required',
-                'middle_name' => 'required',
+                // 'password' => 'required',
+                // 'middle_name' => 'required',
                 'last_name' => 'required',
-                'gender_id' => 'required',
-                'date_of_birth' => 'required',
+                // 'gender_id' => 'required',
+                // 'date_of_birth' => 'required',
                 'country_id' => 'required',
-                'address' => 'required',
+                // 'address' => 'required',
                 'telephone' => 'required'
             ]);
-
-            
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'middle_name' => $request->middle_name,
+                // 'password' => Hash::make($request->password),
+                // 'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
-                'gender_id' => $request->gender_id,
-                'date_of_birth' => $request->date_of_birth,
+                // 'gender_id' => $request->gender_id,
+                // 'date_of_birth' => $request->date_of_birth,
                 'country_id' => $request->country_id,
-                'address' => $request->address,
+                // 'address' => $request->address,
                 'telephone' => $request->telephone,
             ]);
     
-            event(new Registered($user));
+            
     
             $token = $user->createToken('authtoken');
 
             $user->token = $token->plainTextToken;
+            $numero_aleatorio = rand(100000,900000);
+            $user->code = $numero_aleatorio;
             $user->save();
 
+            Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
 
+            // event(new Registered($user));
+            
             if($token){
 
                 return response()->json(
