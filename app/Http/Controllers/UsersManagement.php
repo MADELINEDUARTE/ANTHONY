@@ -320,9 +320,7 @@ class UsersManagement extends Controller
         if($request->exercise_place_id && $request->exercise_place_id!=""){
             $User->exercise_place_id = $request->exercise_place_id;
         }
-        
-        
-        
+
 
         $User->save();
 
@@ -331,7 +329,7 @@ class UsersManagement extends Controller
         return response()->json(
             [
                 'message'=>'User Updated',
-                'data'=> ['user' => $User]
+                'data'=> ['user' => $User, 'token' => $User->token]
             ]
         );
      

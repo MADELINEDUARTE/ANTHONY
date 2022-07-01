@@ -14,7 +14,7 @@ class AddCampoCountries extends Migration
     public function up()
     {
         Schema::table('countries', function (Blueprint $table) {
-            $table->string('code')->nullable();
+            // $table->string('code')->nullable();
         });
     }
 

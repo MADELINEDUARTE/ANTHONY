@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Program;
+use App\Models\ProgramDayRoutine;
 use App\Models\State;
 use App\Models\Country;
 use App\Http\Controllers\Api\SubscriptionStripeController; 
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Subscription;
 use App\Models\Package;
 use App\Models\SubscriptionProgram;
+use App\Models\SubscriptionProgramLog;
+use App\Models\SubscriptionProgramLogDetail;
 
 class HomeController extends Controller
 {
@@ -315,6 +318,57 @@ class HomeController extends Controller
         return response()->json(['status'=> true, 'message'=> 'Program stop']);
       }
       return response()->json(['status'=> false, 'message'=> 'Program not found'], 422);
+    }
+
+    public function create_log(Request $request)
+    {
+      $rules=[
+        "program_days_id"                 => 'required',
+        "program_day_routines_id"         => 'required',
+        "subscription_programs_id"        => 'required',
+        "data"                            => 'required'
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return response()->json($validator->errors(),422);
+      }
+
+      $log = SubscriptionProgramLog::insert([
+          "program_days_id"          => $request->program_days_id, //Dia
+          "program_day_routines_id"  => $request->program_day_routines_id, //Ejercicio
+          "subscription_programs_id" => $request->subscription_programs_id, //subscription
+          "status"                   => 1,
+          "is_complete"              => 0,
+      ]);
+
+      $arr = [];
+      foreach ($request->data as $key => $data) {
+        $arr[] = [
+          "subscription_program_logs_id"=> $log->id,
+          "set"          => $data['set'],
+          "repeticiones" => $data['repeticiones'],
+          "peso"         => $data['peso'],
+        ];
+      }
+
+      $logDetail = SubscriptionProgramLogDetail::upsert($arr,['subscription_program_logs_id','set'],['repeticiones','peso']);
+
+      $ejercicio = ProgramDayRoutine::where('id',$request->program_day_routines_id)->first();
+
+      $logs = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)->get();
+
+      if(count($logs) == $ejercicio->sets){ // completo el ejercicio
+
+        $log->is_complete = 1;
+        $log->save();
+
+      }elseif(count($logs) == $ejercicio->sets){ //No lo ha completado
+
+      }
+
+      return response()->json([ 'status'=> true, 'message'=> 'Created', 'data' => $logs ]);
     }
     
 

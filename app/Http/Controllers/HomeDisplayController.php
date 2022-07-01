@@ -32,7 +32,13 @@ class HomeDisplayController extends Controller
         }
 
         if(isset($request->my_programs) && $request->my_programs == 'all'){
-            return response()->json(['data'=> SubscriptionProgram::where("user_id",Auth::user()->id)->get()]);
+            $subscription_program=SubscriptionProgram::where("user_id",Auth::user()->id)->where('status_id',1)->where('is_active',1)->get();
+            $arr = [];
+            foreach ($subscription_program as $key => $value) {
+                $arr[] = $value->program;
+            }
+            $subscription_program = $arr;
+            return response()->json(['data'=> $subscription_program]);
         }
 
         $program_recommended=Program::where("recommended",1)->limit(6)->get();
@@ -40,7 +46,13 @@ class HomeDisplayController extends Controller
         $program_popular=Program::where("popular",1)->limit(6)->get();
 
         if(Auth::user() ){
-            $subscription_program=SubscriptionProgram::where("user_id",Auth::user()->id)->get();
+// dd(Auth::user());
+            $subscription_program=SubscriptionProgram::where("user_id",Auth::user()->id)->where('status_id',1)->where('is_active',1)->get();
+            $arr = [];
+            foreach ($subscription_program as $key => $value) {
+                $arr[] = $value->program;
+            }
+            $subscription_program = $arr;
         }else{
             $subscription_program=[];
         }
@@ -79,12 +91,13 @@ class HomeDisplayController extends Controller
         $user = Auth::user();
 
         $status_package = null;
-$status_program = null;
+        $status_program = null;
+
         if($user->subscription){
           $status_package = [ // saber si pago si no tiene sub llega null 
             "id"      => $user->subscription->package->id,
             "name"    => $user->subscription->package->name,
-            "status"  => $user->subscription->status_id ? true:false,
+            "status"  => $user->subscription->stripe_status =='active' ? true:false,
             "message" => "", //alert
             "subscription_id" => $user->subscription->id
           ];
@@ -103,7 +116,7 @@ $status_program = null;
         if($subscriptionProgram && $subscriptionProgram->status_id == 1){
           $status_program = [ //si el programa en el que entro esta registrado o no o nulo
             "id"     => $subscriptionProgram->id,
-            "status" => $subscriptionProgram->is_active ? true: false,
+            "status" => $subscriptionProgram->is_active  ? true: false,
             "active" => $subscriptionProgram->is_active,
           ];
         }
@@ -123,6 +136,8 @@ $status_program = null;
         ];
 
         foreach ($program_detail['details'] as $key => $dia) {
+            $dia['status'] = false;
+            $dia['muscular_group'] = '';
           foreach ($dia['exercise'] as $d => $ejercicio) {
 
             $ejercicio['complete'] = false;
