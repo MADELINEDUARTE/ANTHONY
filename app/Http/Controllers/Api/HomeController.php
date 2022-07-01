@@ -461,4 +461,10 @@ class HomeController extends Controller
       return response()->json(['status'=> true, 'data'=> $subscription ]);
     }
 
+    public function getUser(){
+      $user = Auth::user();
+
+      return response()->json(['status'=> true, 'data'=> ['user'=> $user, 'token'=> $user->token ]]);
+    }
+
 }
