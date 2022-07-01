@@ -6,6 +6,11 @@ use App\Models\Program;
 use App\Models\Subscription;
 use App\Models\SubscriptionProgram;
 use Illuminate\Http\Request;
+use App\Models\ProgramDayRoutine;
+use App\Models\SubscriptionProgramLogDetail;
+use App\Models\SubscriptionProgramLog;
+
+
 use Illuminate\Support\Facades\Auth;
 
 class HomeDisplayController extends Controller
@@ -46,7 +51,6 @@ class HomeDisplayController extends Controller
         $program_popular=Program::where("popular",1)->limit(6)->get();
 
         if(Auth::user() ){
-// dd(Auth::user());
             $subscription_program=SubscriptionProgram::where("user_id",Auth::user()->id)->where('status_id',1)->where('is_active',1)->get();
             $arr = [];
             foreach ($subscription_program as $key => $value) {
@@ -105,21 +109,21 @@ class HomeDisplayController extends Controller
   
         
 
-        $subscriptionProgram = SubscriptionProgram::where('program_id',$program->id)
-                                ->where('subscription_id',$user->subscription->id)
-                                ->where('user_id',$user->id)
-                                ->latest()
-                                ->first();
+            $subscriptionProgram = SubscriptionProgram::where('program_id',$program->id)
+                                    ->where('subscription_id',$user->subscription->id)
+                                    ->where('user_id',$user->id)
+                                    ->latest()
+                                    ->first();
 
-        
+            
 
-        if($subscriptionProgram && $subscriptionProgram->status_id == 1){
-          $status_program = [ //si el programa en el que entro esta registrado o no o nulo
-            "id"     => $subscriptionProgram->id,
-            "status" => $subscriptionProgram->is_active  ? true: false,
-            "active" => $subscriptionProgram->is_active,
-          ];
-        }
+            if($subscriptionProgram && $subscriptionProgram->status_id == 1){
+              $status_program = [ //si el programa en el que entro esta registrado o no o nulo
+                "id"     => $subscriptionProgram->id,
+                "status" => $subscriptionProgram->is_active  ? true: false,
+                "active" => $subscriptionProgram->is_active,
+              ];
+            }
         }
 
         $program_detail =  [
@@ -139,9 +143,39 @@ class HomeDisplayController extends Controller
             $dia['status'] = false;
             $dia['muscular_group'] = '';
           foreach ($dia['exercise'] as $d => $ejercicio) {
-
-            $ejercicio['complete'] = false;
+            
+            $ejercicio['completed'] = false;
             $ejercicio['log'] = [];
+
+            if($subscriptionProgram){
+                $log = SubscriptionProgramLog::where('program_days_id', $dia['id'])
+                            ->where('program_day_routines_id', $ejercicio['id'])
+                            ->where('subscription_programs_id', $subscriptionProgram->id)
+                            ->first(); 
+                if($log){
+
+
+                    $logs = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)->get();        
+
+                    if(count($logs) == $ejercicio->sets){ // completo el ejercicio
+                        $ejercicio['completed'] = true;
+                    }elseif(count($logs) < $ejercicio['sets']){ //sNo lo ha completado
+                        $ejercicio['completed'] = false;
+                    }
+
+                    $arr = [];
+                    foreach ($logs as $y => $value) {
+                        $arr[] = [
+                          "set"=> $value->set,
+                          "repetitions"=> $value->repeticiones,
+                          "weight"=> $value->peso
+                        ];
+                    }
+
+                    $ejercicio['log'] = $arr;
+                }
+            }
+            
           }
         }
 

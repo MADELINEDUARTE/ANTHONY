@@ -263,7 +263,7 @@ class HomeController extends Controller
             ->get();
 
             if(count($subscription_program_per_user)>0){
-              return response()->json(['status'=> true, 'message'=> "The user already has this program associated"], 403);
+              return response()->json(['status'=> true, 'message'=> "The user already has this program associated"], 200);
             }else{ 
 
               $programsActivos = $subscription_program->where('is_active',1);
@@ -335,25 +335,41 @@ class HomeController extends Controller
         return response()->json($validator->errors(),422);
       }
 
-      $log = SubscriptionProgramLog::insert([
-          "program_days_id"          => $request->program_days_id, //Dia
-          "program_day_routines_id"  => $request->program_day_routines_id, //Ejercicio
-          "subscription_programs_id" => $request->subscription_programs_id, //subscription
-          "status"                   => 1,
-          "is_complete"              => 0,
-      ]);
+      $log = SubscriptionProgramLog::where('program_days_id', $request->program_days_id)
+                            ->where('program_day_routines_id', $request->program_day_routines_id)
+                            ->where('subscription_programs_id', $request->subscription_programs_id)
+                            ->first(); 
+      if(!$log){
+        $log = new SubscriptionProgramLog();
+        $log->program_days_id          = $request->program_days_id; //Dia
+        $log->program_day_routines_id  = $request->program_day_routines_id; //Ejercicio
+        $log->subscription_programs_id = $request->subscription_programs_id; //subscription
+        $log->status                   = 1;
+        $log->is_complete              = 0;
+        $log->save();
+      }
 
       $arr = [];
       foreach ($request->data as $key => $data) {
-        $arr[] = [
-          "subscription_program_logs_id"=> $log->id,
-          "set"          => $data['set'],
-          "repeticiones" => $data['repeticiones'],
-          "peso"         => $data['peso'],
-        ];
+
+        $detalle = SubscriptionProgramLogDetail::where('subscription_program_logs_id',$log->id)
+                                                ->where('set', $data['set'])
+                                                ->first();
+
+        if(!$detalle){
+          $detalle = new SubscriptionProgramLogDetail();
+          $detalle->subscription_program_logs_id  = $log->id;
+          $detalle->set                           = $data['set'];
+          $detalle->repeticiones                  = $data['repeticiones'];
+          $detalle->peso                          = $data['peso'];
+          $detalle->save();
+        }else{
+          $detalle->repeticiones= $data['repeticiones'];
+          $detalle->peso =$data['peso'];
+          $detalle->save();
+        }
       }
 
-      $logDetail = SubscriptionProgramLogDetail::upsert($arr,['subscription_program_logs_id','set'],['repeticiones','peso']);
 
       $ejercicio = ProgramDayRoutine::where('id',$request->program_day_routines_id)->first();
 
@@ -364,12 +380,34 @@ class HomeController extends Controller
         $log->is_complete = 1;
         $log->save();
 
-      }elseif(count($logs) == $ejercicio->sets){ //No lo ha completado
+      }elseif(count($logs) < $ejercicio->sets){ //sNo lo ha completado
+        $log->is_complete = 0;
+        $log->save();
+      }
+      $ejercicio->completed = $log->is_complete == 1 ? true:false;
 
+      $arr = [];
+      foreach ($logs as $key => $value) {
+        $arr[] = [
+          "set"=> $value->set,
+          "repetitions"=> $value->repeticiones,
+          "weight"=> $value->peso
+        ];
       }
 
-      return response()->json([ 'status'=> true, 'message'=> 'Created', 'data' => $logs ]);
+      $ejercicio->log = $arr;
+
+      return response()->json([ 'status'=> true, 'message'=> 'Created', 'data' => $ejercicio ]);
     }
     
+
+    public function getSubscription()
+    {
+      $user = Auth::user();
+      $user->subscription;
+      $user->subscription->packages;
+
+      return response()->json(['status'=> true, 'data'=> $user->subscription ]);
+    }
 
 }
