@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        html{
+            width:  100%;
+            height:  100%;
+        }
         body{
             background-color: #43A047;
             color:  white;
@@ -14,8 +18,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            width: 100%;
             overflow: hidden;
         }   
     </style>

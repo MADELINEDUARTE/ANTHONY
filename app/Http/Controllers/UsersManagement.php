@@ -63,7 +63,7 @@ class UsersManagement extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::attempt($credentials)) {
 
 
@@ -88,7 +88,35 @@ class UsersManagement extends Controller
         
         
     }
+ public function validateCode(Request $request)
+        {
+           
+            $rules=[
+                'code' => 'required',
+                'user_id' => 'required'
+            ];
 
+            $validator = Validator::make($request->all(),$rules);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(),422);
+            }
+
+            $user = User::where('id', $request->user_id)->first();
+
+            if($user){
+                if($user->code == $request->code){
+                    return response()->json([
+                        'message'=>'User Validated',
+                        'data'=> ['token' => $user->token, 'user' => $user]
+                    ],200);
+                }
+            }else{
+                return response()->json(["message"=>"User Not Found"],422);
+            }
+
+
+        }
 
     public function register(Request $request)
     {
@@ -118,7 +146,7 @@ class UsersManagement extends Controller
             $rules=[
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                // 'password' => 'required',
+                'password' => 'required',
                 // 'middle_name' => 'required',
                 'last_name' => 'required',
                 // 'gender_id' => 'required',
@@ -137,7 +165,7 @@ class UsersManagement extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                // 'password' => Hash::make($request->password),
+                'password' => Hash::make($request->password),
                 // 'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
                 // 'gender_id' => $request->gender_id,
@@ -178,33 +206,7 @@ class UsersManagement extends Controller
         }
 
         
-        public function validateCode(Request $request){
-            $rules=[
-                'code' => 'required',
-                'user_id' => 'required'
-            ];
-
-            $validator = Validator::make($request->all(),$rules);
-
-            if ($validator->fails()) {
-                return response()->json($validator->errors(),422);
-            }
-
-            $user = User::where('id', $request->user_id)->first();
-
-            if($user){
-                if($user->code == $request->code){
-                    return response()->json([
-                        'message'=>'User Validated',
-                        'data'=> ['token' => $user->token, 'user' => $user]
-                    ],200);
-                }
-            }else{
-                return response()->json(["message"=>"User Not Found"],422);
-            }
-
-
-        }
+       
         
 
         

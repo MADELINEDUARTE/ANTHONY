@@ -79,15 +79,18 @@ class HomeDisplayController extends Controller
         $user = Auth::user();
 
         $status_package = null;
-
+$status_program = null;
         if($user->subscription){
           $status_package = [ // saber si pago si no tiene sub llega null 
             "id"      => $user->subscription->package->id,
             "name"    => $user->subscription->package->name,
             "status"  => $user->subscription->status_id ? true:false,
             "message" => "", //alert
+            "subscription_id" => $user->subscription->id
           ];
-        }
+        
+  
+        
 
         $subscriptionProgram = SubscriptionProgram::where('program_id',$program->id)
                                 ->where('subscription_id',$user->subscription->id)
@@ -95,7 +98,7 @@ class HomeDisplayController extends Controller
                                 ->latest()
                                 ->first();
 
-        $status_program = null;
+        
 
         if($subscriptionProgram && $subscriptionProgram->status_id == 1){
           $status_program = [ //si el programa en el que entro esta registrado o no o nulo
@@ -103,6 +106,7 @@ class HomeDisplayController extends Controller
             "status" => $subscriptionProgram->is_active ? true: false,
             "active" => $subscriptionProgram->is_active,
           ];
+        }
         }
 
         $program_detail =  [
