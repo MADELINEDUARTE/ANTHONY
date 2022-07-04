@@ -36,6 +36,10 @@ class UserResource extends Resource
                 ->label('Last Name')
                 ->required(), 
 
+                Forms\Components\TextInput::make('password')
+                ->label('Password')
+                ->required(), 
+
                 Forms\Components\BelongsToSelect::make('gender_id')
                 ->relationship('gender', 'description')
                 ->required()
