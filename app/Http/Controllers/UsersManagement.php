@@ -68,7 +68,7 @@ class UsersManagement extends Controller
 
 
             return response()->json([ 
-                'status'=> false,
+                'status'=> true,
                 "message" => "User Logged",
                 "data" => [
                     "user"=> Auth::user(),
@@ -88,122 +88,116 @@ class UsersManagement extends Controller
         
         
     }
- public function validateCode(Request $request)
-        {
-           
-            $rules=[
-                'code' => 'required',
-                'user_id' => 'required'
-            ];
+    public function validateCode(Request $request)
+    {
+      $rules=[
+        'code' => 'required',
+        'user_id' => 'required'
+      ];
 
-            $validator = Validator::make($request->all(),$rules);
+      $validator = Validator::make($request->all(),$rules);
 
-            if ($validator->fails()) {
-                return response()->json($validator->errors(),422);
-            }
+      if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+      }
 
-            $user = User::where('id', $request->user_id)->first();
+      $user = User::where('id', $request->user_id)->first();
 
-            if($user){
-                if($user->code == $request->code){
-                    return response()->json([
-                        'message'=>'User Validated',
-                        'data'=> ['token' => $user->token, 'user' => $user]
-                    ],200);
-                }
-            }else{
-                return response()->json(["message"=>"User Not Found"],422);
-            }
-
-
-        }
+      if($user){
+          if($user->code == $request->code){
+              return response()->json([
+                  'message'=>'User Validated',
+                  'data'=> ['token' => $user->token, 'user' => $user]
+              ],200);
+          }
+      }else{
+          return response()->json(["message"=>"User Not Found"],422);
+      }
+    }
 
     public function register(Request $request)
     {
+      $rules=[
+        'email' => 'required|string|email'
         
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+        return response()->json($validator->errors(),422);
+      }
+
+    $validate_user=User::where('email',$request->email)->get();
+
+    if(count($validate_user)>0){
+        
+         return response()->json(["message"=>"User already exists"],422);
+
+    }else{
 
 
-         $rules=[
-            'email' => 'required|string|email'
-            
-          ];
+      $rules=[
+          'name' => 'required|string|max:255',
+          'email' => 'required|string|email|max:255|unique:users',
+          'password' => 'required',
+          // 'middle_name' => 'required',
+          'last_name' => 'required',
+          // 'gender_id' => 'required',
+          // 'date_of_birth' => 'required',
+          'country_id' => 'required',
+          // 'address' => 'required',
+          'telephone' => 'required'
+      ];
 
-          $validator = Validator::make($request->all(),$rules);
+    $validator = Validator::make($request->all(),$rules);
 
-          if ($validator->fails()) {
-            return response()->json($validator->errors(),422);
-          }
+    if ($validator->fails()) {
+      return response()->json($validator->errors(),422);
+    }
 
-        $validate_user=User::where('email',$request->email)->get();
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        // 'middle_name' => $request->middle_name,
+        'last_name' => $request->last_name,
+        // 'gender_id' => $request->gender_id,
+        // 'date_of_birth' => $request->date_of_birth,
+        'country_id' => $request->country_id,
+        // 'address' => $request->address,
+        'telephone' => $request->telephone,
+    ]);
 
-        if(count($validate_user)>0){
-            
-             return response()->json(["message"=>"User already exists"],422);
-
-        }else{
-
-
-            $rules=[
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required',
-                // 'middle_name' => 'required',
-                'last_name' => 'required',
-                // 'gender_id' => 'required',
-                // 'date_of_birth' => 'required',
-                'country_id' => 'required',
-                // 'address' => 'required',
-                'telephone' => 'required'
-            ];
-
-          $validator = Validator::make($request->all(),$rules);
-
-          if ($validator->fails()) {
-            return response()->json($validator->errors(),422);
-          }
-
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                // 'middle_name' => $request->middle_name,
-                'last_name' => $request->last_name,
-                // 'gender_id' => $request->gender_id,
-                // 'date_of_birth' => $request->date_of_birth,
-                'country_id' => $request->country_id,
-                // 'address' => $request->address,
-                'telephone' => $request->telephone,
-            ]);
     
-            
+
+    $token = $user->createToken('authtoken');
+
+    $user->token = $token->plainTextToken;
+    $numero_aleatorio = rand(100000,900000);
+    $user->code = $numero_aleatorio;
+    $user->save();
+
+    Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
+
+    // event(new Registered($user));
     
-            $token = $user->createToken('authtoken');
+    if($token){
 
-            $user->token = $token->plainTextToken;
-            $numero_aleatorio = rand(100000,900000);
-            $user->code = $numero_aleatorio;
-            $user->save();
+        return response()->json(
+            [
+                'message'=>'User Registered',
+                'data'=> ['token' => $token->plainTextToken, 'user' => $user]
+            ]
+        );
 
-            Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
+    }else{
 
-            // event(new Registered($user));
-            
-            if($token){
+        return response()->json(["message"=>"User Not Registered"],422);
 
-                return response()->json(
-                    [
-                        'message'=>'User Registered',
-                        'data'=> ['token' => $token->plainTextToken, 'user' => $user]
-                    ]
-                );
-    
-            }else{
-    
-                return response()->json(["message"=>"User Not Registered"],422);
-    
-            }
+    }
 
-        }
+  }
 
         
        

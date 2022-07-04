@@ -50,13 +50,23 @@ class HomeDisplayController extends Controller
 
         $program_popular=Program::where("popular",1)->limit(6)->get();
 
+        $subscription_program = [];
         if(Auth::user() ){
+          $user = Auth::user();
+            $statusNo = ['canceled'];
+
+
             $subscription_program=SubscriptionProgram::where("user_id",Auth::user()->id)->where('status_id',1)->where('is_active',1)->get();
+
             $arr = [];
             foreach ($subscription_program as $key => $value) {
+              // dd($value->subscription->stripe_status);
+              if(!in_array($value->subscription->stripe_status, $statusNo)){
                 $arr[] = $value->program;
+              }
             }
             $subscription_program = $arr;
+
         }else{
             $subscription_program=[];
         }
@@ -156,12 +166,19 @@ $conteoSI = 0;
                 $log = SubscriptionProgramLog::where('program_days_id', $dia['id'])
                             ->where('program_day_routines_id', $ejercicio['id'])
                             ->where('subscription_programs_id', $subscriptionProgram->id)
+                            
                             ->first();
 
                 if($log){
 
 
-                    $logs = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)->get();        
+                    $logs = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)
+                                                          ->whereNotNull('repeticiones')
+                                                          ->whereNotNull('peso')
+                                                          ->orderBy('peso','desc')
+                                                          ->get();   
+                                                          
+                    //dd($logs->first()->peso);     
 
                     if(count($logs) == $ejercicio->sets){ // completo el ejercicio
                         $ejercicio['completed'] = true;
@@ -172,34 +189,39 @@ $conteoSI = 0;
                     if($ejercicio['completed'] == true){
                         $conteoSI++;
                     }
+                    if(count($logs)){
 
-                    $arr = [];
-                    foreach ($logs as $y => $value) {
-                        $arr[] = [
-                          "set"=> $value->set,
-                          "repetitions"=> $value->repeticiones,
-                          "weight"=> $value->peso
-                        ];
+                      $arr = [];
+                      foreach ($logs as $y => $value) {
+                          $arr[] = [
+                            "set"=> $value->set,
+                            "repetitions"=> $value->repeticiones,
+                            "weight"=> $value->peso
+                          ];
+                      }
+                      
+                      $ejercicio['log'] = $arr;
+                      $cuento = 0;
+                      $cuentow = 0;
+                      $numero = count($ejercicio['log']);
+                      foreach ($ejercicio['log'] as $key => $value) {
+                        $cuento += $value['repetitions'];
+                        $cuentow += intval($value['weight']);
+                      }
+  
+                      $calculorepetitions = $cuento / $numero;
+                      $calculow = $cuentow / $numero;
+                      
+                      
+                      
+                      $ejercicio['list'] = [
+                        [
+                          "maxweight" => $logs->first()->peso.' lb',
+                          "maxreps" => $calculorepetitions,
+                          "date" => Carbon::parse($log->updated_at)->format('m/d/Y'),
+                        ]
+                      ];
                     }
-                    $ejercicio['log'] = $arr;
-                    $cuento = 0;
-                    $cuentow = 0;
-                    $numero = count($ejercicio['log']);
-                    foreach ($ejercicio['log'] as $key => $value) {
-                      $cuento += $value['repetitions'];
-                      $cuentow += intval($value['weight']);
-                    }
-
-                    $calculorepetitions = $cuento / $numero;
-                    $calculow = $cuentow / $numero;
-
-                    $ejercicio['list'] = [
-                      [
-                        "maxweight" => $calculow,
-                        "maxreps" => $calculorepetitions,
-                        "date" => Carbon::parse($log->updated_at)->format('m/d/Y'),
-                      ]
-                    ];
                 }
             }
             
