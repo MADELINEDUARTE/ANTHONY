@@ -15,6 +15,8 @@ use Filament\Tables;
 use Illuminate\Support\Facades\Auth;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Session;
+use Livewire\TemporaryUploadedFile;
+use Illuminate\Support\Str;
 
 class ProgramDayRoutineRelationManager extends HasManyRelationManager
 {
@@ -40,6 +42,11 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->label('Title')
+                    ->afterStateUpdated(function ($state,callable $set) {
+                        //$set('slug',Str::slug($state));
+                        session()->forget('hidden_title');
+                        session(['hidden_title' => Str::slug($state)]);
+                    } )
                     ->default('')
                     ->helperText('Your full title, including any notation.')
                     ->maxLength(255),
@@ -48,7 +55,11 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
                 ->directory('programs/day/routine/video')
                 ->visibility('public')
                 ->imagePreviewHeight('200')
-                ->preserveFilenames()
+                ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                    //return "modatex-chile";
+                    return (string) "realworld-program-day-routine-video-".session('hidden_title').".".$file->extension();
+                })
+                //->preserveFilenames()
                 ->label('Video'),
                 //->required(), 
 
@@ -123,6 +134,15 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
             ]);
     }
 
+
+    /*
+    protected function beforeFill(): void
+    {
+        
+        session()->forget('hidden_title');
+        session(['hidden_title' => Str::slug($this->record->title)]);
+    } 
+    */  
 
 
     

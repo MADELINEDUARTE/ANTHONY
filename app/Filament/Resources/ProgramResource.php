@@ -13,6 +13,8 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Support\Facades\Auth;
 use Filament\Facades\Filament;
+use Livewire\TemporaryUploadedFile;
+use Illuminate\Support\Str;
 
 class ProgramResource extends Resource
 {
@@ -33,6 +35,11 @@ class ProgramResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->label('Name')
+                    ->afterStateUpdated(function ($state,callable $set) {
+                        //$set('slug',Str::slug($state));
+                        session()->forget('hidden_slug');
+                        session(['hidden_slug' => Str::slug($state)]);
+                    } )
                     ->maxLength(255),
 
                 Forms\Components\RichEditor::make('description')
@@ -48,8 +55,12 @@ class ProgramResource extends Resource
                     Forms\Components\FileUpload::make('video')->disk('public')
                     ->directory('programs/video')
                     ->visibility('public')
+                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                        //return "modatex-chile";
+                        return (string) "realworld-program-video-".session('hidden_slug').".".$file->extension();
+                    })
                     //->imagePreviewHeight('200')
-                    ->preserveFilenames()
+                    //->preserveFilenames()
                     ->label('Video'),
                     //->required(),
 
@@ -62,7 +73,11 @@ class ProgramResource extends Resource
                     ->directory('programs/images')
                     ->visibility('public')
                     //->imagePreviewHeight('200')
-                    ->preserveFilenames()
+                    //->preserveFilenames()
+                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                        //return "modatex-chile";
+                        return (string) "realworld-program-image-".session('hidden_slug').".".$file->extension();
+                    })
                     ->label('Image')
                     ->required(),
 
@@ -103,6 +118,7 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('description')->sortable()->searchable()->label('Description'),
                 Tables\Columns\ImageColumn::make('image')->label('Image'),
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 //
             ]);
