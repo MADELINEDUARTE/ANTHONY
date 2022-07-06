@@ -42,7 +42,7 @@ class ProgramResource extends Resource
                     } )
                     ->maxLength(255),
 
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\Textarea::make('description')
                     ->label('Description')
                     ->required(),
 
