@@ -100,7 +100,7 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('status.description')->sortable()->searchable()->label('Status'),
                 Tables\Columns\TextColumn::make('user.name')->sortable()->searchable()->label('User'),
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable()->label('Name'),
-                Tables\Columns\TextColumn::make('description')->sortable()->searchable()->label('Description'),
+                // Tables\Columns\TextColumn::make('description')->sortable()->searchable()->label('Description'),
                 Tables\Columns\ImageColumn::make('image')->label('Image'),
             ])
             ->filters([
