@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendCode;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+
 class UsersManagement extends Controller
 {
     /**
@@ -26,27 +28,6 @@ class UsersManagement extends Controller
     
     public function login(Request $request)
     {
-
-        /*
-        $user=User::with("gender")
-        ->with("country")
-        ->where('email',$request->email)
-        ->first();
-
-        $pasword = $request->password;
-        $cost=10;
-        $password = password_hash($pasword, PASSWORD_BCRYPT, ['cost' => $cost]);
-        
-        $hash = $user->password;
-        
-        if (password_verify($pasword, $hash)) {
-            return response($user);
-        } else {
-            return response("Not authorized (not logged in)", 401);
-        }
-        */
-
-        // $request->authenticate();
 
       $rules=[
         'email'    => 'required',
@@ -59,35 +40,28 @@ class UsersManagement extends Controller
         return response()->json($validator->errors(),422);
       }
 
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+      $credentials = $request->validate([
+          'email' => ['required', 'email'],
+          'password' => ['required'],
+      ]);
 
-        if (Auth::attempt($credentials)) {
-
-
-            return response()->json([ 
-                'status'=> true,
-                "message" => "User Logged",
-                "data" => [
-                    "user"=> Auth::user(),
-                    "token" =>  Auth::user()->token
-                ]
-            ]);
-
-            
-        }else{
-
-            return response()->json([ 
-                'status'=> false,
-                'message' => 'The provided credentials do not match our records.',
-            ]);
-
-        }
-        
-        
+      if (Auth::attempt($credentials)) {
+        return response()->json([ 
+            'status'=> true,
+            "message" => "User Logged",
+            "data" => [
+                "user"=> Auth::user(),
+                "token" =>  Auth::user()->token
+            ]
+        ]); 
+      }else{
+        return response()->json([ 
+            'status'=> false,
+            'message' => 'The provided credentials do not match our records.',
+        ], 403);
+      }
     }
+
     public function validateCode(Request $request)
     {
       $rules=[
@@ -104,14 +78,118 @@ class UsersManagement extends Controller
       $user = User::where('id', $request->user_id)->first();
 
       if($user){
-          if($user->code == $request->code){
-              return response()->json([
-                  'message'=>'User Validated',
-                  'data'=> ['token' => $user->token, 'user' => $user]
-              ],200);
-          }
+
+        $fechaDeEnvio = Carbon::parse($user->updated_at);
+        $hoy = Carbon::now();
+        $diferencia = $fechaDeEnvio->diffInMinutes($hoy); 
+
+        if($diferencia > 60){
+          return response()->json(["status" => false, "message"=>"Code Expired"], 422);
+        }
+
+        if($user->code == $request->code){
+
+          $token = $user->createToken('authtoken');
+          $user->token = $token->plainTextToken;
+          $user->save();
+
+          return response()->json([
+              'message'=>'User Validated',
+              'data'=> ['token' => $user->token, 'user' => $user]
+          ],200);
+
+        }
       }else{
-          return response()->json(["message"=>"User Not Found"],422);
+          return response()->json(["status" => false, "message"=>"User Not Found"],422);
+      }
+    }
+    public function recover_password(Request $request)
+    {
+      $rules=[
+        'email' => 'required',
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+      }
+
+      $user = User::where('email', $request->email)->first();
+
+      if($user){
+
+        // $token                = $user->createToken('authtoken');
+        // $user->remember_token = $token->plainTextToken;
+        $user->updated_at = Carbon::now();
+        $numero_aleatorio = rand(100000,900000);
+        $user->code       = $numero_aleatorio;
+        $user->save();
+
+        Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
+
+        return response()->json(['status'=> true, 'message'=> 'Code email send'], 200);
+
+      }else{
+        return response()->json(['status'=> false, 'message'=> 'Client no fotund'], 403);
+      }
+    }
+
+    public function new_password(Request $request)
+    {
+      $rules=[
+        'email' => 'required',
+        'paswword' => 'required',
+        'password_confirmation' => 'required|confirmed'
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+      }
+
+      $user = User::where('email', $request->email)->first();
+
+      if($user){
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(["status" => true, "message"=>"Saved Password"]);
+
+      }else{ 
+        return response()->json(["status" => false, "message"=>"User Not Found"],422);
+      }
+    }
+
+    public function resend_code(Request $request)
+    {
+       $rules=[
+        'email' => 'required'
+      ];
+
+      $validator = Validator::make($request->all(),$rules);
+
+      if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+      }
+
+      $user = User::where('email', $request->email)->first();
+
+      if($user){
+
+        $user->updated_at = Carbon::now();
+        $numero_aleatorio = rand(100000,900000);
+        $user->code       = $numero_aleatorio;
+        $user->save();
+
+        Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
+        
+        return response()->json(["status" => true, "message"=>"Saved Password"]);
+
+      }else{ 
+        return response()->json(["status" => false, "message"=>"User Not Found"],422);
       }
     }
 
@@ -119,7 +197,6 @@ class UsersManagement extends Controller
     {
       $rules=[
         'email' => 'required|string|email'
-        
       ];
 
       $validator = Validator::make($request->all(),$rules);
@@ -128,116 +205,56 @@ class UsersManagement extends Controller
         return response()->json($validator->errors(),422);
       }
 
-    $validate_user=User::where('email',$request->email)->get();
+      $validate_user=User::where('email',$request->email)->get();
 
-    if(count($validate_user)>0){
-        
-         return response()->json(["message"=>"User already exists"],422);
+      if(count($validate_user)>0){
+        return response()->json(["message"=>"User already exists"],422);
+      }else{
 
-    }else{
-
-
-      $rules=[
-          'name' => 'required|string|max:255',
-          'email' => 'required|string|email|max:255|unique:users',
-          'password' => 'required',
-          // 'middle_name' => 'required',
-          'last_name' => 'required',
-          // 'gender_id' => 'required',
-          // 'date_of_birth' => 'required',
-          'country_id' => 'required',
-          // 'address' => 'required',
-          'telephone' => 'required'
-      ];
-
-    $validator = Validator::make($request->all(),$rules);
-
-    if ($validator->fails()) {
-      return response()->json($validator->errors(),422);
-    }
-
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        // 'middle_name' => $request->middle_name,
-        'last_name' => $request->last_name,
-        // 'gender_id' => $request->gender_id,
-        // 'date_of_birth' => $request->date_of_birth,
-        'country_id' => $request->country_id,
-        // 'address' => $request->address,
-        'telephone' => $request->telephone,
-    ]);
-
-    
-
-    $token = $user->createToken('authtoken');
-
-    $user->token = $token->plainTextToken;
-    $numero_aleatorio = rand(100000,900000);
-    $user->code = $numero_aleatorio;
-    $user->save();
-
-    Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
-
-    // event(new Registered($user));
-    
-    if($token){
-
-        return response()->json(
-            [
-                'message'=>'User Registered',
-                'data'=> ['token' => $token->plainTextToken, 'user' => $user]
-            ]
-        );
-
-    }else{
-
-        return response()->json(["message"=>"User Not Registered"],422);
-
-    }
-
-  }
-
-        
-       
-        
-
-        
-        
-        /*
-        $request->validate([
-            'name' => 'required',
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'gender_id' => 'required',
-            'date_of_birth' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
+        $rules=[
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|string|email|max:255|unique:users',
+            'password'   => 'required',
+            'last_name'  => 'required',
             'country_id' => 'required',
-            'address' => 'required',
-            'telephone' => 'required'
-        ]);*/
+            'telephone'  => 'required'
+        ];
 
-        /*
-        $user = new User();
-        $user->name = $request->name;
-        $user->middle_name = $request->middle_name;
-        $user->last_name = $request->last_name;
-        $user->gender_id = $request->gender_id;
-        $user->date_of_birth = $request->date_of_birth;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->country_id = $request->country_id;
-        $user->address = $request->address;
-        $user->telephone = $request->telephone;
+        $validator = Validator::make($request->all(),$rules);
+
+        if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+        }
+
+        $user = User::create([
+          'name'       => $request->name,
+          'email'      => $request->email,
+          'password'   => Hash::make($request->password),
+          'last_name'  => $request->last_name,
+          'country_id' => $request->country_id,
+          'telephone'  => $request->telephone,
+        ]);
+
+        // $token = $user->createToken('authtoken');
+        // $user->token = $token->plainTextToken;
+        $numero_aleatorio = rand(100000,900000);
+        $user->code = $numero_aleatorio;
         $user->save();
-        */
 
-        //$user = User::create($request->all());
+        Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
 
-        
-        //return response("El usuario ha sido creado correctamente", 201);
+        if($token){
+          return response()->json(
+            [
+              'message'=>'User Registered',
+              'data'=> [ 'user' => $user ]
+            ]
+          );
+        }else{
+          return response()->json(["message"=>"User Not Registered"],422);
+        }
+      }
+
     }
 
     public function update_user(Request $request)
@@ -337,122 +354,37 @@ class UsersManagement extends Controller
                 'data'=> ['user' => $User, 'token' => $User->token]
             ]
         );
-     
-
-        
     }
 
 
     public function logout(Request $request)
     {
+      $request->user()->tokens()->delete();
 
-        $request->user()->tokens()->delete();
+      return response()->json(
+          [
+              'message' => 'Logged out'
+          ]
+      );
 
-        return response()->json(
-            [
-                'message' => 'Logged out'
-            ]
-        );
-
-        //return response("El usuario ha finalizado sesion", 201);
+      //return response("El usuario ha finalizado sesion", 201);
 
     }
 
     public function register_user_subscription(Request $request)
     {
-        $request->validate([
-            'package_id' => 'required',
-            'user_id' => 'required',
-            'status_id' => 'required'
-            
-        ]);
-
-        $user_subscription = new Subscription();
-        $user_subscription->package_id = $request->package_id;
-        $user_subscription->user_id = $request->user_id;
-        $user_subscription->status_id = $request->status_id;
-        $user_subscription->save();
-
-        
-        return response("El usuario ha sido asociado correctamente a la suscripción", 201);
+      $request->validate([
+        'package_id' => 'required',
+        'user_id' => 'required',
+        'status_id' => 'required'
+      ]);
+      $user_subscription = new Subscription();
+      $user_subscription->package_id = $request->package_id;
+      $user_subscription->user_id = $request->user_id;
+      $user_subscription->status_id = $request->status_id;
+      $user_subscription->save();
+      return response("El usuario ha sido asociado correctamente a la suscripción", 201);
     }
 
-    
 
-    /*public function register_user_program(Request $request)
-    {
-        $request->validate([
-            'subscription_id' => 'required',
-            'program_id' => 'required',
-            'status_id' => 'required',
-            'user_id' => 'required',
-            'is_active' => 'required'
-        ]);
-
-        $user_program = new SubscriptionProgram();
-        $user_program->subscription_id = $request->subscription_id;
-        $user_program->program_id = $request->program_id;
-        $user_program->status_id = $request->status_id;
-        $user_program->user_id = $request->user_id;
-        $user_program->is_active = $request->is_active;
-        $user_program->save();
-
-        //$user = User::create($request->all());
-
-        
-        return response("El usuario ha sido asociado correctamente añ programa", 201);
-    }*/
-
-    
-    
-
-    public function index(Request $request)
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

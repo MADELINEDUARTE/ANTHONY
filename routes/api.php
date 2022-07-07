@@ -43,7 +43,12 @@ Route::middleware('token_validate')->group(function(){
 Route::post('login',[UsersManagement::class,'login']);
 Route::post('register',[UsersManagement::class,'register']);
 Route::post('validate_code',[UsersManagement::class,'validateCode']);
+
+Route::post('recover_password', [UsersManagement::class,'recover_password']);
+Route::post('new_password',     [UsersManagement::class,'new_password']);
 Route::post('resend_code',[UsersManagement::class,'resendCode']);
+
+
 Route::post('logout', [UsersManagement::class, 'logout'])->middleware('auth:sanctum');
 Route::post('update_user',[UsersManagement::class,'update_user']);
 
