@@ -30,7 +30,7 @@ class PackageResource extends Resource
                     ->label('Name')
                     ->maxLength(255),
 
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\Textarea::make('description')
                     ->label('Description')
                     ->required(),
 

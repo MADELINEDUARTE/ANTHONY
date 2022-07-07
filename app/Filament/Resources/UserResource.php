@@ -12,6 +12,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\Filter;
 
 class UserResource extends Resource
 {
@@ -94,9 +95,15 @@ class UserResource extends Resource
                 Tables\Columns\ImageColumn::make('address')->label('address'),
                 Tables\Columns\ImageColumn::make('telephone')->label('telephone'),
             ])
-            ->defaultSort('id', 'desc')
+            ->defaultSort('utype', 'asc')
+            //->defaultSort('id', 'desc')
             ->filters([
-                //
+                Filter::make('USR')
+                ->label('User')
+                ->query(fn (Builder $query): Builder => $query->where('utype', 'USR')),
+                Filter::make('ADM')
+                ->label('Admin')
+                ->query(fn (Builder $query): Builder => $query->where('utype', 'ADM')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

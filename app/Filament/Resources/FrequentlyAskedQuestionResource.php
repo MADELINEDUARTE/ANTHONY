@@ -28,7 +28,7 @@ class FrequentlyAskedQuestionResource extends Resource
                     ->label('Question')
                     ->maxLength(255),
 
-                Forms\Components\RichEditor::make('answer')
+                Forms\Components\Textarea::make('answer')
                     ->label('Answer')
                     ->required(),
 
