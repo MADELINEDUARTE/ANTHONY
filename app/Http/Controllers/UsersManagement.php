@@ -128,7 +128,7 @@ class UsersManagement extends Controller
 
         Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
 
-        return response()->json(['status'=> true, 'message'=> 'Code email send'], 200);
+        return response()->json(['status'=> true, 'message'=> 'Code email send', "data" => ["user" => $user]], 200);
 
       }else{
         return response()->json(['status'=> false, 'message'=> 'Client no fotund'], 403);
@@ -185,7 +185,7 @@ class UsersManagement extends Controller
         $user->save();
 
         Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
-        
+
         return response()->json(["status" => true, "message"=>"Saved Password"]);
 
       }else{ 
