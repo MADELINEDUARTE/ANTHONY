@@ -55,6 +55,9 @@ Route::get('cancel',[HomeController::class,'cancel']);
     return view('auth.login');
 });
 */
+Route::get('test2',function(){
+echo 'aja';
+});
 
 Route::get('/', \Filament\Http\Livewire\Auth\Login::class);
 

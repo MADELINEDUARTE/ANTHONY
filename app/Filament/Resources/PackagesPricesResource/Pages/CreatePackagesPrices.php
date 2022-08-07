@@ -51,21 +51,26 @@ class CreatePackagesPrices extends CreateRecord
  
         
         if($this->data["is_recurrence"]==1){
-
-            //si es recurrente 
+          try {
             $plan = $subscription->createPlan([
-            'amount'=> ($this->record->amount),
-            'interval'=> $this->record->recurrence->interval,
-            'product_id'=> $this->record->packages->stripe_id,
+                'amount'=> ($this->record->amount),
+                'interval'=> $this->record->recurrence->interval,
+                'product_id'=> $this->record->packages->stripe_id,
             ]);
+          } catch (\Exception $e) {
+            \Log::info($e->getMessage());
+          }
+            //si es recurrente 
+            
+            // dd($plan);
 
         }elseif($this->data["is_recurrence"]==0){
 
             //Si no es recurrente
             $plan = $subscription->createPriceUnique([
-            'amount' => ($this->record->amount),
-            'product_id' => $this->record->packages->stripe_id,
-            'name' => $this->record->recurrence->description,
+              'amount' => ($this->record->amount),
+              'product_id' => $this->record->packages->stripe_id,
+              'name' => $this->record->recurrence->description,
             ]);
 
         }

@@ -212,7 +212,7 @@ class HomeController extends Controller
 
     public function getCountry()
     {
-      return response()->json(['status'=> true, 'data'=> Country::all() ]);
+      return response()->json(['status'=> true, 'data'=> Country::orderBy('description','asc')->get() ]);
     }
 
     public function updateAddress(Request $request)
@@ -235,6 +235,7 @@ class HomeController extends Controller
 
       $user->address     = $request->address;
       $user->state_id    = $request->state_id;
+      $user->country_id  = $request->country_id;
       $user->city        = $request->city;
       $user->postal_code = $request->postal_code;
       $user->save();
@@ -261,57 +262,70 @@ class HomeController extends Controller
         $subscription = Subscription::where('id',$request->subscription_id)
         ->where('user_id',Auth::user()->id)
         ->first();
-    
-        $package = Package::where('id',$subscription->package_id)->first();
-    
-        $subscription_program = SubscriptionProgram::where('subscription_id',$request->subscription_id)
-        ->where('status_id',1)
-        ->where('user_id',Auth::user()->id)
-        ->orderBy('created_at','desc')
-        // ->where('is_active',1)
-        ->get();
+
+        if($subscription){
+
+          $package = Package::where('id',$subscription->package_id)->first();
+      
+          $subscription_program = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+          ->where('status_id',1)
+          ->where('user_id',Auth::user()->id)
+          ->orderBy('created_at','desc')
+          // ->where('is_active',1)
+          ->get();
         
     
-            $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
-            ->where('status_id',1)
-            ->where('user_id',Auth::user()->id)
-            ->where('program_id',$request->program_id)
-            ->where('is_active',1)
-            ->get();
+          $subscription_program_per_user = SubscriptionProgram::where('subscription_id',$request->subscription_id)
+          ->where('status_id',1)
+          ->where('user_id',Auth::user()->id)
+          ->where('program_id',$request->program_id)
+          ->where('is_active',1)
+          ->get();
 
-            if(count($subscription_program_per_user)>0){
-              return response()->json(['status'=> true, 'message'=> "The user already has this program associated"], 200);
-            }else{ 
+          if(count($subscription_program_per_user)>0){
+            return response()->json(['status'=> true, 'message'=> "The user already has this program associated"], 200);
+          }else{ 
 
-              $programsActivos = $subscription_program->where('is_active',1);
+            $programsActivos = $subscription_program->where('is_active',1);
 
-              if(count($programsActivos) >= $package->number_of_programs){
+            if(count($programsActivos) >= $package->number_of_programs){
 
-                return response()->json(['status'=> true, 'message'=> "The user has reached and/or exceeded the program limit according to its associated package:"], 403);
-      
+              return response()->json(['status'=> true, 'message'=> "The user has reached and/or exceeded the program limit according to its associated package:"], 403);
+    
+            }else{
+
+              $programsInactivo = $subscription_program->where('is_active',0);
+
+              if(count($programsInactivo)){
+                
+                foreach ($programsInactivo as $key => $value) {
+
+                  if($value->program_id == $request->program_id){
+                    $value->is_active = 1;
+                    $value->save();
+                  }
+                }
+              
               }else{
 
-                $programsInactivo = $subscription_program->where('is_active',0);
-                if(count($programsInactivo)){
-                  
-                  $programsInactivo[0]->is_active = 1;
-                  $programsInactivo[0]->save();
-
-                }else{
-
-                  $user_program = new SubscriptionProgram();
-                  $user_program->subscription_id = $request->subscription_id;
-                  $user_program->program_id = $request->program_id;
-                  $user_program->status_id = $request->status_id;
-                  $user_program->user_id = Auth::user()->id;
-                  $user_program->is_active = $request->is_active;
-                  $user_program->save();
-               }
-                //$user = User::create($request->all());
-    
-                return response()->json(['status'=> true,'message'=>"The user has been successfully associated with the program; they have ".count($programsActivos)." associated programs "],201);
-              }
+                $user_program = new SubscriptionProgram();
+                $user_program->subscription_id = $request->subscription_id;
+                $user_program->program_id = $request->program_id;
+                $user_program->status_id = $request->status_id;
+                $user_program->user_id = Auth::user()->id;
+                $user_program->is_active = $request->is_active;
+                $user_program->save();
+             }
+              //$user = User::create($request->all());
+              $number = $package->number_of_programs - count($programsActivos) ;
+              $number = $number - 1;
+              return response()->json(['status'=> true,'message'=>"The user has been successfully associated with the program; can associate ".$number." more programs"],201);
             }
+          }
+        }else{
+          return response()->json(['status'=> false, 'message'=> 'No subscription'],422);
+        }
+    
     }
 
     public function cancel_user_program(Request $request)
@@ -445,6 +459,9 @@ class HomeController extends Controller
     {
       $user = Auth::user();
       $subscription = [];
+      if(!$user->subscription){
+         return response()->json(['status'=> false, 'data'=> '' ]);
+      }
       if($user->subscription->package){
         $price = $user->subscription->package->prices()->where('stripe_id',$user->subscription->stripe_price)->first();
 

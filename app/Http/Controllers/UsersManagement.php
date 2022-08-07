@@ -30,7 +30,7 @@ class UsersManagement extends Controller
     {
 
       $rules=[
-        'email'    => 'required',
+        'email'    => 'required|email',
         'password'   => 'required',
       ];
 
@@ -72,7 +72,7 @@ class UsersManagement extends Controller
       $validator = Validator::make($request->all(),$rules);
 
       if ($validator->fails()) {
-          return response()->json($validator->errors(),422);
+          return response()->json($validator->errors(),403);
       }
 
       $user = User::where('id', $request->user_id)->first();
@@ -98,11 +98,14 @@ class UsersManagement extends Controller
               'data'=> ['token' => $user->token, 'user' => $user]
           ],200);
 
+        }else{
+          return response()->json(["status" => false, "message"=>"Code invalid"],422);
         }
       }else{
           return response()->json(["status" => false, "message"=>"User Not Found"],422);
       }
     }
+
     public function recover_password(Request $request)
     {
       $rules=[
@@ -137,10 +140,11 @@ class UsersManagement extends Controller
 
     public function new_password(Request $request)
     {
+      //dd($request->all());
       $rules=[
         'email' => 'required',
-        'paswword' => 'required',
-        'password_confirmation' => 'required|confirmed'
+        'password' => 'required|confirmed',
+        'password_confirmation' => 'required'
       ];
 
       $validator = Validator::make($request->all(),$rules);
@@ -156,7 +160,8 @@ class UsersManagement extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return response()->json(["status" => true, "message"=>"Saved Password"]);
+        return response()->json(["status" => true, "message"=>"Saved Password",  "data" => ['user' => $user, 'token' => $user->token]]);
+        
 
       }else{ 
         return response()->json(["status" => false, "message"=>"User Not Found"],422);
@@ -191,6 +196,88 @@ class UsersManagement extends Controller
       }else{ 
         return response()->json(["status" => false, "message"=>"User Not Found"],422);
       }
+    }
+
+    public function accessSocial(Request $request)
+    {
+      
+
+      if($request->type == 'register'){
+        $rules=[
+          'email'        => 'required|email',
+          'given_name'   => 'required',        
+          'family_name'  => 'required',
+          'password'     => 'required',
+          'type'         => 'required'
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+        }
+
+        $user = User::create([
+          'name'       => $request->given_name,
+          'email'      => $request->email,
+          'password'   => Hash::make($request->password),
+          'last_name'  => $request->family_name,
+        ]);
+
+        $token = $user->createToken('authtoken');
+        $user->token = $token->plainTextToken;
+        $user->save();
+
+
+        if($user){
+          return response()->json(
+            [
+              'status'=> true,
+              'message'=>'User Registered',
+              'data'=> [ 'user' => $user, 'token' => $user->token ]
+            ]
+          );
+
+        }else{
+          return response()->json(["message"=>"User Not Registered"],422);
+        }
+
+      }elseif($request->type == 'login'){
+
+        $rules=[
+          'email'        => 'required|email',
+          'password'     => 'required',
+          'type'         => 'required'
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        if ($validator->fails()) {
+          return response()->json($validator->errors(),422);
+        }
+
+        $credentials = $request->validate([
+          'email' => ['required', 'email'],
+          'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+          return response()->json([ 
+              'status'=> true,
+              "message" => "User Logged",
+              "data" => [
+                  "user"=> Auth::user(),
+                  "token" =>  Auth::user()->token
+              ]
+          ]); 
+        }else{
+          return response()->json([ 
+              'status'=> false,
+              'message' => 'The provided credentials do not match our records.',
+          ], 403);
+        }
+      }
+
     }
 
     public function register(Request $request)
@@ -243,7 +330,7 @@ class UsersManagement extends Controller
 
         Mail::to($user->email)->send(new SendCode($numero_aleatorio,$user));
 
-        if($token){
+        if($user){
           return response()->json(
             [
               'message'=>'User Registered',

@@ -55,10 +55,10 @@ class ProgramResource extends Resource
                     Forms\Components\FileUpload::make('video')->disk('public')
                     ->directory('programs/video')
                     ->visibility('public')
-                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                    //->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
                         //return "modatex-chile";
-                        return (string) "realworld-program-video-".session('hidden_slug').".".$file->extension();
-                    })
+                      //  return (string) "realworld-program-video-".Str::random(40).".".$file->extension();
+                    //})
                     //->imagePreviewHeight('200')
                     //->preserveFilenames()
                     ->label('Video'),
@@ -74,10 +74,10 @@ class ProgramResource extends Resource
                     ->visibility('public')
                     //->imagePreviewHeight('200')
                     //->preserveFilenames()
-                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                    //->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
                         //return "modatex-chile";
-                        return (string) "realworld-program-image-".session('hidden_slug').".".$file->extension();
-                    })
+                      //  return (string) "realworld-program-image-".Str::random(40).".".$file->extension();
+                    //})
                     ->label('Image')
                     ->required(),
 
