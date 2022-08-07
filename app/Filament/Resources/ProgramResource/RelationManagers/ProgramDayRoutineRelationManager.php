@@ -57,7 +57,7 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
                 ->imagePreviewHeight('200')
                 ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
                     //return "modatex-chile";
-                    return (string) "realworld-program-day-routine-video-".session('hidden_title').".".$file->extension();
+                    return (string) "realworld-program-day-routine-video-".Str::random(40).".".$file->extension();
                 })
                 //->preserveFilenames()
                 ->label('Video'),
