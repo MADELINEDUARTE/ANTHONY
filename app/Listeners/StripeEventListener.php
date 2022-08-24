@@ -30,10 +30,12 @@ class StripeEventListener
                 $subscription->save();
 
                 $data = [
-                  'error'   => true,
+                  'status'   => true,
                   'message' => 'Subscription processed. Press OK to continue',
                   'user_id' => $user->id
                 ];
+             
+
                 event(new SendPusher($data));
                
             }else{

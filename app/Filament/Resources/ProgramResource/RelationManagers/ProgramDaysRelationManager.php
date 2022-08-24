@@ -30,16 +30,16 @@ class ProgramDaysRelationManager extends HasManyRelationManager
                                 
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->label('Name')
+                    ->label('Number Day')
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('number')
                 ->required()
                 //->numeric()
-                ->label('Number'),   
+                ->label('Number Week'),   
               
                 Forms\Components\Textarea::make('description')
-                ->label('Description')
+                ->label('Name Day')
                 ->default(' '),
            
                 Forms\Components\Select::make('user_id')
@@ -55,9 +55,9 @@ class ProgramDaysRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable()->label('Name'),
-                Tables\Columns\TextColumn::make('description')->sortable()->searchable()->label('Description'),
-                Tables\Columns\TextColumn::make('number')->sortable()->searchable()->label('number'),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable()->label('Number Day'),
+                Tables\Columns\TextColumn::make('description')->sortable()->searchable()->label('Name Day'),
+                Tables\Columns\TextColumn::make('number')->sortable()->searchable()->label('Number Week'),
                 Tables\Columns\TextColumn::make('program_day_user.name')->sortable()->searchable()->label('User'),
 
             ])

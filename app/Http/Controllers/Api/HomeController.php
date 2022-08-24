@@ -319,7 +319,7 @@ class HomeController extends Controller
               //$user = User::create($request->all());
               $number = $package->number_of_programs - count($programsActivos) ;
               $number = $number - 1;
-              return response()->json(['status'=> true,'message'=>"The user has been successfully associated with the program; can associate ".$number." more programs"],201);
+              return response()->json(['status'=> true,'message'=>"Congratulations, you've unlocked one program. With your subscription you can unlock ".$number." more"],201);
             }
           }
         }else{
@@ -406,6 +406,8 @@ class HomeController extends Controller
 
       $logs = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)->get();
 
+
+
       if(count($logs) == $ejercicio->sets){ // completo el ejercicio
 
         $log->is_complete = 1;
@@ -420,9 +422,9 @@ class HomeController extends Controller
       $arr = [];
       foreach ($logs as $key => $value) {
         $arr[] = [
-          "set"=> $value->set,
-          "repetitions"=> $value->repeticiones,
-          "weight"=> $value->peso
+          "set" => $value->set,
+          "repetitions" => $value->repeticiones,
+          "weight" => $value->peso
         ];
       }
 
@@ -442,10 +444,22 @@ class HomeController extends Controller
       $calculorepetitions = $cuento / $numero;
       $calculow = $cuentow / $numero;
 
+      $logsw = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)
+                                                          ->whereNotNull('repeticiones')
+                                                          ->whereNotNull('peso')
+                                                          ->orderBy('peso','desc')
+                                                          ->get(); 
+
+        $logss = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)
+                                              ->whereNotNull('repeticiones')
+                                              ->whereNotNull('peso')
+                                              ->orderBy('repeticiones','desc')
+                                              ->get(); 
+
       $ejercicio->list = [
         [
-          "maxweight" => $calculow,
-          "maxreps" => $calculorepetitions,
+          "maxweight" => $logsw->first()->peso.' lb',
+          "maxreps" => $logss->first()->repeticiones,
           "date" => Carbon::parse($log->updated_at)->format('m/d/Y'),
         ]
       ];

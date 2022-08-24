@@ -176,6 +176,12 @@ $conteoSI = 0;
                                                           ->whereNotNull('repeticiones')
                                                           ->whereNotNull('peso')
                                                           ->orderBy('peso','desc')
+                                                          ->get(); 
+
+                    $logss = SubscriptionProgramLogDetail::where('subscription_program_logs_id', $log->id)
+                                                          ->whereNotNull('repeticiones')
+                                                          ->whereNotNull('peso')
+                                                          ->orderBy('repeticiones','desc')
                                                           ->get();   
                                                           
                     //dd($logs->first()->peso);     
@@ -217,7 +223,7 @@ $conteoSI = 0;
                       $ejercicio['list'] = [
                         [
                           "maxweight" => $logs->first()->peso.' lb',
-                          "maxreps" => $calculorepetitions,
+                          "maxreps" => $logss->first()->repeticiones,
                           "date" => Carbon::parse($log->updated_at)->format('m/d/Y'),
                         ]
                       ];

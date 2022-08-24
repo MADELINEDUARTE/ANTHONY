@@ -36,6 +36,12 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
         //dd($form);
         //dd($this->all());
         
+        $v = ProgramDay::where('program_id',Session::get('program_id_hidden'))->get();
+        $optiosDR = [];
+        foreach ($v as $key => $value) {
+             $optiosDR[$value->id] = $value->name. ' '.$value->number;
+        }
+       
         return $form
             ->schema([
                                 
@@ -75,7 +81,7 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
 
                     Forms\Components\Select::make('program_day_id')
                     ->label('Program Day')
-                    ->options(ProgramDay::where('program_id',Session::get('program_id_hidden'))->pluck('name', 'id'))
+                    ->options($optiosDR)
                     ->required(),
                     
 
@@ -123,11 +129,10 @@ class ProgramDayRoutineRelationManager extends HasManyRelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable()->searchable()->label('Id'),
                 Tables\Columns\TextColumn::make('program_day.name')->sortable()->searchable()->label('Day'),
-                Tables\Columns\TextColumn::make('program_day.number')->sortable()->searchable()->label('#'),
+                Tables\Columns\TextColumn::make('program_day.number')->sortable()->searchable()->label('Number Week'),
                 Tables\Columns\TextColumn::make('title')->sortable()->searchable()->label('Title'),
                 Tables\Columns\TextColumn::make('sets')->sortable()->searchable()->label('Sets'),
                 Tables\Columns\TextColumn::make('repetitions')->sortable()->searchable()->label('Repetitions'),
-
             ])
             ->filters([
                 //
