@@ -115,6 +115,7 @@ class OrderController extends Controller
   {
     $user = $params['user'];
 
+    $subtotal = 0;
     foreach ($user->cart as $key => $cart) {
       if($cart->stripe_id == $params['stripe_id']){
         $subtotal += $this->getPrice($cart->product)->price;
