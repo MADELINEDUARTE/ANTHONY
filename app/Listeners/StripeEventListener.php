@@ -60,7 +60,7 @@ class StripeEventListener
                                                 ]);
 
                 $data = [
-                  'error'   => false,
+                  'status'   => false,
                   'message' => 'Payment Success. Press OK to continue',
                   'user_id' => $user->id
                 ];
