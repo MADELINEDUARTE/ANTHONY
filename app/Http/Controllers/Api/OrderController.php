@@ -75,14 +75,23 @@ class OrderController extends Controller
     $checkout = null;
 
     try {
-      $checkout = Cashier::stripe()->checkout->sessions->create([
+
+      $data = [
         'success_url' => $YOUR_DOMAIN . '/success',
         'cancel_url' => $YOUR_DOMAIN . '/cancel',
         'line_items' => $items,
         'mode'     => 'payment',
         'currency' => 'USD',
-        'customer' => $this->user->stripe_id
-      ]);
+        
+      ];
+
+      if($this->user->stripe_id){
+        $data['customer'] = $this->user->stripe_id;
+      }else{
+        $data['customer_creation'] = 'always';
+      }
+
+      $checkout = Cashier::stripe()->checkout->sessions->create($data);
 
       foreach ($this->user->cart as $key => $cart) {
 
