@@ -48,10 +48,16 @@ class StripeEventListener
 
         if($event->payload['type'] === 'checkout.session.completed'){
             try {
-                $user = User::where('stripe_id',$event->payload['data']['object']['customer'])->first();
+                $user = User::where('id',$event->payload['data']['object']['metadata']['user_id'])->first();
 
                 if(!$user){
-                    throw new Exception('User not Found');
+                    throw new \Exception('User not Found');
+                }else{
+                    if(!$user->stripe_id){
+                        $user->stripe_id = $event->payload['data']['object']['customer'];
+                        $user->postal_code = $event->payload['data']['object']['customer_details']['address']['postal_code']
+                        $user->save();
+                    }
                 }
 
                 $order = new OrderController();

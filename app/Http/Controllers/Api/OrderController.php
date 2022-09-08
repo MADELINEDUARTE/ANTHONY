@@ -82,7 +82,7 @@ class OrderController extends Controller
         'line_items' => $items,
         'mode'     => 'payment',
         'currency' => 'USD',
-        
+        'metadata' => [ 'user_id' => $this->user->id ]
       ];
 
       if($this->user->stripe_id){
