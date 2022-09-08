@@ -46,12 +46,17 @@ class CartController extends Controller
       $cart = Cart::find($request->id)->update($data);
 
     }else{
-
-      $cart = new Cart($data);
-
       $user = Auth::user();
+      
+      $cart = Cart::where('user_id',$user->id)->where('products_id', $request->product['id'])->first();
 
-      $user->cart()->save($cart);
+      if($cart){
+        $cart->update($data);
+      }else{
+        $cart = new Cart($data);
+
+        $user->cart()->save($cart);
+      }
 
     }
     
