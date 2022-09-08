@@ -54,8 +54,9 @@ class StripeEventListener
                     throw new \Exception('User not Found');
                 }else{
                     if(!$user->stripe_id){
+
                         $user->stripe_id = $event->payload['data']['object']['customer'];
-                        $user->postal_code = $event->payload['data']['object']['customer_details']['address']['postal_code']
+                        $user->postal_code = $event->payload['data']['object']['customer_details']['address']['postal_code'];
                         $user->save();
                     }
                 }
