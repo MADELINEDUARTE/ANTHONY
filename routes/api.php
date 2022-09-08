@@ -134,12 +134,12 @@ Route::middleware(['token_validate'])->group(function () {
 
         Route::prefix('cart')->group(function(){
             Route::post('store',[CartController::class,'store']);
-            Route::post('index',[CartController::class,'index']);
+            Route::get('index',[CartController::class,'index']);
         });
 
         Route::prefix('order')->group(function(){
             Route::post('store',[OrderController::class,'store']);
-            Route::post('index',[OrderController::class,'index']);
+            Route::get('index',[OrderController::class,'index']);
         });
     });
 

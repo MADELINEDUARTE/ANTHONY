@@ -51,7 +51,7 @@ class OrderController extends Controller
     if(count($this->user->cart)){
       $checkout = $this->createCheckout();
     }else{
-      return response()->json(['status'=> false, 'message'=> 'Car is empty']);
+      return response()->json(['status'=> false, 'message'=> 'Car is empty'], 422);
     }
 
     return response()->json($checkout);
