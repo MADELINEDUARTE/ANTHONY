@@ -162,8 +162,8 @@ class OrderController extends Controller
 
   private function direccionEnvio(User $user)
   {
-    $state = $user->state ? $user->state->name : '';
-    return $user->address." ".$user->city." ".$user->state->name." ".$user->postal_code;
+    $state = $user->state_id ? $user->state->name : '';
+    return $user->address." ".$user->city." ".$state." ".$user->postal_code;
   }
 
   private function getPrice(Products $product)
