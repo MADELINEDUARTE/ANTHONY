@@ -230,7 +230,9 @@ class SubscriptionStripeController extends Controller
           'description' => $data['description'],
           'active'      => $data['status'],
           'tax_code'    => "txcd_99999999",
-          'metadata'    => []
+          'metadata'    => [
+            'product_id' => isset($data['id']) ? $data['id'] : null
+          ]
         ]);
 
       } catch (\Exception $e) {

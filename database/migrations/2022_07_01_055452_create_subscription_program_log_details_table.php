@@ -13,16 +13,16 @@ class CreateSubscriptionProgramLogDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscription_program_log_details', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('subscription_program_logs_id')->unsigned()->nullable(false);
-            $table->foreign('logs_id')->references('id')->on('subscription_program_logs')->onDelete('cascade');
-            $table->integer('set');
-            $table->integer('repeticiones')->nullable();
-            $table->string('peso')->nullable();
-            $table->index(['subscription_program_logs_id','set']);
-            $table->timestamps();
-        });
+        // Schema::create('subscription_program_log_details', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->bigInteger('subscription_program_logs_id')->unsigned()->nullable(false);
+        //     $table->foreign('logs_id')->references('id')->on('subscription_program_logs')->onDelete('cascade');
+        //     $table->integer('set');
+        //     $table->integer('repeticiones')->nullable();
+        //     $table->string('peso')->nullable();
+        //     $table->index(['subscription_program_logs_id','set']);
+        //     $table->timestamps();
+        // });
     }
 
     /**

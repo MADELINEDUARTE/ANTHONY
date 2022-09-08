@@ -1,13 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\SubscriptionStripeController;
 use App\Http\Controllers\BlogPostController;
-use App\Http\Controllers\VerificacionDeEmailController;
-use App\Http\Controllers\OlvideClaveController;
-use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\CardRegisterController;
 use App\Http\Controllers\ExercisePlaceController;
 use App\Http\Controllers\ExperienceController;
@@ -15,10 +13,16 @@ use App\Http\Controllers\FrequencyController;
 use App\Http\Controllers\FrequentlyAskedQuestionController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\HomeDisplayController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\OlvideClaveController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\UsersManagement;
-use App\Http\Controllers\Api\SubscriptionStripeController;
+use App\Http\Controllers\VerificacionDeEmailController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -122,6 +126,23 @@ Route::middleware(['token_validate'])->group(function () {
     Route::post('create_log',[HomeController::class,'create_log']);
     Route::get('get_subscription',[HomeController::class,'getSubscription']);
     Route::get('get_user',[HomeController::class,'getUser']);
+
+    Route::prefix('store')->group(function(){
+        Route::get('products',[ProductController::class,'products']);
+        Route::get('categories',[ProductController::class,'productCategories']);
+        Route::get('product/{product}',[ProductController::class,'product']);
+
+        Route::prefix('cart')->group(function(){
+            Route::post('store',[CartController::class,'store']);
+            Route::post('index',[CartController::class,'index']);
+        });
+
+        Route::prefix('order')->group(function(){
+            Route::post('store',[OrderController::class,'store']);
+            Route::post('index',[OrderController::class,'index']);
+        });
+    });
+
 });
 
 
