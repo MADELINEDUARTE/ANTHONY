@@ -304,7 +304,7 @@ class UsersManagement extends Controller
             'password'   => 'required',
             'last_name'  => 'required',
             'country_id' => 'required',
-            'telephone'  => 'required'
+           // 'telephone'  => 'required'
         ];
 
         $validator = Validator::make($request->all(),$rules);
