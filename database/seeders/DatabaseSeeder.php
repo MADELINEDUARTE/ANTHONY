@@ -18,15 +18,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $categori = ProductCategorie::factory(3)->create();
+        // $categori = ProductCategorie::factory(3)->create();
 
-        $product = Products::factory()
-                            ->count(7)
-                            ->has(ProductsTalles::factory()->count(5),'talles')
-                            ->has(ProductsColores::factory()->count(5),'colores')
-                            ->has(ProductsImagenes::factory()->count(5),'imagenes')
-                            ->has(ProductsPrices::factory()->count(1))
-                            ->create();
+        // $product = Products::factory()
+        //                     ->count(7)
+        //                     ->has(ProductsTalles::factory()->count(5),'talles')
+        //                     ->has(ProductsColores::factory()->count(5),'colores')
+        //                     ->has(ProductsImagenes::factory()->count(5),'imagenes')
+        //                     ->has(ProductsPrices::factory()->count(1))
+        //                     ->create();
 
         // \App\Models\Gender::factory(1)->create();
         // \App\Models\Country::factory(1)->create();
@@ -37,5 +37,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Subscription::factory(1)->create();
 
         // $this->call([ RoleSeeder::class, RecurrenceSeeder::class ]);
+        $this->call([ EasyPostPredefinedPackageSeeder::class ]);
     }
 }

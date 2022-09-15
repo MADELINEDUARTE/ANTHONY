@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^3.3",
+        "easypost/easypost-php": "^5.6",
         "filament/filament": "^2.10",
         "filament/forms": "^2.10",
         "filament/tables": "^2.10",

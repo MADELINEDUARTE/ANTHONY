@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\EnviosController;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+  
 
   public function index()
   {
+
     $user = Auth::user();
     $cart = $user->cart;
 
@@ -28,7 +32,16 @@ class CartController extends Controller
 
     $cart = array_map($arreglo, collect($cart)->all());
 
-    return response()->json($cart);
+    $envio = new EnviosController(['user' => $user]);
+    $envio = $envio->consultaEnvio();
+
+    $rate = null;
+    if($envio['status']){
+      $index = array_search('First', array_column($envio['data']->rates, 'service'));
+      $rate = $envio['data']->rates[$index]->retail_rate;
+    }
+
+    return response()->json([ 'cart' => $cart, 'rate' => $rate ]);
   }
 
   public function store(Request $request)
@@ -54,7 +67,6 @@ class CartController extends Controller
         $cart->update($data);
       }else{
         $cart = new Cart($data);
-
         $user->cart()->save($cart);
       }
 
@@ -62,5 +74,9 @@ class CartController extends Controller
     
     return response()->json($cart);   
   }
+
+  
+
+ 
   
 }
