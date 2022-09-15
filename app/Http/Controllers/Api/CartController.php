@@ -36,7 +36,7 @@ class CartController extends Controller
     $envio = $envio->consultaEnvio();
 
     $rate = null;
-    if($envio['status']){
+    if(!$envio['hasErrors']){
       $index = array_search('First', array_column($envio['data']->rates, 'service'));
       $rate = $envio['data']->rates[$index]->retail_rate;
     }

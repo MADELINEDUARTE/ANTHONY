@@ -73,6 +73,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    protected $with = ['country','state'];
+
 
     public function gender(){
         return $this->belongsTo(Gender::class,'gender_id');

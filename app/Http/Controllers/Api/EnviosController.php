@@ -16,7 +16,7 @@ class EnviosController extends Controller
   private $parcel;
   private $shipment;
   private $user;
-  private $errors = [ 'status' => false, 'errors' => [] ];
+  private $errors = [ 'hasErrors' => false, 'errors' => [] ];
 
   private function setErrors($message)
   {
@@ -26,11 +26,11 @@ class EnviosController extends Controller
   public function hasErrors()
   {
     if(count($this->errors['errors'])){
-      $this->errors['status'] = true;
+      $this->errors['hasErrors'] = true;
     }else{
-      $this->errors['status'] = false;
+      $this->errors['hasErrors'] = false;
     }
-    return $this->errors['status'];
+    return $this->errors['hasErrors'];
   }
 
   public function getErrors()
