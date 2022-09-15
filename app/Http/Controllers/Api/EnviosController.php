@@ -78,7 +78,7 @@ class EnviosController extends Controller
       }
 
     } catch (\Exception $e) {
-      $this->setErrors();
+      $this->setErrors($e->getMessage());
       return $this->getErrors();
     }
 
@@ -116,7 +116,7 @@ class EnviosController extends Controller
       return  ['status' => true, 'data' => json_decode($this->to_address) ];
 
     } catch (\Exception $e) {
-      $this->setErrors();
+      $this->setErrors($e->getMessage());
       return $this->getErrors();
     }
   }
@@ -142,7 +142,7 @@ class EnviosController extends Controller
 
     } catch (\Exception $e) {
 
-      $this->setErrors();
+      $this->setErrors($e->getMessage());
       return $this->getErrors();
 
     }
@@ -166,7 +166,7 @@ class EnviosController extends Controller
       return  ['status' => true, 'data' => json_decode($this->shipment) ];
 
     } catch (\Exception $e) {
-      $this->setErrors();
+      $this->setErrors($e->getMessage());
       return $this->getErrors();
     }
   }
