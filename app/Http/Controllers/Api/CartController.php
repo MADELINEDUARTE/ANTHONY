@@ -29,16 +29,35 @@ class CartController extends Controller
       ];
       return $product;
     };
+    
+    $rate = null;
+    
+    if($cart->count()){
+      if(!$cart[0]->envio_easypost_id){
+        $envio = new EnviosController(['user' => $user]);
+        $envio = $envio->consultaEnvio();
+
+        if(empty($envio['hasErrors'])){
+          foreach ($cart as $key => $car) {
+            $car->envio_easypost_id = $envio['data']->id;
+            $car->save();
+          }
+        }
+      }else{
+        $envio = new EnviosController(['user' => $user]);
+        $envio = $envio->getEnvio($cart[0]->envio_easypost_id);
+        
+      }
+    }
 
     $cart = array_map($arreglo, collect($cart)->all());
 
-    $envio = new EnviosController(['user' => $user]);
-    $envio = $envio->consultaEnvio();
-
-    $rate = null;
-    if(!$envio['hasErrors']){
+    
+    if(empty($envio['hasErrors'])){
       $index = array_search('First', array_column($envio['data']->rates, 'service'));
-      $rate = $envio['data']->rates[$index]->retail_rate;
+      $rate['price'] = $envio['data']->rates[$index]->retail_rate;
+    }elseif(isset($envio['hasErrors']) && $envio['hasErrors']){
+      $rate['errors'] = $envio['errors'];
     }
 
     return response()->json([ 'cart' => $cart, 'rate' => $rate ]);

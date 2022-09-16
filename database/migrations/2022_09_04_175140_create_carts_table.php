@@ -31,6 +31,7 @@ class CreateCartsTable extends Migration
             $table->foreign('color_id')->references('id')->on('products_colores')->onDelete('cascade');
 
             $table->text('stripe_id')->nullable();
+            $table->text('envio_easypost_id')->nullable();
 
             $table->timestamps();
         });

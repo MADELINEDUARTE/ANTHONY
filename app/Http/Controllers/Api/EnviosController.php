@@ -78,7 +78,7 @@ class EnviosController extends Controller
       }
 
     } catch (\Exception $e) {
-      $this->setErrors($e->getMessage());
+      $this->setErrors(['construct'=>$e->getMessage()]);
       return $this->getErrors();
     }
 
@@ -116,7 +116,7 @@ class EnviosController extends Controller
       return  ['status' => true, 'data' => json_decode($this->to_address) ];
 
     } catch (\Exception $e) {
-      $this->setErrors($e->getMessage());
+      $this->setErrors(['to_adress'=>$e->getMessage()]);
       return $this->getErrors();
     }
   }
@@ -142,7 +142,7 @@ class EnviosController extends Controller
 
     } catch (\Exception $e) {
 
-      $this->setErrors($e->getMessage());
+      $this->setErrors(['parcel'=>$e->getMessage()]);
       return $this->getErrors();
 
     }
@@ -166,9 +166,28 @@ class EnviosController extends Controller
       return  ['status' => true, 'data' => json_decode($this->shipment) ];
 
     } catch (\Exception $e) {
-      $this->setErrors($e->getMessage());
+      $this->setErrors(['shipment'=>$e->getMessage()]);
       return $this->getErrors();
     }
+  }
+
+  public function getEnvio($id)
+  {
+
+    try {
+
+      $this->shipment = \EasyPost\Shipment::retrieve($id);
+      $this->shipment->regenerate_rates();
+
+      return  ['status' => true, 'data' => json_decode($this->shipment) ];
+
+    } catch (\Exception $e) {
+      $this->setErrors(['shipment'=>$e->getMessage()]);
+      return $this->getErrors();
+    }
+    
+
+
   }
 
   /*
