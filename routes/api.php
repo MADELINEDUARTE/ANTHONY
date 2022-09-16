@@ -133,6 +133,7 @@ Route::middleware(['token_validate'])->group(function () {
         Route::get('product/{product}',[ProductController::class,'product']);
 
         Route::prefix('cart')->group(function(){
+            Route::post('delete_product',[CartController::class,'delete_product']);
             Route::post('store',[CartController::class,'store']);
             Route::get('index',[CartController::class,'index']);
         });

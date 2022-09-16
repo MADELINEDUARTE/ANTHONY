@@ -94,6 +94,18 @@ class CartController extends Controller
     return response()->json($cart);   
   }
 
+  public function delete_product(Request $request)
+  {
+    
+    $consulta = Cart::find($request->id);
+
+    if($consulta){
+      $consulta->delete();
+    }
+
+    return response()->json(['status'=> true]);
+  }
+
   
 
  
