@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\EnviosController;
 use App\Http\Controllers\Controller;
 use App\Models\Orders;
 use App\Models\OrdersProducts;
@@ -18,6 +19,7 @@ class OrderController extends Controller
   private $tax;
   private $user;
   private $setting;
+  private $envio;
 
   public function __construct()
   {
@@ -122,7 +124,9 @@ class OrderController extends Controller
       }
     }
 
-    $total = $this->calcTotal($subtotal);
+    $envio_easypost_id = $user->cart[0]->envio_easypost_id;
+
+    $total = $this->calcTotal($subtotal, $user, $envio_easypost_id);
     
     $direccion = $this->direccionEnvio($user);
 
@@ -131,6 +135,7 @@ class OrderController extends Controller
       'status'          => 1,
       'direccion_envio' => $direccion,
       'stripe_id'       => $params['stripe_id'],
+      'envio_easypost_id' => $envio_easypost_id
     ]);
 
     $user->order()->save($order);
@@ -150,6 +155,9 @@ class OrderController extends Controller
     $order->ordersProducts()->saveMany($ordersProducts);
 
     $order = Orders::find($order->id);
+
+    $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
+    $this->envio['data']->buy(array('rate' => array('id' => $this->envio->rates[$index]->id )));
 
     foreach ($user->cart as $key => $cart) {
       if($cart->stripe_id == $params['stripe_id']){
@@ -175,8 +183,20 @@ class OrderController extends Controller
     return $product->price;
   }
 
-  private function calcTotal($total)
+  private function calcTotal($total, $user = null, $envio_easypost_id = null)
   {
+
+    if($envio_easypost_id && $user){
+      $this->envio = new EnviosController(['user' => $user]);
+      $this->envio = $this->envio->getEnvio($envio_easypost_id);
+    }
+
+    $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
+    // $this->envio = $this->envio['data'];
+
+    $rate = $this->envio->rates[$index]->retail_rate;
+
+    $total += $rate;
     $this->tax = ($total * 7) / 100;
     return $total + $this->tax;
   }

@@ -48,17 +48,19 @@ class CartController extends Controller
         $envio = $envio->getEnvio($cart[0]->envio_easypost_id);
         
       }
+
+      if(empty($envio['hasErrors'])){
+        $index = array_search('First', array_column($envio['data']->rates, 'service'));
+        $rate['price'] = $envio['data']->rates[$index]->retail_rate;
+      }elseif(isset($envio['hasErrors']) && $envio['hasErrors']){
+        $rate['errors'] = $envio['errors'];
+      }
     }
 
     $cart = array_map($arreglo, collect($cart)->all());
 
     
-    if(empty($envio['hasErrors'])){
-      $index = array_search('First', array_column($envio['data']->rates, 'service'));
-      $rate['price'] = $envio['data']->rates[$index]->retail_rate;
-    }elseif(isset($envio['hasErrors']) && $envio['hasErrors']){
-      $rate['errors'] = $envio['errors'];
-    }
+    
 
     return response()->json([ 'cart' => $cart, 'rate' => $rate ]);
   }
