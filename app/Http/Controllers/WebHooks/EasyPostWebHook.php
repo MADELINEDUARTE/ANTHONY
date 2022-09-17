@@ -20,6 +20,6 @@ class EasyPostWebHook extends Controller
             ]);
           return response()->json(['status'=> true, 'shipment_id' => $shipment->id]);
         }
-        reurn;
+        return;
     }
 }
