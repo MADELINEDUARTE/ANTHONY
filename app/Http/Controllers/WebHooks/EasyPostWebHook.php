@@ -12,7 +12,7 @@ class EasyPostWebHook extends Controller
         \Log::info($request);
         if($request->description == 'tracker.updated'){
             
-            Shipment::where('tracker_id',$request->result['shipment_id'])->updated([
+            Shipment::where('tracker_id',$request->result['shipment_id'])->update([
               'tracker_status'        => $request->result['status'],
               'tracker_signed_by'     => $request->result['signed_by'],
               'tracker_carrier'       => $request->result['carrier'],
