@@ -35,4 +35,6 @@ class ShipmentController extends Controller
         'rate_retail_rate'      => $shipment->selected_rate->retail_rate,
       ]);
     }
+
+
 }
