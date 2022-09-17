@@ -12,13 +12,16 @@ class EasyPostWebHook extends Controller
         
         if($request['description'] == 'tracker.updated'){
             \Log::info('Llego hasta aqui');
+            \Log::info($request['result']['shipment_id']);
             $shipment = Shipment::where('tracker_id',$request['result']['shipment_id'])->update([
               'tracker_status'        => $request['result']['status'],
               'tracker_signed_by'     => $request['result']['signed_by'],
               'tracker_carrier'       => $request['result']['carrier'],
               'tracker_public_url'    => $request['result']['public_url'],
             ]);
-          return response()->json(['status'=> true, 'shipment_id' => $shipment]);
+            \Log::info($shipment);
+            
+          return response()->json(['status'=> true, 'shipment' => '$shipment']);
         }
         return;
     }
