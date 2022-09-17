@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->integer('status');
             $table->text('direccion_envio')->nullable();
             $table->text('stripe_id')->nullable();
+            $table->char('price_rate',250)->nullable();
         
             $table->timestamps();
         });

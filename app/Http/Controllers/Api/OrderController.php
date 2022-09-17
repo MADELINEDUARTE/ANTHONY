@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\EnviosController;
+use App\Http\Controllers\Api\ShipmentController;
 use App\Http\Controllers\Controller;
 use App\Models\Orders;
 use App\Models\OrdersProducts;
@@ -40,7 +41,7 @@ class OrderController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $orders = Orders::get();
+    $orders = Orders::->latest()->get();
     
     return response()->json($orders);
   }
@@ -151,15 +152,17 @@ class OrderController extends Controller
 
     $total = $this->calcTotal($subtotal, $user, $envio_easypost_id);
     
-    \Log::info($total);
+    // \Log::info($total);
     $direccion = $this->direccionEnvio($user);
+    $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
 
     $order = new Orders([
       'price'           => $total,
       'status'          => 1,
       'direccion_envio' => $direccion,
       'stripe_id'       => $params['stripe_id'],
-      'envio_easypost_id' => $envio_easypost_id
+      'envio_easypost_id' => $envio_easypost_id,
+      'price_rate' =>  $this->envio['data']->rates[$index]->retail_rate
     ]);
 
     $user->order()->save($order);
@@ -179,11 +182,8 @@ class OrderController extends Controller
     $order->ordersProducts()->saveMany($ordersProducts);
 
     $order = Orders::find($order->id);
-
-    $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
-
-    $shipment = \EasyPost\Shipment::retrieve($envio_easypost_id);
-    $shipment->buy(array('rate' => array('id' => $this->envio['data']->rates[$index]->id )));
+    
+    $this->shipment($envio_easypost_id, $order);
 
     foreach ($user->cart as $key => $cart) {
       if($cart->stripe_id == $params['stripe_id']){
@@ -225,6 +225,23 @@ class OrderController extends Controller
     $total += $rate;
     $this->tax = ($total * 7) / 100;
     return $total + $this->tax;
+  }
+
+  private function shipment($id,$order)
+  {
+    try {
+      $shipment = \EasyPost\Shipment::retrieve($id);
+      $shipment->buy(array('rate' => array('id' => $this->envio['data']->rates[$index]->id )));
+
+      $shipmentTable = new ShipmentController();
+      $shipmentTable = $shipmentTable->createShipment($shipment, $order);
+
+      return ['shipment' => $shipment, 'shipmentTable' => $shipmentTable];
+
+    } catch (\Exception $e) {
+      \Log::info($e->getMessage());
+    }
+    
   }
 
  
