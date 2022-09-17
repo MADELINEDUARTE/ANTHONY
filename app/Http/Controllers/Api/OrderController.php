@@ -20,6 +20,7 @@ class OrderController extends Controller
   private $user;
   private $setting;
   private $envio;
+  private $tasa;
 
   public function __construct()
   {
@@ -51,6 +52,7 @@ class OrderController extends Controller
     $checkout = null;
 
     if(count($this->user->cart)){
+
       $checkout = $this->createCheckout();
     }else{
       return response()->json(['status'=> false, 'message'=> 'Car is empty'], 422);
@@ -65,26 +67,51 @@ class OrderController extends Controller
 
     $items = [];
     foreach ($this->user->cart as $key => $cart) {
-  
       $items[] = [
         'price' => $this->getPrice($cart->product)->stripe_id, 
         'quantity' => $cart->count,
         'tax_rates' => [$this->setting['tax_id_stripe']],
       ];
-      
     }
 
     $checkout = null;
 
     try {
 
+      $envio = new EnviosController([ 'user' => $this->user ]);
+      $envio = $envio->getEnvio($this->user->cart[0]->envio_easypost_id);
+      
+      $rate = null;
+      $priceRate = 0;
+
+      if(empty($envio['hasErrors'])){
+        $index = array_search('First', array_column($envio['data']->rates, 'service'));
+        $rate['price'] = $envio['data']->rates[$index]->retail_rate;
+      }elseif(isset($envio['hasErrors']) && $envio['hasErrors']){
+        $rate['errors'] = $envio['errors'];
+      }
+
+      $priceRate = $rate['price']*100;
+
       $data = [
         'success_url' => $YOUR_DOMAIN . '/success',
-        'cancel_url' => $YOUR_DOMAIN . '/cancel',
-        'line_items' => $items,
-        'mode'     => 'payment',
-        'currency' => 'USD',
-        'metadata' => [ 'user_id' => $this->user->id ]
+        'cancel_url'  => $YOUR_DOMAIN . '/cancel',
+        'line_items'  => $items,
+        'mode'        => 'payment',
+        'currency'    => 'USD',
+        'metadata'    => [ 'user_id' => $this->user->id ],
+        'shipping_options' => [
+          [
+            'shipping_rate_data' => [
+              'display_name' => 'Ground shipping',
+              'type' => 'fixed_amount',
+              'fixed_amount' => [
+                'amount' => $priceRate,
+                'currency' => 'usd',
+              ],
+            ]
+          ]
+        ]
       ];
 
       if($this->user->stripe_id){
@@ -96,13 +123,9 @@ class OrderController extends Controller
       $checkout = Cashier::stripe()->checkout->sessions->create($data);
 
       foreach ($this->user->cart as $key => $cart) {
-
         $cart->stripe_id = $checkout->payment_intent;
         $cart->save();
-
       }
-
-
     } catch (\Exception $e) {
 
       \Log::info($e->getMessage());
@@ -128,6 +151,7 @@ class OrderController extends Controller
 
     $total = $this->calcTotal($subtotal, $user, $envio_easypost_id);
     
+    \Log::info($total);
     $direccion = $this->direccionEnvio($user);
 
     $order = new Orders([
@@ -157,7 +181,9 @@ class OrderController extends Controller
     $order = Orders::find($order->id);
 
     $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
-    $this->envio['data']->buy(array('rate' => array('id' => $this->envio->rates[$index]->id )));
+
+    $shipment = \EasyPost\Shipment::retrieve($envio_easypost_id);
+    $shipment->buy(array('rate' => array('id' => $this->envio['data']->rates[$index]->id )));
 
     foreach ($user->cart as $key => $cart) {
       if($cart->stripe_id == $params['stripe_id']){
@@ -193,11 +219,13 @@ class OrderController extends Controller
 
     $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
     // $this->envio = $this->envio['data'];
-
-    $rate = $this->envio->rates[$index]->retail_rate;
+    // \Log::info($this->envio['data']->rates);
+    $rate = $this->envio['data']->rates[$index]->retail_rate;
 
     $total += $rate;
     $this->tax = ($total * 7) / 100;
     return $total + $this->tax;
   }
+
+ 
 }
