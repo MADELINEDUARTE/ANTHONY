@@ -18,7 +18,7 @@ class EasyPostWebHook extends Controller
               'tracker_carrier'       => $request['result']['carrier'],
               'tracker_public_url'    => $request['result']['public_url'],
             ]);
-          return response()->json(['status'=> true, 'shipment_id' => $shipment->id]);
+          return response()->json(['status'=> true, 'shipment_id' => $shipment]);
         }
         return;
     }
