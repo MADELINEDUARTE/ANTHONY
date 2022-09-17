@@ -230,6 +230,7 @@ class OrderController extends Controller
   private function shipment($id,$order)
   {
     try {
+      $index = array_search('First', array_column($this->envio['data']->rates, 'service'));
       $shipment = \EasyPost\Shipment::retrieve($id);
       $shipment->buy(array('rate' => array('id' => $this->envio['data']->rates[$index]->id )));
 
