@@ -23,7 +23,7 @@ class CreateShipmentsTable extends Migration
             // Direccion
             $table->text('address_name');
             $table->text('address_street1');
-            $table->text('address_street2');
+            $table->text('address_street2')->nullable();
             $table->text('address_city');
             $table->text('address_state');
             $table->text('address_zip');
@@ -35,7 +35,7 @@ class CreateShipmentsTable extends Migration
             $table->text('tracker_tracking_code');
             $table->text('tracker_status');
             $table->text('tracker_created_at');
-            $table->text('tracker_signed_by');
+            $table->text('tracker_signed_by')->nullable();
             $table->text('tracker_carrier');
             $table->text('tracker_public_url');
             

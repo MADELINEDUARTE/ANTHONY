@@ -38,7 +38,7 @@ use App\Http\Livewire\Admin\AdminProgramDayRoutineComponent;
 use App\Http\Livewire\Admin\AdminUserComponent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\WebHooks\EasyPostWebHook;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +74,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
 */
 
 
+Route::post('easypost/webhook',[EasyPostWebHook::class,'index']);
 
 Route::get('/dash','App\Http\Controllers\DashboardController@index');
 
