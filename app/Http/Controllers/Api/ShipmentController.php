@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ShipmentController extends Controller
 {
@@ -33,6 +34,7 @@ class ShipmentController extends Controller
         'rate_service'          => $shipment->selected_rate->service,
         'rate_price'            => $shipment->selected_rate->rate,
         'rate_retail_rate'      => $shipment->selected_rate->retail_rate,
+        'created_at' => Carbon::now()
       ]);
     }
 

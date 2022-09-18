@@ -71,8 +71,8 @@ class CartController extends Controller
     $data = [
       'products_id' => $request->product['id'],
       'count'       => $request->count,
-      'talle_id'    => isset($request->talle) && count($request->talle) ? $request->talle['id']: null,
-      'color_id'    => isset($request->color) && count($request->color) ? $request->color['id']: null
+      'talle_id'    => isset($request->talle) && count($request->talle) && $request->talle['id'] ? $request->talle['id']: null,
+      'color_id'    => isset($request->color) && count($request->color) && $request->color['id'] ? $request->color['id']: null
     ];
 
     if($request->id){
