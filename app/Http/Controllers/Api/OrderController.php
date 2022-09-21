@@ -41,7 +41,7 @@ class OrderController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $orders = Orders::latest()->get();
+    $orders = Orders::where('user_id',$user->id)->latest()->get();
     
     return response()->json($orders);
   }
