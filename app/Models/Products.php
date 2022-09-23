@@ -13,6 +13,8 @@ class Products extends Model
 
     protected $with = ['categorie','price','priceOffert','imagenes','talles','colores'];
 
+    protected $fillable = ['categorie_id','name','description','stock','status','price_last','price_offert_last'];
+
 
     public function scopeName($query, $name)
     {

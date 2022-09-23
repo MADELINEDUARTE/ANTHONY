@@ -10,4 +10,10 @@ class ProductsImagenes extends Model
     use HasFactory;
 
     protected $hidden = ['created_at','updated_at','id','products_id'];
+
+    protected $fillable = ['image'];
+
+    // protected $casts = [
+    //     'image' => 'array',
+    // ];
 }

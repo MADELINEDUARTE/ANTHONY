@@ -10,4 +10,6 @@ class ProductsTalles extends Model
     use HasFactory;
 
     protected $hidden = ['created_at','updated_at','status','products_id'];
+
+    protected $fillable =  ['description','status'];
 }

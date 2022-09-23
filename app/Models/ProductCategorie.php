@@ -10,4 +10,10 @@ class ProductCategorie extends Model
     use HasFactory;
 
     protected $hidden = ['created_at','updated_at','status'];
+
+    protected $fillable = ['name','status'];
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 }
