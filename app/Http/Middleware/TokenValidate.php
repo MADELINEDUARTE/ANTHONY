@@ -27,6 +27,7 @@ class TokenValidate
         }
         Auth::loginUsingId($user->id);
 
+
         return $next($request);
     }
 }

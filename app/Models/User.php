@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Cashier\Billable;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
