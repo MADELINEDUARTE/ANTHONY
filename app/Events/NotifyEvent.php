@@ -14,7 +14,7 @@ class NotifyEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    private $user;
     public $message;
 
     /**
@@ -35,7 +35,7 @@ class NotifyEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notify-event.'.$this->user->id);
+        return new PrivateChannel('private-event.'.$this->user->id);
     }
 
     public function broadcastWith()

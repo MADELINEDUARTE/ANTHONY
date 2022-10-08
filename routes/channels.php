@@ -20,6 +20,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 use App\Models\User;
  
-Broadcast::channel('notify-event.{userId}', function ($user, $userId) {
+Broadcast::channel('private-event.{userId}', function ($user, $userId) {
     return $user->id === User::findOrNew($userId)->id;
 });
