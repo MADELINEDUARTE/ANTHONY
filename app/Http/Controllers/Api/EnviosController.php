@@ -173,7 +173,6 @@ class EnviosController extends Controller
 
   public function getEnvio($id)
   {
-
     try {
 
       $this->shipment = \EasyPost\Shipment::retrieve($id);
@@ -185,9 +184,6 @@ class EnviosController extends Controller
       $this->setErrors(['shipment'=>$e->getMessage()]);
       return $this->getErrors();
     }
-    
-
-
   }
 
   /*

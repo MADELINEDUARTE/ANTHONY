@@ -18,6 +18,9 @@ class ProductsPolicy
      */
     public function viewAny(User $user)
     {
+        \Log::info('=================================');
+        \Log::info( $user->can('view_any_products'));
+        \Log::info('=================================');
         return $user->can('view_any_products');
     }
 

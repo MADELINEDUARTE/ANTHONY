@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+
+use App\Models\User;
+ 
+Broadcast::channel('notify-event.{userId}', function ($user, $userId) {
+    return $user->id === User::findOrNew($userId)->id;
+});

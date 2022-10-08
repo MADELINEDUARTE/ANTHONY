@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\NotifyEvent;
 use App\Events\SendPusher;
 use App\Http\Controllers\Api\OrderController;
 use App\Models\Package;
@@ -36,8 +37,8 @@ class StripeEventListener
                   'user_id' => $user->id
                 ];
              
-
-                event(new SendPusher($data));
+                event(new NotifyEvent($user,'Subscription processed. Press OK to continue'));
+                //event(new SendPusher($data));
                
             }else{
               \Log::info('============ customer.subscription.created');
@@ -72,7 +73,8 @@ class StripeEventListener
                   'user_id' => $user->id
                 ];
                 
-                event(new SendPusher($data));
+                event(new NotifyEvent($user,'Payment Success. Press OK to continue'));
+                //event(new SendPusher($data));
 
             } catch (\Exception $e) {
                 \Log::info('============ checkout.session.completed');

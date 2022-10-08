@@ -12,9 +12,15 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\RefreshesPermissionCache;
 
 class OrdersResource extends Resource
 {
+
+     use HasPermissions;
+    use RefreshesPermissionCache;
+
     protected static ?string $model = Orders::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
