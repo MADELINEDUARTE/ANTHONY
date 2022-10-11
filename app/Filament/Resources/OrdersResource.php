@@ -63,16 +63,22 @@ class OrdersResource extends Resource
               //   ->html()
               //   ->label('Tracking Code'),
 
-              Tables\Columns\ViewColumn::make('shipment.tracker_public_url')->view('orders.tables.columns.tracker_public_url'),
+              Tables\Columns\ViewColumn::make('shipment.tracker_public_url')
+              ->view('orders.tables.columns.tracker_public_url')
+              ->label('Tracking Code'),
+
+              Tables\Columns\ViewColumn::make('shipment.label_url')
+              ->view('orders.tables.columns.label_url')
+              ->label('LABEL'),
 
 
-              Tables\Columns\TextColumn::make('shipment.label_url')
-                ->sortable()
-                ->searchable()
-                ->formatStateUsing(fn (string $state): string => "<a target='_blank' href='{$state}'>LABEL</a>")
-                ->wrap()
-                ->html()
-                ->label('LABEL'),
+              // Tables\Columns\TextColumn::make('shipment.label_url')
+              //   ->sortable()
+              //   ->searchable()
+              //   ->formatStateUsing(fn (string $state): string => "<a target='_blank' href='{$state}'>LABEL</a>")
+              //   ->wrap()
+              //   ->html()
+              //   ->label('LABEL'),
 
               
 
