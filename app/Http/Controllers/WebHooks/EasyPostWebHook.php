@@ -11,7 +11,7 @@ class EasyPostWebHook extends Controller
     public function index(Request $request){
         
         if($request['description'] == 'tracker.updated'){
-            \Log::info('Llego hasta aqui');
+            // \Log::info('Llego hasta aqui');
             // \Log::info($request['result']['shipment_id']);
             $shipment = Shipment::where('shipment_id',$request['result']['shipment_id'])->update([
               'tracker_status'        => $request['result']['status'],
