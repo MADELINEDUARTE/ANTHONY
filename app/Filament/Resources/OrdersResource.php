@@ -53,13 +53,19 @@ class OrdersResource extends Resource
               Tables\Columns\TextColumn::make('price')->sortable()->searchable()->label('Total Price'),
               Tables\Columns\TextColumn::make('shipment.tracker_status')->sortable()->searchable()->label('Shipment Status'),
               Tables\Columns\TextColumn::make('shipment.tracker_tracking_code')->sortable()->searchable()->label('Tracking Code'),
-              Tables\Columns\TextColumn::make('shipment.tracker_public_url')
-                ->sortable()
-                ->searchable()
-                ->formatStateUsing(fn (string $state): string => "<a target='_blank' href='{$state}'>Tracker</a>")
-                ->wrap()
-                ->html()
-                ->label('Tracking Code'),
+
+
+              // Tables\Columns\TextColumn::make('shipment.tracker_public_url')
+              //   ->sortable()
+              //   ->searchable()
+              //   ->formatStateUsing(fn (string $state): string => "<a target='_blank' href='{$state}'>Tracker</a>")
+              //   ->wrap()
+              //   ->html()
+              //   ->label('Tracking Code'),
+
+              Tables\Columns\ViewColumn::make('shipment.tracker_public_url')->view('orders.tables.columns.tracker_public_url'),
+
+
               Tables\Columns\TextColumn::make('shipment.label_url')
                 ->sortable()
                 ->searchable()
