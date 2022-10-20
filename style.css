@@ -1,0 +1,180 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500&family=Poppins:wght@400;500;600;700&family=Raleway:wght@600;700&display=swap');
+
+
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #ff7978;
+    background-image: url(images/bg-intro-mobile.png);
+    text-align: center;
+    height: 950px;
+    margin: 0;
+    padding: 70px 25px 0px 25px;
+}
+
+/*SECCION 1*/
+.contenedor-uno{
+    height: 300px;
+    box-sizing: border-box;
+}
+.contenedor-learn h1{
+    color: white;
+    font-size: 33px;
+}
+.contenedor-learn p {
+    color: white;
+    font-size: 16px;
+    line-height: 25px;
+    padding-bottom: 70px;
+}
+
+/*SECCION 2*/
+.contenedor-dos{
+    background-color: #5d54a3;
+    height: 90px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.contenedor-try p{
+    color: white;
+    padding-top: 15px;
+    line-height: 30px;
+}
+
+/*SECCION 3*/
+.contenedor-tres{
+    height: 400px;
+    padding-top: 30px;
+    background-color: white;
+    border-radius: 10px;
+    
+}
+.contenedor-form{
+   padding-top: 10px;
+}
+.form-control{
+  padding: 15px 60px;
+  border-radius: 5px;  
+}
+.Email-Address{
+    padding: 15px 60px;
+    border-radius: 5px;
+}
+.Password{
+    padding: 15px 60px;
+    border-radius: 5px;
+}
+.btn-btn-primary{
+    padding: 15px 60px;
+    border-radius: 5px;
+}
+
+.btn-enviar{
+    padding: 15px 60px;
+    border-radius: 5px;
+    background-color: #36cd8a;
+    color: white;
+    text-transform: uppercase;
+}
+.contenedor-tres p{
+    color: rgba(135, 134, 134, 0.697);
+    font-size: 14px;
+    padding-top: 20px;
+}
+.contenedor-tres span{
+    color: #ff7978;
+}
+
+.warnings{
+    width: 200px;
+    text-align: center;
+    margin: auto;
+    color: #ff7978;
+    padding-top: 20px;
+}
+
+
+@media screen and (min-width:1366px){
+    body {
+            background-image: url(images/bg-intro-desktop.png);
+            height: 500px;
+            padding: 120px 160px 119px 160px;
+            display: flex;
+            justify-content: space-between;
+        }
+        main{
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            justify-content: space-between;
+            height: 50;   
+        }
+    
+        /*SECCION 1*/
+        .contenedor-uno {
+          text-align: left;
+          padding-top: 110px;
+        }
+    
+        .contenedor-learn h1 {
+            font-size: 43px;
+        }
+        .contenedor-learn p {
+            color: white;
+            font-size: 16px;
+            line-height: 30px;
+            padding-bottom: 70px;
+        }
+
+        /*SECCION 2*/
+        .contenedor-dos {
+            text-align: center;
+            background-color: #5d54a3;
+            height: 90px;
+            width: 600px;     
+        }
+        
+    
+        .contenedor-try p {
+            line-height: 30px;    
+        }
+    
+        /*SECCION 3*/
+        .contenedor-tres {
+            height: 410px;
+            width: 600px;
+            padding-top: 30px;  
+        }
+    
+        .contenedor-form {
+            padding-top: 10px;
+        }
+    
+        .form-control {
+            padding: 15px 150px;
+        }
+    
+        .Email-Address {
+            padding: 15px 150px;
+ 
+        }
+    
+        .Password {
+            padding: 15px 150px;
+ 
+        }
+    
+        .btn-enviar {
+            padding: 15px 150px;
+ 
+        }
+    
+
+        .contenedor-tres p {
+            font-size: 15px;
+        }
+    
+        .contenedor-tres span {
+            color: #ff7978;
+        }
+}
