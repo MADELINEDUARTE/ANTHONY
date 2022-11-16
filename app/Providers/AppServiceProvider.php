@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Filament\Resources\GenderResource::class,
             \App\Filament\Resources\OrdersResource::class,
             \App\Filament\Resources\PackageResource::class,
-            \App\Filament\Resources\PackageResource::class,
+            \App\Filament\Resources\PackagesPricesResource::class,
             \App\Filament\Resources\ProductCategorieResource::class,
             \App\Filament\Resources\ProgramCategoryResource::class,
             \App\Filament\Resources\ProgramResource::class,
