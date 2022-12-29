@@ -32,8 +32,15 @@ class BeforeAfterController extends Controller
 
                 $fotos            = $value->fotos->groupBy('type');
 
-                $fotos['before'] = $fotos['before']->pluck('url_foto');
-                $fotos['after']  = $fotos['after']->pluck('url_foto');
+                if(isset($fotos['before'])){
+
+                    $fotos['before'] = $fotos['before']->pluck('url_foto');
+                }
+
+                if(isset($fotos['after'])){
+
+                    $fotos['after']  = $fotos['after']->pluck('url_foto');
+                }
 
                 $program['fotos'] = $fotos->map(function($grupo){
                     return $grupo->map(function($foto){
