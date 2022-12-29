@@ -60,17 +60,19 @@ class BeforeAfterController extends Controller
 
     public function addFoto(Request $request)
     {
+
+        return response()->json($request->header());
         $rules=[
-          'foto'                     => 'required|mimes:jpg,png',
+          // 'foto'                     => 'required|mimes:jpg,png',
           'type'                     => 'required',
           'pose'                     => 'required',
           'subscription_programs_id' => 'required'
         ];
 
-        $validator= Validator::make($request->all(),$rules);
+        $validator= Validator::make($request->header(),$rules);
 
         if ($validator->fails()) {
-          return response()->json($validator->errors());
+          return response()->json($validator->errors(), 422);
         }
 
         $beforeAfter = BeforeAfter::where('type', $request->type)
