@@ -24,16 +24,23 @@ class BeforeAfterController extends Controller
             
             $program          = $value->program;
             $program['image'] = asset('storage').'/'.$program['image'];
-            $fotos            = $value->fotos->groupBy('type');
 
-            $fotos['before'] = $fotos['before']->pluck('url_foto');
-            $fotos['after']  = $fotos['after']->pluck('url_foto');
 
-            $program['fotos'] = $fotos->map(function($grupo){
-                return $grupo->map(function($foto){
-                   return asset('storage').'/'.$foto;
+            $program['fotos'] = [ 'before' => [] , 'after' => [] ];
+
+            if($value->fotos->count()){
+
+                $fotos            = $value->fotos->groupBy('type');
+
+                $fotos['before'] = $fotos['before']->pluck('url_foto');
+                $fotos['after']  = $fotos['after']->pluck('url_foto');
+
+                $program['fotos'] = $fotos->map(function($grupo){
+                    return $grupo->map(function($foto){
+                       return asset('storage').'/'.$foto;
+                    });
                 });
-            });
+            }
 
             $program['subscription_programs_id'] = $value->id;
             $program['status'] = 'aka';
