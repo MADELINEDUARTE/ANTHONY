@@ -282,6 +282,7 @@ class HomeController extends Controller
           ->where('is_active',1)
           ->get();
 
+
           if(count($subscription_program_per_user)>0){
             return response()->json(['status'=> true, 'message'=> "The user already has this program associated"], 200);
           }else{ 
@@ -294,10 +295,11 @@ class HomeController extends Controller
     
             }else{
 
-              $programsInactivo = $subscription_program->where('is_active',0);
+              $programsInactivo = $subscription_program->where('is_active',0)->where('program_id',  $request->program_id);
 
               if(count($programsInactivo)){
                 
+              
                 foreach ($programsInactivo as $key => $value) {
 
                   if($value->program_id == $request->program_id){
@@ -305,6 +307,8 @@ class HomeController extends Controller
                     $value->save();
                   }
                 }
+
+                return $programsInactivo;
               
               }else{
 

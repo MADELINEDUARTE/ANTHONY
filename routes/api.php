@@ -21,6 +21,7 @@ use App\Http\Controllers\UsersManagement;
 use App\Http\Controllers\VerificacionDeEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\BeforeAfterController;
 
 
 /*
@@ -142,6 +143,11 @@ Route::middleware(['token_validate'])->group(function () {
             Route::post('store',[OrderController::class,'store']);
             Route::get('index',[OrderController::class,'index']);
         });
+    });
+
+    Route::prefix('before_after')->group(function(){
+        Route::get('/',[BeforeAfterController::class,'index']);
+        Route::post('/addFoto',[BeforeAfterController::class,'addFoto']);
     });
 
 });

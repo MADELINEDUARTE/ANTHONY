@@ -77,6 +77,11 @@ class SubscriptionProgram extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
+
+    public function fotos()
+    {
+        return $this->hasMany(BeforeAfter::class, 'subscription_programs_id');
+    }
     
 
 }
