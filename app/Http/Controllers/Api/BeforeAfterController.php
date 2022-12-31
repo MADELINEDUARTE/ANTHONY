@@ -39,7 +39,7 @@ class BeforeAfterController extends Controller
 
                 if(isset($fotos['after'])){
 
-                    $fotos['after']  = $fotos['after']->pluck('url_foto');
+                    $fotos['after']  = $fotos['after']->pluck('url_foto','pose');
                 }
 
                 $program['fotos'] = $fotos->map(function($grupo){
