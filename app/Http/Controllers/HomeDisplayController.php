@@ -150,11 +150,15 @@ class HomeDisplayController extends Controller
           "details"             => $program->details
         ];
 
-$conteoSI = 0;
         foreach ($program_detail['details'] as $key => $dia) {
+        $conteoSI = 0;
             
             $dia['status'] = false;
             $dia['muscular_group'] = '';
+
+            if($dia['id'] == 80){
+                //dd(count($dia['exercise']));
+            }
 
           foreach ($dia['exercise'] as $d => $ejercicio) {
             
@@ -183,8 +187,7 @@ $conteoSI = 0;
                                                           ->whereNotNull('peso')
                                                           ->orderBy('repeticiones','desc')
                                                           ->get();   
-                                                          
-                    //dd($logs->first()->peso);     
+                                                           
 
                     if(count($logs) == $ejercicio->sets){ // completo el ejercicio
                         $ejercicio['completed'] = true;
@@ -233,6 +236,10 @@ $conteoSI = 0;
             
           }
 
+          if($dia['id'] == 80){
+            // dd($conteoSI);
+                // dd(count($dia['exercise']));
+            }
 
           if($conteoSI == count($dia['exercise'])){
             $dia['status'] = true;
