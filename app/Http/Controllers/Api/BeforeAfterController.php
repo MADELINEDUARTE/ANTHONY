@@ -34,7 +34,7 @@ class BeforeAfterController extends Controller
 
                 if(isset($fotos['before'])){
 
-                    $fotos['before'] = $fotos['before']->pluck('url_foto');
+                    $fotos['before'] = $fotos['before']->pluck('url_foto','pose');
                 }
 
                 if(isset($fotos['after'])){
@@ -60,8 +60,6 @@ class BeforeAfterController extends Controller
 
     public function addFoto(Request $request)
     {
-
-        return response()->json($request->header());
         $rules=[
           // 'foto'                     => 'required|mimes:jpg,png',
           'type'                     => 'required',
@@ -69,7 +67,7 @@ class BeforeAfterController extends Controller
           'subscription_programs_id' => 'required'
         ];
 
-        $validator= Validator::make($request->header(),$rules);
+        $validator= Validator::make($request->all(),$rules);
 
         if ($validator->fails()) {
           return response()->json($validator->errors(), 422);
@@ -90,7 +88,7 @@ class BeforeAfterController extends Controller
             $beforeAfter = new BeforeAfter();
         }
 
-        $foto = Storage::disk('public')->put($request->type, $request->file('foto'));
+        $foto = Storage::disk('public')->put($request->type, $request->file('fileToUpload'));
 
         $beforeAfter->user_id                  = Auth::user()->id;
         $beforeAfter->subscription_programs_id = $request->subscription_programs_id;
@@ -99,6 +97,6 @@ class BeforeAfterController extends Controller
         $beforeAfter->pose                     = $request->pose;
         $beforeAfter->save();
 
-        return $beforeAfter;
+        return response()->json($beforeAfter,200);
     }
 }
