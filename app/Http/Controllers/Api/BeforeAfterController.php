@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeDisplayController;
 use App\Models\BeforeAfter;
 use App\Models\SubscriptionProgram;
 use Illuminate\Http\Request;
@@ -50,11 +51,42 @@ class BeforeAfterController extends Controller
             }
 
             $program['subscription_programs_id'] = $value->id;
-            $program['status'] = 'aka';
+
+            $program_detail = HomeDisplayController::statusProgram($value->program->id);
+
+            $calculo = $this->calculo($program_detail['details']);
+
+            $program['status'] = $calculo.'% Completed';
+            $program['calculo'] = $calculo;
+
             return $program;
         });
 
-        return response()->json(['data'=> [ 'incomplete' => $subscription_program , 'complete' => [] ] ]);
+        //dd($subscription_program);
+
+        return response()->json(['data'=> [ 'incomplete' => $subscription_program->where('calculo', '!=' ,100) , 'complete' => $subscription_program->where('calculo',100) ] ]);
+
+    }
+
+    private function calculo($detail)
+    {
+        $cantidad_dias = $detail->count();
+        $estados = $detail->pluck('status');
+        
+        $completados = 0;
+        foreach ($estados as $key => $value) {
+            if($value == true){
+                $completados++;
+            }
+        }
+
+        $procentaje = ($completados * 100) / $cantidad_dias;
+
+        if($procentaje > 100){
+            return 100;
+        }
+
+        return round($procentaje);
 
     }
 

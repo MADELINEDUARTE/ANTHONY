@@ -85,6 +85,13 @@ class HomeDisplayController extends Controller
     public function program_detail(Request $request)
     {
 
+        $program_detail = $this->statusProgram($request->program_id);
+
+        return response()->json(['date'=> $program_detail]);
+    }
+
+    public static function statusProgram($program_id)
+    {
         $program = Program::with([
           "programCategory",
           "status",
@@ -99,7 +106,7 @@ class HomeDisplayController extends Controller
           "subscription_programs",
           "subscription_program_day_routines"
         ])
-        ->where("id",$request->program_id)
+        ->where("id",$program_id)
         ->first();
 
         $user = Auth::user();
@@ -107,7 +114,7 @@ class HomeDisplayController extends Controller
         $status_package = null;
         $status_program = null;
         
-       $statusNo = ['canceled'];
+        $statusNo = ['canceled'];
         if($user->subscription && !in_array($user->subscription->stripe_status, $statusNo)){
           $status_package = [ // saber si pago si no tiene sub llega null 
             "id"      => $user->subscription->package->id,
@@ -151,14 +158,10 @@ class HomeDisplayController extends Controller
         ];
 
         foreach ($program_detail['details'] as $key => $dia) {
-        $conteoSI = 0;
-            
-            $dia['status'] = false;
-            $dia['muscular_group'] = '';
-
-            if($dia['id'] == 80){
-                //dd(count($dia['exercise']));
-            }
+          $conteoSI = 0;
+          
+          $dia['status'] = false;
+          $dia['muscular_group'] = '';
 
           foreach ($dia['exercise'] as $d => $ejercicio) {
             
@@ -236,11 +239,6 @@ class HomeDisplayController extends Controller
             
           }
 
-          if($dia['id'] == 80){
-            // dd($conteoSI);
-                // dd(count($dia['exercise']));
-            }
-
           if($conteoSI == count($dia['exercise'])){
             $dia['status'] = true;
           }elseif($conteoSI < count($dia['exercise'])){
@@ -248,8 +246,8 @@ class HomeDisplayController extends Controller
           }
         }
 
-        return response()->json(['date'=> $program_detail]);
-    }
+        return $program_detail;
+    } 
 
 
 
