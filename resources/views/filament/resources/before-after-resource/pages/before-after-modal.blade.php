@@ -7,7 +7,7 @@
 	<h2>Before</h2>
 	<div class="columns-3 d-flex">
 		@foreach($this->fotos['before'] as $key => $value)
-			<img class="w-full aspect-video" src="{{ asset('storage').'/'.$value['url_foto'] }}" />
+			<img class="" src="{{ asset('storage').'/'.$value['url_foto'] }}" />
 			{{-- {{ $value['url_foto'] }} --}}
 		@endforeach
 	</div>
@@ -17,7 +17,7 @@
 <h2>After</h2>
 	<div class="columns-3 d-flex">
 		@foreach($this->fotos['after'] as $key => $value)
-			<img class="w-full aspect-video" src="{{ asset('storage').'/'.$value['url_foto'] }}" />
+			<img class="" src="{{ asset('storage').'/'.$value['url_foto'] }}" />
 		@endforeach
 	<div class="columns-3">
 @endif
@@ -27,5 +27,9 @@
 	.d-flex{
 		display: flex;
 		justify-content: space-around;
+	}
+	img{
+		max-width: 300px;
+    	height: 100%;
 	}
 </style>	
