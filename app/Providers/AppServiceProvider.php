@@ -41,6 +41,8 @@ class AppServiceProvider extends ServiceProvider
             \App\Filament\Resources\RecurrenceResource::class,
             \App\Filament\Resources\StatusResource::class,
             \App\Filament\Resources\UserResource::class,
+            \App\Filament\Resources\BeforeAfterResource::class,
+            
         ]);
 
     }
