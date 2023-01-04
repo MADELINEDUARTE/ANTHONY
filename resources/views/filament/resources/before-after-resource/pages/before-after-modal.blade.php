@@ -1,7 +1,4 @@
 <x-filament::page>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error iste, quasi voluptatibus aliquam repellendus aspernatur corrupti quas ullam sint itaque distinctio nesciunt rem laboriosam. Perspiciatis, nobis aperiam officia dolor eaque?</p>
-
-
 
 @if(isset($this->fotos['before']))
 	<h2>Before</h2>
