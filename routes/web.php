@@ -135,4 +135,17 @@ Route::resource('exercise-logs', ExerciseLogController::class)->middleware([ 'au
 Route::resource('exercise-videos', ExerciseVideoController::class)->middleware([ 'auth','verified']);
 Route::resource('program-day-routines', ProgramDayRoutineController::class)->middleware([ 'auth','verified']);
 
+Route::get('landing/register', function () {
+    return view('landing_page.index');
+})->name('soyindex');
+
+Route::get('landing/register/success', function () {
+    return view('landing_page.success');
+})->name('soysuccess');
+
+Route::get('landing/register/error', function () {
+    return view('landing_page.error');
+})->name('soyerror');
+
+
 
